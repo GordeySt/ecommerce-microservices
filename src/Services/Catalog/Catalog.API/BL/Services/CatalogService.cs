@@ -1,9 +1,8 @@
-﻿using Catalog.API.BL.Interface;
+﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Catalog.API.BL.Services

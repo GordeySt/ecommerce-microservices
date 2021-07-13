@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Catalog.API.BL.Interface
+namespace Catalog.API.BL.Interfaces
 {
     public interface ICatalogService
     {

@@ -1,4 +1,4 @@
-﻿using Catalog.API.BL.Interface;
+﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
