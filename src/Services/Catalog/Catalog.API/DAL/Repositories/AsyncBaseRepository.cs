@@ -10,19 +10,19 @@ namespace Catalog.API.DAL.Repositories
     public class AsyncBaseRepository<T> : IAsyncBaseRepository<T> where T 
         : EntityBase
     {
-        protected readonly IDatabaseContext databaseContext;
+        protected readonly IDatabaseContext DatabaseContext;
         private readonly IMongoCollection<T> _collection;
 
         public AsyncBaseRepository(IDatabaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
-            _collection = this.databaseContext.GetCollection<T>(typeof(T).Name);
+            DatabaseContext = databaseContext;
+            _collection = DatabaseContext.GetCollection<T>(typeof(T).Name);
         }
 
         public async Task<IEnumerable<T>> GetAllItemsAsync()
         {
             return await _collection
-                .Find(p => true)
+                .Find(_ => true)
                 .ToListAsync();
         }
 

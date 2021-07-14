@@ -17,7 +17,7 @@ namespace Catalog.API.DAL.Repositories
             var filter = Builders<Product>.Filter
                 .Eq(p => p.Category, categoryName);
 
-            return await databaseContext
+            return await DatabaseContext
                 .Products
                 .Find(filter)
                 .ToListAsync();
