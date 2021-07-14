@@ -28,6 +28,7 @@ namespace Catalog.API.Startup
 
             services.ValidateSettingParameters(Configuration);
             services.RegisterServices(appSettings);
+            services.RegisterAutoMapper();
 
             services.AddControllers();
             services.RegisterSwagger();
