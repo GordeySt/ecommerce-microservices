@@ -1,0 +1,27 @@
+﻿using System.ComponentModel.DataAnnotations;
+using NetEscapades.Configuration.Validation;
+
+namespace Catalog.API.Startup.Settings
+{
+    public class DbSettings : IValidatable
+    {
+        [Required]
+        public string Host { get; set; }
+
+        [Required]
+        public int Port { get; set; }
+
+        [Required]
+        public string DatabaseName { get; set; }
+
+        [Required]
+        public string CollectionName { get; set; }
+
+        public string ConnectionString => $"mongodb://{Host}:{Port}";
+
+        public void Validate()
+        {
+            Validator.ValidateObject(this, new ValidationContext(this), true);
+        }
+    }
+}

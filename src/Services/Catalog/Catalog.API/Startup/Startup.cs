@@ -1,6 +1,7 @@
 using Catalog.API.DAL;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.Startup.Configuration;
+using Catalog.API.Startup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,9 +23,12 @@ namespace Catalog.API.Startup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettings = ReadAppSettings(Configuration);
+
+            services.ValidateSettingParameters(Configuration);
+            services.RegisterServices(appSettings);
 
             services.AddControllers();
-            services.RegisterServices();
             services.RegisterSwagger();
         }
 
@@ -45,6 +49,17 @@ namespace Catalog.API.Startup
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static AppSettings ReadAppSettings(IConfiguration configuration)
+        {
+            var dbSettings = configuration.GetSection(nameof(AppSettings.DbSettings))
+                .Get<DbSettings>();
+
+            return new AppSettings
+            {
+                DbSettings = dbSettings
+            };
         }
     }
 }

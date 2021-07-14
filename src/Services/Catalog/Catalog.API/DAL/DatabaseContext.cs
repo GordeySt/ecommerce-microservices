@@ -1,24 +1,21 @@
 ﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
+using Catalog.API.Startup.Settings;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
 
 namespace Catalog.API.DAL
 {
     public class DatabaseContext : IDatabaseContext
     {
         private readonly IMongoDatabase _mongoDatabase;
-        public DatabaseContext(IConfiguration configuration)
+        public DatabaseContext(AppSettings appSettings)
         {
-            var mongoClient = new MongoClient(configuration
-                .GetValue<string>("DatabaseSettings:ConnectionString"));
-            _mongoDatabase = mongoClient.GetDatabase(configuration
-                .GetValue<string>("DatabaseSettings:DatabaseName"));
+            var mongoClient = new MongoClient(appSettings.DbSettings.ConnectionString);
+            _mongoDatabase = mongoClient.GetDatabase(appSettings.DbSettings.DatabaseName);
 
-            Products = _mongoDatabase.GetCollection<Product>(configuration
-                .GetValue<string>("DatabaseSettings:CollectionName"));
+            Products = _mongoDatabase.GetCollection<Product>(appSettings.DbSettings.CollectionName);
 
             DatabaseContextSeed.SeedData(Products);
         }
