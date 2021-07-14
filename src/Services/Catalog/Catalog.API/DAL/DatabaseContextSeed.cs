@@ -10,9 +10,9 @@ namespace Catalog.API.DAL
     {
         public static void SeedData(IMongoCollection<Product> productCollection)
         {
-            bool existProduct = productCollection.Find(p => true).Any();
+            bool existProduct = productCollection.Find(_ => true).Any();
 
-            if (existProduct == false)
+            if (!existProduct)
             {
                 productCollection.InsertManyAsync(GetPreconfiguredProducts());
             }
