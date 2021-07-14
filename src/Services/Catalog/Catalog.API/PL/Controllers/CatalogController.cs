@@ -1,6 +1,7 @@
 ﻿using Catalog.API.BL.Enums;
 using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
+using Catalog.API.PL.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -28,7 +29,7 @@ namespace Catalog.API.PL.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
             var products = await _catalogService.GetAllProductsAsync();
 
@@ -38,7 +39,7 @@ namespace Catalog.API.PL.Controllers
         [HttpGet("{id:guid}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Product>> GetProductById(Guid id)
+        public async Task<ActionResult<ProductDto>> GetProductById(Guid id)
         {
             var product = await _catalogService.GetProductByIdAsync(id);
 
@@ -54,7 +55,7 @@ namespace Catalog.API.PL.Controllers
         [Route("[action]/{categoryName}", Name = "GetProductsByCategory")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string categoryName)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsByCategory(string categoryName)
         {
             var products = await _catalogService.GetProductsByCategory(categoryName);
 
@@ -63,23 +64,24 @@ namespace Catalog.API.PL.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Product>> CreateProduct([BindRequired] Product product)
+        public async Task<ActionResult<ProductDto>> CreateProduct
+            ([BindRequired] CreateProductDto createProductDto)
         {
-            await _catalogService.AddProductAsync(product);
+            await _catalogService.AddProductAsync(createProductDto);
 
-            return CreatedAtRoute("GetProduct", new { id = product.Id }, product);
+            return CreatedAtAction(nameof(CreateProduct), createProductDto);
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateProduct([BindRequired] Product product)
+        public async Task<IActionResult> UpdateProduct([BindRequired] UpdateProductDto updateProductDto)
         {
-            var result = await _catalogService.UpdateProductAsync(product);
+            var result = await _catalogService.UpdateProductAsync(updateProductDto);
 
             if (result.Result is ServiceResultType.NotFound)
             {
-                _logger.LogInformation($"Product with id: {product.Id} not found");
+                _logger.LogInformation($"Product with id: {updateProductDto.Id} not found");
                 return NotFound(result.Message);
             }
 
