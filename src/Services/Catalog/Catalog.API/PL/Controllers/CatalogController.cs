@@ -1,16 +1,19 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace Catalog.API.PL.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     public class CatalogController : ControllerBase
     {
         private readonly ICatalogService _catalogService;
@@ -23,17 +26,17 @@ namespace Catalog.API.PL.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             var products = await _catalogService.GetAllProductsAsync();
 
-            return Ok(products);
+            return products.ToList();
         }
 
         [HttpGet("{id}", Name = "GetProduct")]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Product>> GetProductById(Guid id)
         {
             var product = await _catalogService.GetProductByIdAsync(id);
@@ -44,22 +47,22 @@ namespace Catalog.API.PL.Controllers
                 return NotFound();
             }
 
-            return Ok(product);
+            return product;
         }
 
-        [Route("[action]/{categoryName}", Name = "GetProductByCategory")]
+        [Route("[action]/{categoryName}", Name = "GetProductsByCategory")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Product>> GetProductByCategory(string categoryName)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string categoryName)
         {
             var products = await _catalogService.GetProductsByCategory(categoryName);
 
-            return Ok(products);
+            return products.ToList();
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Product>> CreateProduct([BindRequired] Product product)
         {
             await _catalogService.AddProductAsync(product);
 
@@ -67,31 +70,32 @@ namespace Catalog.API.PL.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateProduct([FromBody] Product product)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateProduct([BindRequired] Product product)
         {
             var result = await _catalogService.UpdateProductAsync(product);
 
-            if (result == false)
+            if (!result)
             {
                 return NotFound();
             }
 
-            return Ok(result);
+            return NoContent();
         }
 
         [HttpDelete("{id}", Name = "DeleteProduct")]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
             var result = await _catalogService.DeleteProductAsync(id);
 
-            if (result == false)
+            if (!result)
             {
                 return NotFound();
             }
 
-            return Ok(result);
+            return NoContent();
         }
     }
 }
