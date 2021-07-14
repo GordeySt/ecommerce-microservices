@@ -4,6 +4,7 @@ using Catalog.API.BL.ResultWrappers;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using MongoDB.Driver;
+using Services.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,12 +23,9 @@ namespace Catalog.API.DAL.Repositories
             _collection = DatabaseContext.GetCollection<T>(typeof(T).Name);
         }
 
-        public async Task<IEnumerable<T>> GetAllItemsAsync()
-        {
-            return await _collection
-                .Find(_ => true)
-                .ToListAsync();
-        }
+        public async Task<PagedList<T>> GetAllItemsAsync(PagingParams pagingParams) => 
+            await PagedList<T>.CreateAsync(_collection, Builders<T>.Filter.Empty, 
+                pagingParams.PageNumber, pagingParams.PageSize);
 
         public async Task<T> GetItemByIdAsync(Guid id)
         {

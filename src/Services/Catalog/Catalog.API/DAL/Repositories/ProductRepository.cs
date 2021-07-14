@@ -1,7 +1,8 @@
 ﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
+using Catalog.API.PL.Models.Params;
 using MongoDB.Driver;
-using System.Collections.Generic;
+using Services.Common.Models;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
@@ -12,15 +13,15 @@ namespace Catalog.API.DAL.Repositories
         public ProductRepository(IDatabaseContext databaseContext) : base(databaseContext)
         { }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategory(string categoryName)
+        public async Task<PagedList<Product>> GetProductsByCategory(CategoryParams categoryParams)
         {
             var filter = Builders<Product>.Filter
-                .Eq(p => p.Category, categoryName);
+                .Eq(p => p.Category, categoryParams.CategoryName);
 
-            return await DatabaseContext
-                .Products
-                .Find(filter)
-                .ToListAsync();
+            var collection = DatabaseContext.Products;
+
+            return await PagedList<Product>.CreateAsync(collection, filter, categoryParams.PageNumber,
+                categoryParams.PageSize);
         }
     }
 }

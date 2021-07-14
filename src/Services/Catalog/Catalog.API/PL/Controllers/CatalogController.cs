@@ -2,10 +2,12 @@
 using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Catalog.API.PL.DTOs;
+using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+using Services.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +31,12 @@ namespace Catalog.API.PL.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
+            ([FromQuery] PagingParams pagingParams)
         {
-            var products = await _catalogService.GetAllProductsAsync();
+            var products = await _catalogService.GetAllProductsAsync(pagingParams);
 
-            return products.ToList();
+            return products;
         }
 
         [HttpGet("{id:guid}", Name = "GetProduct")]
@@ -52,14 +55,15 @@ namespace Catalog.API.PL.Controllers
             return product;
         }
 
-        [Route("[action]/{categoryName}", Name = "GetProductsByCategory")]
+        [Route("[action]", Name = "GetProductsByCategory")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsByCategory(string categoryName)
+        public async Task<ActionResult<PagedList<ProductDto>>> GetProductsByCategory
+            ([FromQuery] CategoryParams categoryParams)
         {
-            var products = await _catalogService.GetProductsByCategory(categoryName);
+            var products = await _catalogService.GetProductsByCategory(categoryParams);
 
-            return products.ToList();
+            return products;
         }
 
         [HttpPost]

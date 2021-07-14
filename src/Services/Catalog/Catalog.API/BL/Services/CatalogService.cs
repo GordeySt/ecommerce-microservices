@@ -4,6 +4,8 @@ using Catalog.API.BL.ResultWrappers;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.PL.DTOs;
+using Catalog.API.PL.Models.Params;
+using Services.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,16 +29,15 @@ namespace Catalog.API.BL.Services
 
             await _productRepository.AddItemAsync(product);
         }
-            
-
+           
         public async Task<ServiceResult> DeleteProductAsync(Guid id) =>
             await _productRepository.DeleteItemAsync(id);
 
-        public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
+        public async Task<PagedList<ProductDto>> GetAllProductsAsync(PagingParams pagingParams)
         {
-            var products = await _productRepository.GetAllItemsAsync();
+            var products = await _productRepository.GetAllItemsAsync(pagingParams);
 
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
+            return _mapper.Map<PagedList<ProductDto>>(products);
         }
 
         public async Task<ProductDto> GetProductByIdAsync(Guid id)
@@ -46,11 +47,11 @@ namespace Catalog.API.BL.Services
             return proudct is not null ? _mapper.Map<ProductDto>(proudct) : default;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetProductsByCategory(string categoryName)
+        public async Task<PagedList<ProductDto>> GetProductsByCategory(CategoryParams categoryParams)
         {
-            var products = await _productRepository.GetProductsByCategory(categoryName);
+            var products = await _productRepository.GetProductsByCategory(categoryParams);
 
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
+            return _mapper.Map<PagedList<ProductDto>>(products);
         }
 
         public async Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto)
