@@ -12,7 +12,7 @@ namespace Catalog.API.DAL.Repositories
         public ProductRepository(IDatabaseContext databaseContext) : base(databaseContext)
         { }
 
-        public async Task<IReadOnlyCollection<Product>> GetProductsByCategory(string categoryName)
+        public async Task<IEnumerable<Product>> GetProductsByCategory(string categoryName)
         {
             var filter = Builders<Product>.Filter
                 .Eq(p => p.Category, categoryName);

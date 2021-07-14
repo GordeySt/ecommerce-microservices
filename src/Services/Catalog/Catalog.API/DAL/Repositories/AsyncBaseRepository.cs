@@ -19,7 +19,7 @@ namespace Catalog.API.DAL.Repositories
             _collection = this.databaseContext.GetCollection<T>(typeof(T).Name);
         }
 
-        public async Task<IReadOnlyList<T>> GetAllItemsAsync()
+        public async Task<IEnumerable<T>> GetAllItemsAsync()
         {
             return await _collection
                 .Find(p => true)

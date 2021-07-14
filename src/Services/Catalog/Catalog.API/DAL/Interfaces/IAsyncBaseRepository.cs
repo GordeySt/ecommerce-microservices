@@ -7,7 +7,7 @@ namespace Catalog.API.DAL.Interfaces
 {
     public interface IAsyncBaseRepository<T> where T : EntityBase
     {
-		Task<IReadOnlyList<T>> GetAllItemsAsync();
+		Task<IEnumerable<T>> GetAllItemsAsync();
 		Task<T> GetItemByIdAsync(Guid id);
 		Task AddItemAsync(T entity);
 		Task<bool> UpdateItemAsync(T entity);

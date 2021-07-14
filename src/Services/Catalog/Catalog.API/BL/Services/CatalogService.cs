@@ -22,14 +22,13 @@ namespace Catalog.API.BL.Services
         public async Task<bool> DeleteProductAsync(Guid id) =>
             await _productRepository.DeleteItemAsync(id);
 
-        public async Task<IReadOnlyList<Product>> GetAllProductsAsync() =>
+        public async Task<IEnumerable<Product>> GetAllProductsAsync() =>
             await _productRepository.GetAllItemsAsync();
-
 
         public async Task<Product> GetProductByIdAsync(Guid id) =>
             await _productRepository.GetItemByIdAsync(id);
 
-        public async Task<IReadOnlyCollection<Product>> GetProductsByCategory(string categoryName) =>
+        public async Task<IEnumerable<Product>> GetProductsByCategory(string categoryName) =>
             await _productRepository.GetProductsByCategory(categoryName);
 
         public async Task<bool> UpdateProductAsync(Product product) =>

@@ -6,6 +6,6 @@ namespace Catalog.API.DAL.Interfaces
 {
     public interface IProductRepository : IAsyncBaseRepository<Product>
     {
-        Task<IReadOnlyCollection<Product>> GetProductsByCategory(string category);
+        Task<IEnumerable<Product>> GetProductsByCategory(string category);
     }
 }

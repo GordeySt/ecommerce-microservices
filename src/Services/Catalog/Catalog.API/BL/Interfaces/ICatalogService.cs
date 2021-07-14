@@ -7,9 +7,9 @@ namespace Catalog.API.BL.Interfaces
 {
     public interface ICatalogService
     {
-        Task<IReadOnlyList<Product>> GetAllProductsAsync();
+        Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<Product> GetProductByIdAsync(Guid id);
-        Task<IReadOnlyCollection<Product>> GetProductsByCategory(string categoryName);
+        Task<IEnumerable<Product>> GetProductsByCategory(string categoryName);
         Task AddProductAsync(Product product);
         Task<bool> UpdateProductAsync(Product product);
         Task<bool> DeleteProductAsync(Guid id);
