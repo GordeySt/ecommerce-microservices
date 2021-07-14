@@ -1,4 +1,5 @@
-﻿using Catalog.API.DAL.Entities;
+﻿using Catalog.API.BL.ResultWrappers;
+using Catalog.API.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Catalog.API.BL.Interfaces
         Task<Product> GetProductByIdAsync(Guid id);
         Task<IEnumerable<Product>> GetProductsByCategory(string categoryName);
         Task AddProductAsync(Product product);
-        Task<bool> UpdateProductAsync(Product product);
-        Task<bool> DeleteProductAsync(Guid id);
+        Task<ServiceResult> UpdateProductAsync(Product product);
+        Task<ServiceResult> DeleteProductAsync(Guid id);
     }
 }

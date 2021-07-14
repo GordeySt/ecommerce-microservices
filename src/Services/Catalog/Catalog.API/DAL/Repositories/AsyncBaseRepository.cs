@@ -1,4 +1,7 @@
-﻿using Catalog.API.DAL.Entities;
+﻿using Catalog.API.BL.Constants;
+using Catalog.API.BL.Enums;
+using Catalog.API.BL.ResultWrappers;
+using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using MongoDB.Driver;
 using System;
@@ -47,24 +50,42 @@ namespace Catalog.API.DAL.Repositories
 
         }
 
-        public async Task<bool> DeleteItemAsync(Guid id)
+        public async Task<ServiceResult> DeleteItemAsync(Guid id)
         {
+            var itemToDelete = await _collection
+                .Find(p => p.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (itemToDelete is null)
+            {
+                return new ServiceResult(ServiceResultType.NotFound,
+                    ExceptionMessageConstants.NotFoundItemMessage);
+            }
+
             var filter = Builders<T>.Filter.Eq(p => p.Id, id);
 
             var deleteResult = await _collection
                 .DeleteOneAsync(filter);
 
-            return deleteResult.IsAcknowledged
-                && deleteResult.DeletedCount > 0;
+            return new ServiceResult(ServiceResultType.Success);
         }
 
-        public async Task<bool> UpdateItemAsync(T entity)
+        public async Task<ServiceResult> UpdateItemAsync(T entity)
         {
+            var itemToUpdate = await _collection
+                .Find(p => p.Id == entity.Id)
+                .FirstOrDefaultAsync();
+
+            if (itemToUpdate is null)
+            {
+                return new ServiceResult(ServiceResultType.NotFound,
+                    ExceptionMessageConstants.NotFoundItemMessage);
+            }
+
             var updateResult = await _collection
                 .ReplaceOneAsync(filter: g => g.Id == entity.Id, replacement: entity);
 
-            return updateResult.IsAcknowledged
-                && updateResult.ModifiedCount > 0;
+            return new ServiceResult(ServiceResultType.Success);
         }
     }
 }
