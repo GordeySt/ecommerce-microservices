@@ -23,10 +23,8 @@ namespace Catalog.API.DAL
             DatabaseContextSeed.SeedData(Products);
         }
 
-        public IMongoCollection<T> GetCollection<T>(string name)
-        {
-            return _mongoDatabase.GetCollection<T>(name);
-        }
+        public IMongoCollection<T> GetCollection<T>(string name) => 
+            _mongoDatabase.GetCollection<T>(name);
 
         public IMongoCollection<Product> Products { get; private set; }
     }
