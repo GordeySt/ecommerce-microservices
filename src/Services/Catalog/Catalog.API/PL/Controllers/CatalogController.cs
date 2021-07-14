@@ -1,4 +1,5 @@
-﻿using Catalog.API.BL.Interfaces;
+﻿using Catalog.API.BL.Enums;
+using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ namespace Catalog.API.PL.Controllers
             return products.ToList();
         }
 
-        [HttpGet("{id}", Name = "GetProduct")]
+        [HttpGet("{id:guid}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Product>> GetProductById(Guid id)
@@ -76,23 +77,25 @@ namespace Catalog.API.PL.Controllers
         {
             var result = await _catalogService.UpdateProductAsync(product);
 
-            if (!result)
+            if (result.Result is ServiceResultType.NotFound)
             {
-                return NotFound();
+                _logger.LogInformation($"Product with id: {product.Id} not found");
+                return NotFound(result.Message);
             }
 
             return NoContent();
         }
 
-        [HttpDelete("{id}", Name = "DeleteProduct")]
+        [HttpDelete("{id:guid}", Name = "DeleteProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
             var result = await _catalogService.DeleteProductAsync(id);
 
-            if (!result)
+            if (result.Result is ServiceResultType.NotFound)
             {
-                return NotFound();
+                _logger.LogInformation($"Product with id: {id} not found");
+                return NotFound(result.Message);
             }
 
             return NoContent();
