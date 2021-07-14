@@ -1,6 +1,7 @@
 using Catalog.API.DAL;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.Startup.Configuration;
+using Catalog.API.Startup.Middlewares;
 using Catalog.API.Startup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,8 @@ namespace Catalog.API.Startup
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
