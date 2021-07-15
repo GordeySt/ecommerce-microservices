@@ -1,8 +1,6 @@
 ﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.Startup.Settings;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Catalog.API.DAL
@@ -10,10 +8,9 @@ namespace Catalog.API.DAL
     public class DatabaseContext : IDatabaseContext
     {
         private readonly IMongoDatabase _mongoDatabase;
-        public DatabaseContext(AppSettings appSettings, IConfiguration configuration)
+        public DatabaseContext(AppSettings appSettings)
         {
-            var mongoClient = new MongoClient(configuration
-                .GetValue<string>("dbSettings:ConnectionString"));
+            var mongoClient = new MongoClient(appSettings.DbSettings.ConnectionString);
             _mongoDatabase = mongoClient.GetDatabase(appSettings.DbSettings.DatabaseName);
 
             Products = _mongoDatabase.GetCollection<Product>(appSettings.DbSettings.CollectionName);

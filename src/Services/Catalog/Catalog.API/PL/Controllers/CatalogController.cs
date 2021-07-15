@@ -84,7 +84,7 @@ namespace Catalog.API.PL.Controllers
 
             if (result.Result is ServiceResultType.NotFound)
             {
-                _logger.LogInformation($"Product with id: {updateProductDto.Id} not found");
+                _logger.LogError($"Product with id: {updateProductDto.Id} not found");
                 return NotFound(result.Message);
             }
 
@@ -100,7 +100,7 @@ namespace Catalog.API.PL.Controllers
 
             if (result.Result is ServiceResultType.NotFound)
             {
-                _logger.LogInformation($"Product with id: {id} not found");
+                _logger.LogError($"Product with id: {id} not found");
                 return NotFound(result.Message);
             }
 
