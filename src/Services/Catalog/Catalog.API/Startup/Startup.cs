@@ -59,10 +59,13 @@ namespace Catalog.API.Startup
         {
             var dbSettings = configuration.GetSection(nameof(AppSettings.DbSettings))
                 .Get<DbSettings>();
+            var cloudinarySettings = configuration.GetSection(nameof(AppSettings.CloudinarySettings))
+                .Get<CloudinarySettings>();
 
             return new AppSettings
             {
-                DbSettings = dbSettings
+                DbSettings = dbSettings,
+                CloudinarySettings = cloudinarySettings
             };
         }
     }
