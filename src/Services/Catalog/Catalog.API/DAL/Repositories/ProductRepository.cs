@@ -1,8 +1,10 @@
-﻿using Catalog.API.DAL.Entities;
+﻿using Catalog.API.BL.ResultWrappers;
+using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.PL.Models.Params;
 using MongoDB.Driver;
 using Services.Common.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
@@ -22,6 +24,13 @@ namespace Catalog.API.DAL.Repositories
 
             return await PagedList<Product>.CreateAsync(collection, filter, categoryParams.PageNumber,
                 categoryParams.PageSize);
+        }
+
+        public async Task UpdateMainImageAsync(Product product)
+        {
+            await DatabaseContext
+                .Products
+                .ReplaceOneAsync(filter: g => g.Id == product.Id, replacement: product);
         }
     }
 }
