@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace Catalog.API.DAL.Entities
@@ -8,9 +7,5 @@ namespace Catalog.API.DAL.Entities
     {
         [BsonId]
         public Guid Id { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTimeOffset? CreatedDate { get; set; }
-        public string LastModifiedBy { get; set; }
-        public DateTimeOffset? LastModifiedDate { get; set; }
     }
 }
