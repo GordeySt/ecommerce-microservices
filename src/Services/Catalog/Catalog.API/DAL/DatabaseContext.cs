@@ -10,9 +10,10 @@ namespace Catalog.API.DAL
     public class DatabaseContext : IDatabaseContext
     {
         private readonly IMongoDatabase _mongoDatabase;
-        public DatabaseContext(AppSettings appSettings)
+        public DatabaseContext(AppSettings appSettings, IConfiguration configuration)
         {
-            var mongoClient = new MongoClient(appSettings.DbSettings.ConnectionString);
+            var mongoClient = new MongoClient(configuration
+                .GetValue<string>("dbSettings:ConnectionString"));
             _mongoDatabase = mongoClient.GetDatabase(appSettings.DbSettings.DatabaseName);
 
             Products = _mongoDatabase.GetCollection<Product>(appSettings.DbSettings.CollectionName);
