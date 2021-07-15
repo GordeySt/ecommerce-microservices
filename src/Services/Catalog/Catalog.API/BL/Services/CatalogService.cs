@@ -7,7 +7,6 @@ using Catalog.API.PL.DTOs;
 using Catalog.API.PL.Models.Params;
 using Services.Common.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Catalog.API.BL.Services
