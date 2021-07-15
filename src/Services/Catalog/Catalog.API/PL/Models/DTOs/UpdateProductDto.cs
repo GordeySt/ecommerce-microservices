@@ -24,9 +24,6 @@ namespace Catalog.API.PL.DTOs
         public string Category { get; set; }
 
         [DefaultValue]
-        public string ImageUrl { get; set; }
-
-        [DefaultValue]
         public decimal Price { get; set; }
 
         public void Mapping(Profile profile)

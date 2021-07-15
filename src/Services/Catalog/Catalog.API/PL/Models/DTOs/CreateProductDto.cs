@@ -21,7 +21,7 @@ namespace Catalog.API.PL.DTOs
         public string Category { get; set; }
 
         [DefaultValue]
-        public string ImageUrl { get; set; }
+        public string MainImageUrl { get; set; }
 
         [DefaultValue]
         public decimal Price { get; set; }
