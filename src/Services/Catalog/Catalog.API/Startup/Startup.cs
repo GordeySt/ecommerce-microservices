@@ -3,7 +3,9 @@ using Catalog.API.DAL.Interfaces;
 using Catalog.API.Startup.Configuration;
 using Catalog.API.Startup.Middlewares;
 using Catalog.API.Startup.Settings;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,7 @@ namespace Catalog.API.Startup
 
             services.AddControllers();
             services.RegisterSwagger();
+            services.RegisterHealthChecks(appSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +55,11 @@ namespace Catalog.API.Startup
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
 
