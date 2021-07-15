@@ -1,6 +1,5 @@
 ﻿using Catalog.API.BL.Enums;
 using Catalog.API.BL.Interfaces;
-using Catalog.API.DAL.Entities;
 using Catalog.API.PL.DTOs;
 using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Http;
@@ -9,9 +8,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Services.Common.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Catalog.API.PL.Controllers
@@ -22,11 +18,14 @@ namespace Catalog.API.PL.Controllers
     {
         private readonly ICatalogService _catalogService;
         private readonly ILogger<CatalogController> _logger;
+        private readonly IPhotoService _photoService;
 
-        public CatalogController(ICatalogService catalogService, ILogger<CatalogController> logger)
+        public CatalogController(ICatalogService catalogService, 
+            ILogger<CatalogController> logger, IPhotoService photoService)
         {
             _catalogService = catalogService;
             _logger = logger;
+            _photoService = photoService;
         }
 
         [HttpGet]
@@ -94,6 +93,7 @@ namespace Catalog.API.PL.Controllers
 
         [HttpDelete("{id:guid}", Name = "DeleteProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
             var result = await _catalogService.DeleteProductAsync(id);
@@ -101,6 +101,22 @@ namespace Catalog.API.PL.Controllers
             if (result.Result is ServiceResultType.NotFound)
             {
                 _logger.LogInformation($"Product with id: {id} not found");
+                return NotFound(result.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AddPhoto([FromForm(Name = "File")] IFormFile mainImage,
+            Guid id)
+        {
+            var result = await _photoService.AddPhotoAsync(mainImage, id);
+
+            if (result.Result is ServiceResultType.NotFound)
+            {
                 return NotFound(result.Message);
             }
 
