@@ -48,6 +48,13 @@ namespace Catalog.API.Startup
                 app.UseSwaggerApplication();
             }
 
+            app.UseCors(x => x
+                .SetIsOriginAllowed(_ => true)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
+
             app.UseRouting();
 
             app.UseAuthorization();
