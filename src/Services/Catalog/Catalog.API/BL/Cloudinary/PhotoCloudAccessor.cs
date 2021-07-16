@@ -12,6 +12,15 @@ namespace Catalog.API.BL.Services
     public class PhotoCloudAccessor : IPhotoCloudAccessor
     {
         private readonly Cloudinary _cloudinary;
+
+        private const int TRANSFORMED_IMAGE_HEIGHT = 500;
+
+        private const int TRANSFORMED_IMAGE_WIDTH = 500;
+
+        private const string TRANSFORMATION_CROP_MODE = "fill";
+
+        private const string TRANSFORMATION_OVERLAY_POSITION = "face";
+
         public PhotoCloudAccessor(AppSettings appSettings, 
             IConfiguration configuration)
         {
@@ -19,7 +28,7 @@ namespace Catalog.API.BL.Services
             (
                 appSettings.CloudinarySettings.CloudName,
                 appSettings.CloudinarySettings.ApiKey,
-                configuration["Cloudinary:ApiSecret"]                
+                appSettings.CloudinarySettings.ApiSecret               
             );
 
             _cloudinary = new Cloudinary(account);
@@ -35,15 +44,21 @@ namespace Catalog.API.BL.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500)
-                            .Crop("fill").Gravity("face")
+                    Transformation = new Transformation()
+                            .Height(TRANSFORMED_IMAGE_HEIGHT)
+                            .Width(TRANSFORMED_IMAGE_WIDTH)
+                            .Crop(TRANSFORMATION_CROP_MODE)
+                            .Gravity(TRANSFORMATION_OVERLAY_POSITION)
                 };
 
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
 
             if (uploadResult.Error != null)
+            {
                 throw new Exception(uploadResult.Error.Message);
+            }
+                
 
             return new PhotoUploadResult
             {
@@ -54,11 +69,13 @@ namespace Catalog.API.BL.Services
 
         public async Task<string> DeletePhotoFromCloudAsync(string publicId)
         {
+            const string CloudinarySuccessfulRemoveStatus = "ok";
+
             var deleteParams = new DeletionParams(publicId);
 
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
-            return result.Result == "ok" ? result.Result : null;
+            return result.Result == CloudinarySuccessfulRemoveStatus ? result.Result : default;
         }
     }
 }
