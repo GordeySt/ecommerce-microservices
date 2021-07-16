@@ -13,13 +13,13 @@ namespace Catalog.API.BL.Services
     {
         private readonly Cloudinary _cloudinary;
 
-        private const int TRANSFORMED_IMAGE_HEIGHT = 500;
+        private const int TransformedImageHeight = 500;
 
-        private const int TRANSFORMED_IMAGE_WIDTH = 500;
+        private const int TransformedImageWidth = 500;
 
-        private const string TRANSFORMATION_CROP_MODE = "fill";
+        private const string TransformationCropMode = "fill";
 
-        private const string TRANSFORMATION_OVERLAY_POSITION = "face";
+        private const string TransformationOverlayPosition = "face";
 
         public PhotoCloudAccessor(AppSettings appSettings, 
             IConfiguration configuration)
@@ -45,10 +45,10 @@ namespace Catalog.API.BL.Services
                 {
                     File = new FileDescription(file.FileName, stream),
                     Transformation = new Transformation()
-                            .Height(TRANSFORMED_IMAGE_HEIGHT)
-                            .Width(TRANSFORMED_IMAGE_WIDTH)
-                            .Crop(TRANSFORMATION_CROP_MODE)
-                            .Gravity(TRANSFORMATION_OVERLAY_POSITION)
+                            .Height(TransformedImageHeight)
+                            .Width(TransformedImageWidth)
+                            .Crop(TransformationCropMode)
+                            .Gravity(TransformationOverlayPosition)
                 };
 
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
