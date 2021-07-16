@@ -2,10 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationTitle>true</GenerateDocumentationTitle>
+    <NoWarn>${NoWarn};1591</NoWarn>
     <UserSecretsId>2e68f9de-8dde-461c-9bdd-b911436dc1d6</UserSecretsId>
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\itechart-group\src\Services\Catalog\Catalog.API\Catalog.API.xml</DocumentationFile>
+    <WarningsAsErrors>;NU1605</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\itechart-group\src\Services\Catalog\Catalog.API\Catalog.API.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
