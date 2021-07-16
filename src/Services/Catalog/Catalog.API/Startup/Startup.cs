@@ -32,7 +32,12 @@ namespace Catalog.API.Startup
             services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                });
+
             services.RegisterSwagger();
             services.RegisterHealthChecks(appSettings);
         }

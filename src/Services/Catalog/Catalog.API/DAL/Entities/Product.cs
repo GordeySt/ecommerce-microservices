@@ -1,4 +1,6 @@
-﻿namespace Catalog.API.DAL.Entities
+﻿using System;
+
+namespace Catalog.API.DAL.Entities
 {
     public class Product : EntityBase
     {
