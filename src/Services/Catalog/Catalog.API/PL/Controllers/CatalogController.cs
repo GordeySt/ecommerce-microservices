@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.API.PL.Controllers
 {
+    [Produces("application/json")]
     [ApiController]
     [Route("api/[controller]")]
     public class CatalogController : ControllerBase
@@ -28,6 +29,18 @@ namespace Catalog.API.PL.Controllers
             _photoService = photoService;
         }
 
+        /// <summary>
+        /// Gets the paginated list of products
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/Catalog?pageNumber=4&amp;pageSize=4
+        /// 
+        /// </remarks>
+        /// <param name="pagingParams"></param>
+        /// <returns>Returns PagedList of ProductDto</returns>
+        /// <response code="200">Success</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
@@ -38,6 +51,19 @@ namespace Catalog.API.PL.Controllers
             return products;
         }
 
+        /// <summary>
+        /// Gets the product by id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/Catalog/e0c40c25-52f7-48df-91fc-441dadca0a0f
+        /// 
+        /// </remarks>
+        /// <param name="id">Note id (guid)</param>
+        /// <returns>Returns ProductDto</returns>
+        /// <response code="200">Success</response>
+        /// <response code="404">If the product not found</response>
         [HttpGet("{id:guid}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -54,6 +80,18 @@ namespace Catalog.API.PL.Controllers
             return product;
         }
 
+        /// <summary>
+        /// Gets the products by category
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/Catalog/GetProductsByCategory?categoryName=Computers&amp;pageNumber=2&amp;pageSize=3
+        ///     
+        /// </remarks>
+        /// <param name="categoryParams">CategoryParams object including PagingParams object</param>
+        /// <returns>Returns PagedList of ProductDto</returns>
+        /// <response code="200">Success</response>
         [Route("[action]", Name = "GetProductsByCategory")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -65,8 +103,27 @@ namespace Catalog.API.PL.Controllers
             return products;
         }
 
+        /// <summary>
+        /// Creates the product
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST /api/Catalog
+        ///     { 
+        ///         name: "f",
+        ///         category: "Computers",
+        ///         summary: "Summary",
+        ///         description: "Description",
+        ///         price: 54.93 
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="createProductDto">CreateProductDto object</param>
+        /// <returns>Returns CreatedAtAction with CreateProductDto object</returns>
+        /// <response code="201">Success</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<ProductDto>> CreateProduct
             ([BindRequired] CreateProductDto createProductDto)
         {
@@ -75,6 +132,27 @@ namespace Catalog.API.PL.Controllers
             return CreatedAtAction(nameof(CreateProduct), createProductDto);
         }
 
+        /// <summary>
+        /// Updates the product
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     PUT /api/Catalog
+        ///     { 
+        ///         id: "0e39f30d-4754-48c0-8191-755f673e2269"
+        ///         name: "f",
+        ///         category: "Computers",
+        ///         summary: "Summary",
+        ///         description: "Description",
+        ///         price: 54.93 
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="updateProductDto">UpdateProductDto object</param>
+        /// <returns>Returns NoContent Result</returns>
+        /// <response code="204">Success</response>
+        /// <response code="404">If the product not found</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -91,6 +169,19 @@ namespace Catalog.API.PL.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes the product by id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     DELETE /api/Catalog/dba6469d-db47-4b57-b1d0-2b0f0a9a06d9
+        ///     
+        /// </remarks>
+        /// <param name="id">id of the product (guid)</param>
+        /// <returns>Return NoContent Result</returns>
+        /// <response code="204">Success</response>
+        /// <response code="404">If the product not found</response>
         [HttpDelete("{id:guid}", Name = "DeleteProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -107,6 +198,20 @@ namespace Catalog.API.PL.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Add photo to the product by productId
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST /api/Catalog/0e39f30d-4754-48c0-8191-755f673e2269
+        ///     
+        /// </remarks>
+        /// <param name="mainImage">Image file (IFormFile)</param>
+        /// <param name="id">id of the product to add photo (guid)</param>
+        /// <returns>Returns NoContent Result</returns>
+        /// <response code="204">Success</response>
+        /// <response code="404">If the product with id (guid) not found</response>
         [HttpPost("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
