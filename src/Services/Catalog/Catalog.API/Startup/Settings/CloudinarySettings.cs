@@ -11,6 +11,8 @@ namespace Catalog.API.Startup.Settings
         [Required]
         public string ApiKey { get; set; }
 
+        [Required]
+        public string ApiSecret { get; set; }
 
         public void Validate()
         {
