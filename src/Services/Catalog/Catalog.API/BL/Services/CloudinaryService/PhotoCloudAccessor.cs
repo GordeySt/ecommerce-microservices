@@ -3,26 +3,21 @@ using Catalog.API.Startup.Settings;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 
-namespace Catalog.API.BL.Services
+namespace Catalog.API.BL.Services.CloudinaryService
 {
     public class PhotoCloudAccessor : IPhotoCloudAccessor
     {
         private readonly Cloudinary _cloudinary;
 
         private const int TransformedImageHeight = 500;
-
         private const int TransformedImageWidth = 500;
-
         private const string TransformationCropMode = "fill";
-
         private const string TransformationOverlayPosition = "face";
 
-        public PhotoCloudAccessor(AppSettings appSettings, 
-            IConfiguration configuration)
+        public PhotoCloudAccessor(AppSettings appSettings)
         {
             var account = new Account
             (
@@ -54,17 +49,13 @@ namespace Catalog.API.BL.Services
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
 
-            if (uploadResult.Error != null)
+            if (uploadResult.Error is not null)
             {
                 throw new Exception(uploadResult.Error.Message);
             }
-                
 
             return new PhotoUploadResult
-            {
-                PublicId = uploadResult.PublicId,
-                Url = uploadResult.SecureUrl.AbsoluteUri
-            };
+                (uploadResult.PublicId, uploadResult.SecureUrl.AbsoluteUri);
         }
 
         public async Task<string> DeletePhotoFromCloudAsync(string publicId)

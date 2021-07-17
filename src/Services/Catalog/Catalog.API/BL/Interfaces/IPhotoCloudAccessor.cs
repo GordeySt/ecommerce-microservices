@@ -1,5 +1,4 @@
-﻿using Catalog.API.BL.Services;
-using Catalog.API.DAL.Entities;
+﻿using Catalog.API.BL.Services.CloudinaryService;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
