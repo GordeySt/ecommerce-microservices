@@ -3,7 +3,7 @@ using Catalog.API.BL.Interfaces;
 using Catalog.API.BL.ResultWrappers;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.DTOs;
+using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
 using Services.Common.Models;
 using System;
@@ -46,7 +46,7 @@ namespace Catalog.API.BL.Services
             return proudct is not null ? _mapper.Map<ProductDto>(proudct) : default;
         }
 
-        public async Task<PagedList<ProductDto>> GetProductsByCategory(CategoryParams categoryParams)
+        public async Task<PagedList<ProductDto>> GetProductsByCategoryAsync(CategoryParams categoryParams)
         {
             var products = await _productRepository.GetProductsByCategory(categoryParams);
 

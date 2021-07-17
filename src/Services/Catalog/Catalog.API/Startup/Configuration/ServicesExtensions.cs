@@ -1,5 +1,6 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.BL.Services;
+using Catalog.API.BL.Services.CloudinaryService;
 using Catalog.API.DAL;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.DAL.Repositories;

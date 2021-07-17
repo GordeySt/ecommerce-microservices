@@ -1,5 +1,4 @@
-﻿
-namespace Catalog.API.BL.Constants
+﻿namespace Catalog.API.BL.Constants
 {
     public static class ExceptionMessageConstants
     {

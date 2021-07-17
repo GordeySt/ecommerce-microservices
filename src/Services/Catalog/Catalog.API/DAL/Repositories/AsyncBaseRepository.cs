@@ -6,7 +6,6 @@ using Catalog.API.DAL.Interfaces;
 using MongoDB.Driver;
 using Services.Common.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories

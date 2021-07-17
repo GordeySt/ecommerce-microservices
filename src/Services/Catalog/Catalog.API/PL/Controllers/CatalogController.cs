@@ -1,6 +1,6 @@
 ﻿using Catalog.API.BL.Enums;
 using Catalog.API.BL.Interfaces;
-using Catalog.API.PL.DTOs;
+using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Catalog.API.PL.Controllers
 {
-    [Produces("application/json")]
     [ApiController]
     [Route("api/[controller]")]
     public class CatalogController : ControllerBase
@@ -44,12 +43,7 @@ namespace Catalog.API.PL.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
-            ([FromQuery] PagingParams pagingParams)
-        {
-            var products = await _catalogService.GetAllProductsAsync(pagingParams);
-
-            return products;
-        }
+            ([FromQuery] PagingParams pagingParams) => await _catalogService.GetAllProductsAsync(pagingParams);
 
         /// <summary>
         /// Gets the product by id
@@ -96,12 +90,8 @@ namespace Catalog.API.PL.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProductsByCategory
-            ([FromQuery] CategoryParams categoryParams)
-        {
-            var products = await _catalogService.GetProductsByCategory(categoryParams);
-
-            return products;
-        }
+            ([FromQuery] CategoryParams categoryParams) => 
+            await _catalogService.GetProductsByCategoryAsync(categoryParams);
 
         /// <summary>
         /// Creates the product
@@ -204,7 +194,7 @@ namespace Catalog.API.PL.Controllers
         /// <remarks>
         /// Sample request:
         /// 
-        ///     POST /api/Catalog/0e39f30d-4754-48c0-8191-755f673e2269
+        ///     POST /api/Catalog/0e39f30d-4754-48c0-8191-755f673e2269/AddPhotoToCategory
         ///     
         /// </remarks>
         /// <param name="mainImage">Image file (IFormFile)</param>
@@ -212,10 +202,10 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns NoContent Result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If the product with id (guid) not found</response>
-        [HttpPost("{id:guid}")]
+        [HttpPost("{id:guid}/AddPhotoToProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddPhoto([FromForm(Name = "File")] IFormFile mainImage,
+        public async Task<IActionResult> AddPhotoToProduct([FromForm(Name = "File")] IFormFile mainImage,
             Guid id)
         {
             var result = await _photoService.AddPhotoAsync(mainImage, id);

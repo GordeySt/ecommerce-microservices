@@ -1,5 +1,5 @@
 ﻿using Catalog.API.BL.ResultWrappers;
-using Catalog.API.PL.DTOs;
+using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
 using Services.Common.Models;
 using System;
@@ -11,7 +11,7 @@ namespace Catalog.API.BL.Interfaces
     {
         Task<PagedList<ProductDto>> GetAllProductsAsync(PagingParams pagingParams);
         Task<ProductDto> GetProductByIdAsync(Guid id);
-        Task<PagedList<ProductDto>> GetProductsByCategory(CategoryParams categoryParams);
+        Task<PagedList<ProductDto>> GetProductsByCategoryAsync(CategoryParams categoryParams);
         Task AddProductAsync(CreateProductDto createProductDto);
         Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto);
         Task<ServiceResult> DeleteProductAsync(Guid id);

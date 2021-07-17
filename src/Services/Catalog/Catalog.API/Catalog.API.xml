@@ -47,7 +47,7 @@
             <returns>Returns PagedList of ProductDto</returns>
             <response code="200">Success</response>
         </member>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.CreateProduct(Catalog.API.PL.DTOs.CreateProductDto)">
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.CreateProduct(Catalog.API.PL.Models.DTOs.CreateProductDto)">
             <summary>
             Creates the product
             </summary>
@@ -68,7 +68,7 @@
             <returns>Returns CreatedAtAction with CreateProductDto object</returns>
             <response code="201">Success</response>
         </member>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.UpdateProduct(Catalog.API.PL.DTOs.UpdateProductDto)">
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.UpdateProduct(Catalog.API.PL.Models.DTOs.UpdateProductDto)">
             <summary>
             Updates the product
             </summary>
@@ -106,14 +106,14 @@
             <response code="204">Success</response>
             <response code="404">If the product not found</response>
         </member>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.AddPhoto(Microsoft.AspNetCore.Http.IFormFile,System.Guid)">
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.AddPhotoToProduct(Microsoft.AspNetCore.Http.IFormFile,System.Guid)">
             <summary>
             Add photo to the product by productId
             </summary>
             <remarks>
             Sample request:
             
-                POST /api/Catalog/0e39f30d-4754-48c0-8191-755f673e2269
+                POST /api/Catalog/0e39f30d-4754-48c0-8191-755f673e2269/AddPhotoToCategory
                 
             </remarks>
             <param name="mainImage">Image file (IFormFile)</param>
@@ -122,109 +122,109 @@
             <response code="204">Success</response>
             <response code="404">If the product with id (guid) not found</response>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.CreateProductDto.Name">
+        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Name">
             <summary>
             Name of the product
             </summary>
             <example>IPhone X</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.CreateProductDto.Description">
+        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Description">
             <summary>
             Description of the product
             </summary>
             <example>Tim Cooks child</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.CreateProductDto.Summary">
+        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Summary">
             <summary>
             Summary about the product
             </summary>
             <example>New Smart Phone</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.CreateProductDto.Category">
+        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Category">
             <summary>
             Category of the product
             </summary>
             <example>Smart Phones</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.CreateProductDto.Price">
+        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Price">
             <summary>
             Price of the product
             </summary>
             <example>60</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.ProductDto.Id">
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Id">
             <summary>
             Id (guid) of the product
             </summary>
             <example>0e39f30d-4754-48c0-8191-755f673e2269</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.ProductDto.Name">
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Name">
             <summary>
             Name of the product
             </summary>
             <example>IPhone X</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.ProductDto.Category">
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Category">
             <summary>
             Category of the product
             </summary>
             <example>Smart Phones</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.ProductDto.Summary">
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Summary">
             <summary>
             Summary about the product
             </summary>
             <example>New Smart Phone</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.ProductDto.Description">
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Description">
             <summary>
             Description of the product
             </summary>
             <example>Tim Cooks child</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.ProductDto.MainImageUrl">
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.MainImageUrl">
             <summary>
             Url from the cloud for the proudct main image
             </summary>
             <example>https://res.cloudinary.com/student-gordey/image/upload/v1626446506/alclnjzmwf3pqcizvfrb.jpg</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.ProductDto.Price">
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Price">
             <summary>
             Price of the product
             </summary>
             <example>60</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.UpdateProductDto.Id">
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Id">
             <summary>
             Id (guid) of the product
             </summary>
             <example>0e39f30d-4754-48c0-8191-755f673e2269</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.UpdateProductDto.Name">
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Name">
             <summary>
             Name of the product
             </summary>
             <example>IPhone X</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.UpdateProductDto.Description">
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Description">
             <summary>
             Description of the product
             </summary>
             <example>Tim Cooks child</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.UpdateProductDto.Summary">
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Summary">
             <summary>
             Summary about the product
             </summary>
             <example>New Smart Phone</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.UpdateProductDto.Category">
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Category">
             <summary>
             Category of the product
             </summary>
             <example>Smart Phones</example>
         </member>
-        <member name="P:Catalog.API.PL.DTOs.UpdateProductDto.Price">
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Price">
             <summary>
             Price of the product
             </summary>

@@ -11,7 +11,7 @@ namespace Common.Logging
         public static Action<HostBuilderContext, LoggerConfiguration> Configure =>
            (context, configuration) =>
            {
-               var elasticUri = context.Configuration.GetValue<string>("ElasticConfiguration:Uri");
+               var elasticUri = context.Configuration.GetValue<string>("elasticConfiguration:uri");
 
                configuration
                     .Enrich.FromLogContext()

@@ -38,6 +38,7 @@ namespace Catalog.API.Startup.Middlewares
         private async Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             _logger.LogError(ex, ex.Message);
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 

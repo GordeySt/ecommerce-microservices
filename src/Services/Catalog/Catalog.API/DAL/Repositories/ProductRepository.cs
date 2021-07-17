@@ -1,10 +1,8 @@
-﻿using Catalog.API.BL.ResultWrappers;
-using Catalog.API.DAL.Entities;
+﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.PL.Models.Params;
 using MongoDB.Driver;
 using Services.Common.Models;
-using System;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
