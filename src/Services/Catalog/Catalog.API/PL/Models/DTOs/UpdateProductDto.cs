@@ -4,7 +4,7 @@ using Catalog.API.DAL.Entities;
 using Catalog.API.PL.Validation;
 using System;
 
-namespace Catalog.API.PL.DTOs
+namespace Catalog.API.PL.Models.DTOs
 {
     public class UpdateProductDto : IMapFrom<UpdateProductDto>
     {
