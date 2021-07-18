@@ -1,4 +1,6 @@
-﻿namespace Catalog.API.DAL.Entities
+﻿using System;
+
+namespace Catalog.API.DAL.Entities
 {
     public class Product : EntityBase
     {
@@ -6,7 +8,7 @@
         public string Description { get; set; }
         public string Summary { get; set; }
         public string Category { get; set; }
-        public string ImageUrl { get; set; }
+        public string MainImageUrl { get; set; }
         public decimal Price { get; set; }
     }
 }

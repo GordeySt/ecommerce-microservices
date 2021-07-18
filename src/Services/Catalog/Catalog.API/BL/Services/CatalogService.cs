@@ -1,8 +1,12 @@
-﻿using Catalog.API.BL.Interfaces;
+﻿using AutoMapper;
+using Catalog.API.BL.Interfaces;
+using Catalog.API.BL.ResultWrappers;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
+using Catalog.API.PL.Models.DTOs;
+using Catalog.API.PL.Models.Params;
+using Services.Common.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Catalog.API.BL.Services
@@ -10,28 +14,50 @@ namespace Catalog.API.BL.Services
     public class CatalogService : ICatalogService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
 
-        public CatalogService(IProductRepository productRepository)
+        public CatalogService(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
+            _mapper = mapper;
         }
 
-        public async Task AddProductAsync(Product product) => 
-            await _productRepository.AddItemAsync(product);
+        public async Task AddProductAsync(CreateProductDto createProductDto)
+        {
+            var product = _mapper.Map<Product>(createProductDto);
 
-        public async Task<bool> DeleteProductAsync(Guid id) =>
+            await _productRepository.AddItemAsync(product);
+        }
+           
+        public async Task<ServiceResult> DeleteProductAsync(Guid id) =>
             await _productRepository.DeleteItemAsync(id);
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync() =>
-            await _productRepository.GetAllItemsAsync();
+        public async Task<PagedList<ProductDto>> GetAllProductsAsync(PagingParams pagingParams)
+        {
+            var products = await _productRepository.GetAllItemsAsync(pagingParams);
 
-        public async Task<Product> GetProductByIdAsync(Guid id) =>
-            await _productRepository.GetItemByIdAsync(id);
+            return _mapper.Map<PagedList<ProductDto>>(products);
+        }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategory(string categoryName) =>
-            await _productRepository.GetProductsByCategory(categoryName);
+        public async Task<ProductDto> GetProductByIdAsync(Guid id)
+        {
+            var proudct = await _productRepository.GetItemByIdAsync(id);
 
-        public async Task<bool> UpdateProductAsync(Product product) =>
-            await _productRepository.UpdateItemAsync(product);
+            return proudct is not null ? _mapper.Map<ProductDto>(proudct) : default;
+        }
+
+        public async Task<PagedList<ProductDto>> GetProductsByCategoryAsync(CategoryParams categoryParams)
+        {
+            var products = await _productRepository.GetProductsByCategory(categoryParams);
+
+            return _mapper.Map<PagedList<ProductDto>>(products);
+        }
+
+        public async Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto)
+        {
+            var product = _mapper.Map<Product>(updateProductDto);
+
+            return await _productRepository.UpdateItemAsync(product);
+        }
     }
 }
