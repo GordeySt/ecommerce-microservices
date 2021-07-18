@@ -2,6 +2,7 @@
 using Catalog.API.BL.Interfaces;
 using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -40,6 +41,7 @@ namespace Catalog.API.PL.Controllers
         /// <param name="pagingParams"></param>
         /// <returns>Returns PagedList of ProductDto</returns>
         /// <response code="200">Success</response>
+        [Authorize(Roles = "User")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
@@ -58,6 +60,7 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns ProductDto</returns>
         /// <response code="200">Success</response>
         /// <response code="404">If the product not found</response>
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:guid}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
