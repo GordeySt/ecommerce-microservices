@@ -24,13 +24,21 @@ namespace Identity.API.Configurations
 					Enabled = true,
 					Scopes = new List<string> { "catalogapi" },
 					UserClaims = new List<string> { "role" }
-                }
+                },
+				new ApiResource()
+				{
+					Name = "identityapi",
+					Enabled = true,
+					Scopes = new List<string> { "identityapi" },
+					UserClaims = new List<string> { "role" }
+				}
 			};
 
 		public static IEnumerable<ApiScope> Scopes =>
 			new ApiScope[]
 			{
-				new ApiScope("catalogapi")
+				new ApiScope("catalogapi"),
+				new ApiScope("identityapi")
 			};
 
 		public static IEnumerable<Client> Clients =>
@@ -49,7 +57,21 @@ namespace Identity.API.Configurations
 						IdentityServerConstants.StandardScopes.OpenId,
 						IdentityServerConstants.StandardScopes.Profile
                     }
-                }
+                },
+				new Client
+				{
+					ClientId = "client_id_identity_swagger",
+					ClientSecrets = {  new Secret("client_secret_identity_swagger".ToSha256()) },
+					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+					AllowedCorsOrigins = { "http://localhost:5010" },
+					AllowedScopes =
+					{
+						"roles",
+						"identityapi",
+						IdentityServerConstants.StandardScopes.OpenId,
+						IdentityServerConstants.StandardScopes.Profile
+					}
+				}
 			};
 	}
 }

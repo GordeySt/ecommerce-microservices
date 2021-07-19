@@ -30,6 +30,8 @@ namespace Identity.API.Startup
             services.RegisterServices(appSettings);
 
             services.AddControllers();
+
+            services.RegisterSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,9 +42,21 @@ namespace Identity.API.Startup
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwaggerApplication();
+
+            app.UseCors(x => x
+                .SetIsOriginAllowed(_ => true)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
+
             app.UseRouting();
 
             app.UseIdentityServer();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

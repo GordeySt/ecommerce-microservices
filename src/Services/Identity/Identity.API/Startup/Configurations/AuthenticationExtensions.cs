@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.API.Startup.Configurations
@@ -7,12 +8,19 @@ namespace Identity.API.Startup.Configurations
     {
         public static void RegisterAuthSettings(this IServiceCollection services)
         {
-            services.AddAuthentication(o =>
+            services.AddAuthentication(options =>
             {
-                o.DefaultScheme = IdentityConstants.ApplicationScheme;
-                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddIdentityCookies();
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:5010";
+                    options.ApiName = "identityapi";
+                    options.RequireHttpsMetadata = false;
+                    options.RoleClaimType = "role";
+                });
         }
     }
 }
