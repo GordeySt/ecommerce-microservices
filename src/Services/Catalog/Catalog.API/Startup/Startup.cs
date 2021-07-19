@@ -2,7 +2,6 @@ using Catalog.API.Startup.Configuration;
 using Catalog.API.Startup.Middlewares;
 using Catalog.API.Startup.Settings;
 using HealthChecks.UI.Client;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -28,13 +27,7 @@ namespace Catalog.API.Startup
         {
             var appSettings = ReadAppSettings(Configuration, Env);
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = "https://localhost:5010";
-                    options.ApiName = "festivalsapi";
-                });
-
+            services.RegisterAuthSettings();
             services.ValidateSettingParameters(Configuration);
             services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
