@@ -8,9 +8,6 @@ namespace Identity.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
         {
-             builder
-                .HasKey(pc => new { pc.RoleId, pc.UserId });
-
             builder
                 .HasOne(x => x.AppRole)
                 .WithMany(x => x.AppUserRoles)

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+using Services.Common.Constants;
 using Services.Common.Enums;
 using Services.Common.Models;
 using System;
@@ -41,7 +42,7 @@ namespace Catalog.API.PL.Controllers
         /// <param name="pagingParams"></param>
         /// <returns>Returns PagedList of ProductDto</returns>
         /// <response code="200">Success</response>
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = ApplicationRolesConstants.UserRole)]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
@@ -60,7 +61,7 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns ProductDto</returns>
         /// <response code="200">Success</response>
         /// <response code="404">If the product not found</response>
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = ApplicationRolesConstants.AdministratorRole)]
         [HttpGet("{id:guid}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -3,6 +3,7 @@ using Identity.Application.ApplicationUsers.DTOs;
 using Identity.Application.ApplicationUsers.Queries.GetUsersByTokenInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.Common.Constants;
 using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
@@ -14,33 +15,28 @@ namespace Identity.API.Controllers
     [Authorize]
     public class UsersController : ApiControllerBase
     {
-        [HttpGet]
-        public async Task<ActionResult<ApplicationUserDto>> GetUserByTokenInfo()
+        [HttpGet("currentUser")]
+        public async Task<ActionResult<ApplicationUserDto>> GetCurrentUser()
         {
-            var result = await Mediator.Send(new GetCurrentUserQuery());
+            var currentUserResult = await Mediator.Send(new GetCurrentUserQuery());
 
-            if (result.Result is ServiceResultType.BadRequest)
+            if (currentUserResult.Result is not ServiceResultType.Success)
             {
-                return BadRequest(result.Message);
+                return StatusCode((int)currentUserResult.Result, currentUserResult.Message);
             }
 
-            return result.Data;
+            return currentUserResult.Data;
         }
 
         [HttpDelete("{id:guid}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = ApplicationRolesConstants.AdministratorRole)]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var result = await Mediator.Send(new DeleteUserCommand { Id = id });
+            var deleteUserResult = await Mediator.Send(new DeleteUserCommand { Id = id });
 
-            if (result.Result is ServiceResultType.NotFound)
+            if (deleteUserResult.Result is not ServiceResultType.Success)
             {
-                return NotFound(result.Message);
-            }
-
-            if (result.Result is ServiceResultType.BadRequest)
-            {
-                return BadRequest(result.Message);
+                return StatusCode((int)deleteUserResult.Result, deleteUserResult.Message);
             }
 
             return NoContent();

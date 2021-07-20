@@ -1,9 +1,11 @@
 ﻿using Identity.Application.Common;
 using Identity.Application.Common.Interfaces;
+using Identity.Application.Common.Utilities;
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Services.Common.Constants;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System.Threading;
@@ -20,15 +22,12 @@ namespace Identity.Application.ApplicationUsers.Commands.SignupUsers
 
     public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, ServiceResult>
     {
-        private readonly IApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailService _emailService;
 
-        public SignupUserCommandHandler(IApplicationDbContext dbContext, 
-            UserManager<ApplicationUser> userManager,
+        public SignupUserCommandHandler(UserManager<ApplicationUser> userManager,
             IEmailService emailService)
         {
-            _dbContext = dbContext;
             _userManager = userManager;
             _emailService = emailService;
         }
@@ -36,7 +35,7 @@ namespace Identity.Application.ApplicationUsers.Commands.SignupUsers
         public async Task<ServiceResult> Handle(SignupUserCommand request, 
             CancellationToken cancellationToken)
         {
-            if (await _dbContext.Users.AnyAsync(x => x.Email == request.Email, cancellationToken))
+            if (await _userManager.Users.AnyAsync(x => x.Email == request.Email, cancellationToken))
             {
                 return new ServiceResult(ServiceResultType.BadRequest,
                     ExceptionMessageConstants.ExistedEmailMessage);
@@ -44,15 +43,15 @@ namespace Identity.Application.ApplicationUsers.Commands.SignupUsers
 
             var user = CreateNewApplicationUser(request);
 
-            var result = await _userManager.CreateAsync(user, request.Password);
+            var userCreationResult = await _userManager.CreateAsync(user, request.Password);
 
-            if (!result.Succeeded)
+            if (!userCreationResult.Succeeded)
             {
-                return new ServiceResult(ServiceResultType.BadRequest,
-                    ExceptionMessageConstants.ProblemCreatingItemMessage);
+                return new ServiceResult(ServiceResultType.InternalServerError,
+                    DatabaseUtilities.CreateErrorMessage(userCreationResult.Errors));
             }
 
-            await _userManager.AddToRoleAsync(user, "User");
+            await _userManager.AddToRoleAsync(user, ApplicationRolesConstants.UserRole);
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 

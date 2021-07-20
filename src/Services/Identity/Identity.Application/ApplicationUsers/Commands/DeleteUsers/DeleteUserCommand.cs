@@ -1,6 +1,9 @@
 ﻿using Identity.Application.Common;
 using Identity.Application.Common.Interfaces;
+using Identity.Application.Common.Utilities;
+using Identity.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
@@ -17,33 +20,31 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
 
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ServiceResult>
     {
-        private readonly IApplicationDbContext _dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DeleteUserCommandHandler(IApplicationDbContext dbContext)
+        public DeleteUserCommandHandler(UserManager<ApplicationUser> userManager)
         {
-            _dbContext = dbContext;
+            _userManager = userManager;
         }
 
         public async Task<ServiceResult> Handle(DeleteUserCommand request,
             CancellationToken cancellationToken)
         {
-            var user = await _dbContext.Users
+            var user = await _userManager.Users
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (user is null)
             {
                 return new ServiceResult(ServiceResultType.NotFound,
-                    ExceptionMessageConstants.NotFoundItemMessage);
+                    NotFoundExceptionMessageConstants.NotFoundItemMessage);
             }
 
-            _dbContext.Remove(user);
+            var deleteUserResult = await _userManager.DeleteAsync(user);
 
-            var isSuccess = await _dbContext.SaveChangesAsync(cancellationToken) > 0;
-
-            if (!isSuccess)
+            if (!deleteUserResult.Succeeded)
             {
-                return new ServiceResult(ServiceResultType.BadRequest,
-                    ExceptionMessageConstants.ProblemDeletingItemMessage);
+                return new ServiceResult(ServiceResultType.InternalServerError,
+                    DatabaseUtilities.CreateErrorMessage(deleteUserResult.Errors));
             }
 
             return new ServiceResult(ServiceResultType.Success);

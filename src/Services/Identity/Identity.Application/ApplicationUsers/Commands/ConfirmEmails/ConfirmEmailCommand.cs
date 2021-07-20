@@ -32,12 +32,12 @@ namespace Identity.Application.ApplicationUsers.Commands.ConfirmEmails
             var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
             var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
 
-            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+            var confirmationResult = await _userManager.ConfirmEmailAsync(user, decodedToken);
 
-            if (!result.Succeeded)
+            if (!confirmationResult.Succeeded)
             {
                 return new ServiceResult(ServiceResultType.BadRequest, 
-                    ExceptionMessageConstants.ProblemVerifyingEmailMessage);
+                    BadRequestExceptionMessageConstants.ProblemVerifyingEmailMessage);
             }
 
             return new ServiceResult(ServiceResultType.Success);

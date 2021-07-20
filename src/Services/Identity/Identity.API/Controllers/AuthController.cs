@@ -14,16 +14,16 @@ namespace Identity.API.Controllers
     public class AuthController : ApiControllerBase
     {
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("signup")]
         public async Task<IActionResult> SignupUser(SignupUserCommand command)
         {
             command.Origin = Request.Headers["origin"];
 
-            var result = await Mediator.Send(command);
+            var signUpResult = await Mediator.Send(command);
 
-            if (result.Result is ServiceResultType.BadRequest)
+            if (signUpResult.Result is not ServiceResultType.Success)
             {
-                return BadRequest(result.Message);
+                return StatusCode((int)signUpResult.Result, signUpResult.Message);
             }
 
             return NoContent();
@@ -33,11 +33,12 @@ namespace Identity.API.Controllers
         [HttpPost("verifyEmail")]
         public async Task<IActionResult> VerifyEmail(ConfirmEmailCommand command)
         {
-            var result = await Mediator.Send(command);
+            var verificationEmailResult = await Mediator.Send(command);
 
-            if (result.Result is ServiceResultType.BadRequest)
+            if (verificationEmailResult.Result is not ServiceResultType.Success)
             {
-                return BadRequest(result.Message);
+                return StatusCode((int)verificationEmailResult.Result,
+                    verificationEmailResult.Message);
             }
 
             return NoContent();
@@ -48,6 +49,7 @@ namespace Identity.API.Controllers
         public async Task<IActionResult> ResendEmailVerification([FromQuery] ResendEmailVerificationQuery query)
         {
             query.Origin = Request.Headers["origin"];
+
             await Mediator.Send(query);
 
             return NoContent();
