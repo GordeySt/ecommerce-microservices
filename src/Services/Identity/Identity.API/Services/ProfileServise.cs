@@ -35,6 +35,9 @@ namespace Identity.API.Services
             claims = claims
                 .Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
 
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, sub));
+            claims.Add(new Claim(ClaimTypes.Email, user.Email));
+
             if (_userManager.SupportsUserRole)
             {
                 var roles = await _userManager.GetRolesAsync(user);
