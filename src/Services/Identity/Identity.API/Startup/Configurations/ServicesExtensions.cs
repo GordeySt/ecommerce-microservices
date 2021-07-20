@@ -21,6 +21,7 @@ namespace Identity.API.Startup.Configurations
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
         }
     }
 }
