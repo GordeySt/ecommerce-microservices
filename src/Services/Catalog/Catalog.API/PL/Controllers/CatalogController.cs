@@ -1,5 +1,4 @@
-﻿using Catalog.API.BL.Enums;
-using Catalog.API.BL.Interfaces;
+﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+using Services.Common.Enums;
 using Services.Common.Models;
 using System;
 using System.Threading.Tasks;

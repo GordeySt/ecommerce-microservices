@@ -1,5 +1,5 @@
-﻿using Catalog.API.BL.ResultWrappers;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Services.Common.ResultWrappers;
 using System;
 using System.Threading.Tasks;
 
