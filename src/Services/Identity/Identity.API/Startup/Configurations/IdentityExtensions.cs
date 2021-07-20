@@ -18,7 +18,8 @@ namespace Identity.API.Startup.Configurations
                 })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddSignInManager<SignInManager<ApplicationUser>>();
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddDefaultTokenProviders();
         }
     }
 }

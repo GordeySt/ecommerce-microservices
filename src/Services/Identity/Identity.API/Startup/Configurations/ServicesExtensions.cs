@@ -1,5 +1,8 @@
 ﻿using Identity.API.Services;
 using Identity.API.Startup.Settings;
+using Identity.Application.Common.Interfaces;
+using Identity.Infrastructure.Persistence;
+using Identity.Infrastructure.Services.Email;
 using IdentityServer4.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +18,9 @@ namespace Identity.API.Startup.Configurations
 
             //Services
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         }
     }
 }

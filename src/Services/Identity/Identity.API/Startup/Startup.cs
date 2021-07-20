@@ -1,5 +1,9 @@
+using FluentValidation.AspNetCore;
 using Identity.API.Startup.Configurations;
+using Identity.API.Startup.Middlewares;
 using Identity.API.Startup.Settings;
+using Identity.Application.ApplicationUsers.Commands.SignupUsers;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +25,12 @@ namespace Identity.API.Startup
         {
             var appSettings = ReadAppSettings(Configuration);
 
+            services.AddControllers()
+                 .AddFluentValidation(config =>
+                 {
+                     config.RegisterValidatorsFromAssemblyContaining<SignupUserCommand>();
+                 });
+
             services.RegisterDatabase(appSettings);
             services.RegisterAuthSettings();
             services.RegisterIdentity();
@@ -29,7 +39,8 @@ namespace Identity.API.Startup
 
             services.RegisterServices(appSettings);
 
-            services.AddControllers();
+            services.RegisterAutoMapper();
+            services.RegisterMediatr();
 
             services.RegisterSwagger();
         }
@@ -37,6 +48,8 @@ namespace Identity.API.Startup
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
