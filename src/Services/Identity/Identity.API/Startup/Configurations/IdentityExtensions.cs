@@ -15,6 +15,7 @@ namespace Identity.API.Startup.Configurations
                     opt.Password.RequireDigit = true;
                     opt.Password.RequireNonAlphanumeric = false;
                     opt.Password.RequireUppercase = false;
+                    opt.SignIn.RequireConfirmedEmail = true;
                 })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
