@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApplicationRoles\Commands\" />
+    <Folder Include="ApplicationRoles\DTOs\" />
+    <Folder Include="ApplicationRoles\Queries\" />
+  </ItemGroup>
+
 </Project>
