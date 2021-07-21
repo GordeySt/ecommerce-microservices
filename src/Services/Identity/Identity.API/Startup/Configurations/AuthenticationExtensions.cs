@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Identity.API.Startup.Configurations
 {

@@ -51,13 +51,15 @@ namespace Identity.API.Configurations
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 					AllowedCorsOrigins = { "http://localhost:5000" },
 					AllowedScopes =
-                    {
+					{
 						"roles",
 						"catalogapi",
 						IdentityServerConstants.StandardScopes.OpenId,
-						IdentityServerConstants.StandardScopes.Profile
-                    }
-                },
+						IdentityServerConstants.StandardScopes.Profile,
+					    IdentityServerConstants.StandardScopes.OfflineAccess
+					},
+					AllowOfflineAccess = true
+				},
 				new Client
 				{
 					ClientId = "client_id_identity_swagger",
@@ -69,8 +71,10 @@ namespace Identity.API.Configurations
 						"roles",
 						"identityapi",
 						IdentityServerConstants.StandardScopes.OpenId,
-						IdentityServerConstants.StandardScopes.Profile
-					}
+						IdentityServerConstants.StandardScopes.Profile,
+						IdentityServerConstants.StandardScopes.OfflineAccess
+					},
+					AllowOfflineAccess = true
 				}
 			};
 	}
