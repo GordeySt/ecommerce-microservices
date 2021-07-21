@@ -10,6 +10,7 @@
     public static class BadRequestExceptionMessageConstants
     {
         public const string ProblemVerifyingEmailMessage = "Problem verifying email address";
+        public const string ProblemResetingPasswordMessage = "Problem reseting password";
         public const string UserIsNotInRoleMessage = "User is not in role";
         public const string UserIsInRoleMessage = "User is already in this role";
         public const string RoleAlreadyExistsMessage = "This role already exists";
