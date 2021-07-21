@@ -11,11 +11,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationRoles.Commands.UpdateRoles
 {
-    public class UpdateRoleCommand : IRequest<ServiceResult>
-    {
-        public Guid RoleId { get; set; }
-        public string RoleName { get; set; }
-    }
+    public record UpdateRoleCommand(Guid RoleId, string RoleName) : IRequest<ServiceResult>;
 
     public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, ServiceResult>
     {

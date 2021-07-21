@@ -12,10 +12,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationRoles.Commands.DeleteRoles
 {
-    public class DeleteRoleCommand : IRequest<ServiceResult>
-    {
-        public Guid Id { get; set; }
-    }
+    public record DeleteRoleCommand(Guid Id) : IRequest<ServiceResult>;
 
     public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, ServiceResult>
     {

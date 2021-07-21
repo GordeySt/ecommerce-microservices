@@ -1,5 +1,4 @@
-﻿using Identity.Infrastructure.Services.Email;
-using NetEscapades.Configuration.Validation;
+﻿using NetEscapades.Configuration.Validation;
 
 namespace Identity.API.Startup.Settings
 {

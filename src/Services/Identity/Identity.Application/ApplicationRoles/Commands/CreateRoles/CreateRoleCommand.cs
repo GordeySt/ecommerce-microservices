@@ -10,10 +10,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationRoles.Commands.CreateRoles
 {
-    public class CreateRoleCommand : IRequest<ServiceResult<ApplicationRole>>
-    {
-        public string RoleName { get; set; }
-    }
+    public record CreateRoleCommand(string RoleName) : IRequest<ServiceResult<ApplicationRole>>;
 
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, ServiceResult<ApplicationRole>>
     {
@@ -35,7 +32,7 @@ namespace Identity.Application.ApplicationRoles.Commands.CreateRoles
                     BadRequestExceptionMessageConstants.RoleAlreadyExistsMessage);
             }
 
-            var newRole = new ApplicationRole { Name = request.RoleName };
+            var newRole = CreateNewRole(request);
 
             var roleCreationResult = await _roleManager.CreateAsync(newRole);
 
@@ -47,5 +44,9 @@ namespace Identity.Application.ApplicationRoles.Commands.CreateRoles
 
             return new ServiceResult<ApplicationRole>(ServiceResultType.Success, newRole);
         }
+
+        private ApplicationRole CreateNewRole(CreateRoleCommand request) =>
+            new() { Name = request.RoleName };
+
     }
 }

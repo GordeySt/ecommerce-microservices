@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationRoles.Queries.GetRoles
 {
-    public class GetRolesQuery : IRequest<List<ApplicationRoleDto>>
-    { }
+    public record GetRolesQuery : IRequest<List<ApplicationRoleDto>>;
 
     public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, List<ApplicationRoleDto>>
     {

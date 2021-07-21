@@ -3,7 +3,6 @@ using Identity.API.Startup.Configurations;
 using Identity.API.Startup.Middlewares;
 using Identity.API.Startup.Settings;
 using Identity.Application.ApplicationUsers.Commands.SignupUsers;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -45,7 +44,6 @@ namespace Identity.API.Startup
             services.RegisterSwagger();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ErrorHandlingMiddleware>();

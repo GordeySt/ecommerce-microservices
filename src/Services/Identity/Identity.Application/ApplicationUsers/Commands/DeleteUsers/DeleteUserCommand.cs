@@ -1,5 +1,6 @@
 ﻿using Identity.Application.Common;
 using Identity.Application.Common.Interfaces;
+using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Enums;
@@ -10,10 +11,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
 {
-    public class DeleteUserCommand : IRequest<ServiceResult>
-    {
-        public Guid Id { get; set; }
-    }
+    public record DeleteUserCommand(Guid Id) : IRequest<ServiceResult>;
 
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ServiceResult>
     {
@@ -36,7 +34,7 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
                     NotFoundExceptionMessageConstants.NotFoundItemMessage);
             }
 
-            user.IsDeleted = true;
+            DeleteUser(user);
 
             var deleteUserResult = await _dbContext.SaveChangesAsync(cancellationToken) > 0;
 
@@ -47,6 +45,11 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
             }
 
             return new ServiceResult(ServiceResultType.Success);
+        }
+
+        private void DeleteUser(ApplicationUser user)
+        {
+            user.IsDeleted = true;
         }
     }
 }

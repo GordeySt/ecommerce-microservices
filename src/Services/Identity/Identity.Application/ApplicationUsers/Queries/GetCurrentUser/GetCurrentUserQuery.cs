@@ -14,9 +14,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationUsers.Queries.GetUsersByTokenInfo
 {
-    public class GetCurrentUserQuery : IRequest<ServiceResult<ApplicationUserDto>>
-    {
-    }
+    public record GetCurrentUserQuery : IRequest<ServiceResult<ApplicationUserDto>>;
 
     public class GetUserByTokenInfoQueryHandler : IRequestHandler<GetCurrentUserQuery,
         ServiceResult<ApplicationUserDto>>

@@ -2,20 +2,14 @@
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationUsers.Commands.ConfirmEmails
 {
-    public class ConfirmEmailCommand : IRequest<ServiceResult>
-    {
-        public string Token { get; set; }
-        public string Email { get; set; }
-    }
+    public record ConfirmEmailCommand(string Token, string Email) : IRequest<ServiceResult>;
 
     public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, ServiceResult>
     {

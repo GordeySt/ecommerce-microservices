@@ -12,11 +12,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationRoles.Commands.GrantRoleToUser
 {
-    public class GrantRoleToUserCommand : IRequest<ServiceResult>
-    {
-        public Guid RoleId { get; set; }
-        public Guid UserId { get; set; }
-    }
+    public record GrantRoleToUserCommand(Guid RoleId, Guid UserId) : IRequest<ServiceResult>;
 
     public class GrantRoleToUserCommandHandler 
         : IRequestHandler<GrantRoleToUserCommand, ServiceResult>

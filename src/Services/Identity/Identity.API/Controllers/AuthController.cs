@@ -3,7 +3,6 @@ using Identity.Application.ApplicationUsers.Commands.ResetPasswords;
 using Identity.Application.ApplicationUsers.Commands.SignupUsers;
 using Identity.Application.ApplicationUsers.Queries.ResendEmailVerifications;
 using Identity.Application.ApplicationUsers.Queries.SendResetPasswordEmail;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Common.Enums;
 using System.Threading.Tasks;
@@ -12,10 +11,8 @@ namespace Identity.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class AuthController : ApiControllerBase
     {
-        [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<IActionResult> SignupUser(SignupUserCommand command)
         {
@@ -31,7 +28,6 @@ namespace Identity.API.Controllers
             return NoContent();
         }
 
-        [AllowAnonymous]
         [HttpPost("verifyEmail")]
         public async Task<IActionResult> VerifyEmail(ConfirmEmailCommand command)
         {
@@ -46,18 +42,22 @@ namespace Identity.API.Controllers
             return NoContent();
         }
 
-        [AllowAnonymous]
         [HttpGet("resendEmailVerification")]
         public async Task<IActionResult> ResendEmailVerification([FromQuery] ResendEmailVerificationQuery query)
         {
             query.Origin = Request.Headers["origin"];
 
-            await Mediator.Send(query);
+            var resendEmailVerificationResult = await Mediator.Send(query);
+
+            if (resendEmailVerificationResult.Result is not ServiceResultType.Success)
+            {
+                return StatusCode((int)resendEmailVerificationResult.Result, 
+                    resendEmailVerificationResult.Message);
+            }
 
             return NoContent();
         }
 
-        [AllowAnonymous]
         [HttpGet("sendResetPasswordEmail")]
         public async Task<IActionResult> SendResetPasswordEmail([FromQuery] SendResetPasswordEmailQuery query)
         {
@@ -73,7 +73,6 @@ namespace Identity.API.Controllers
             return NoContent();
         }
 
-        [AllowAnonymous]
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
         {

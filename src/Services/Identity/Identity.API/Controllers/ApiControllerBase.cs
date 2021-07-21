@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Services.Common.Enums;
-using Services.Common.ResultWrappers;
 
 namespace Identity.API.Controllers
 {

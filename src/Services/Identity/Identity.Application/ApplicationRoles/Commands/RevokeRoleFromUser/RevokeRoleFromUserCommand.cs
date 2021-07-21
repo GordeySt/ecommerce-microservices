@@ -12,11 +12,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser
 {
-    public class RevokeRoleFromUserCommand : IRequest<ServiceResult>
-    {
-        public Guid RoleId { get; set; }
-        public Guid UserId { get; set; }
-    }
+    public record RevokeRoleFromUserCommand(Guid RoleId, Guid UserId) : IRequest<ServiceResult>;
 
     public class RevokeRoleFromUserCommandHandler
         : IRequestHandler<RevokeRoleFromUserCommand, ServiceResult>

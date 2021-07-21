@@ -9,13 +9,8 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationUsers.Commands.ResetPasswords
 {
-    public class ResetPasswordCommand : IRequest<ServiceResult>
-    {
-        public string Token { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
-    }
+    public record ResetPasswordCommand(string Token, string Email, string Password, 
+        string ConfirmPassword) : IRequest<ServiceResult>;
 
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, ServiceResult>
     {
