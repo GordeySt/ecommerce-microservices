@@ -47,9 +47,6 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
             return new ServiceResult(ServiceResultType.Success);
         }
 
-        private void DeleteUser(ApplicationUser user)
-        {
-            user.IsDeleted = true;
-        }
+        private void DeleteUser(ApplicationUser user) => user.IsDeleted = true;
     }
 }

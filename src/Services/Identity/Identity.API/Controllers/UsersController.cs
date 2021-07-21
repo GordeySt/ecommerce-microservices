@@ -32,7 +32,7 @@ namespace Identity.API.Controllers
         [Authorize(Roles = ApplicationRolesConstants.AdministratorRole)]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var deleteUserResult = await Mediator.Send(new DeleteUserCommand { Id = id });
+            var deleteUserResult = await Mediator.Send(new DeleteUserCommand(id));
 
             if (deleteUserResult.Result is not ServiceResultType.Success)
             {

@@ -68,7 +68,7 @@ namespace Identity.API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteRole(Guid id)
         {
-            var deleteRoleResult = await Mediator.Send(new DeleteRoleCommand { Id = id });
+            var deleteRoleResult = await Mediator.Send(new DeleteRoleCommand(id));
 
             if (deleteRoleResult.Result is not ServiceResultType.Success)
             {
@@ -78,11 +78,9 @@ namespace Identity.API.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateRole(Guid id, UpdateRoleCommand command)
+        [HttpPut]
+        public async Task<IActionResult> UpdateRole(UpdateRoleCommand command)
         {
-            command.RoleId = id;
-
             var updateRoleResult = await Mediator.Send(command);
 
             if (updateRoleResult.Result is not ServiceResultType.Success)

@@ -30,7 +30,7 @@ namespace Identity.Application.ApplicationRoles.Queries.GetRoles
             return await _roleManager.Roles
                 .AsNoTracking()
                 .ProjectTo<ApplicationRoleDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
     }
 }
