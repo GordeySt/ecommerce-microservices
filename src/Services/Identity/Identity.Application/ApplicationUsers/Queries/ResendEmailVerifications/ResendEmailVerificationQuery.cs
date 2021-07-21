@@ -2,6 +2,8 @@
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -29,10 +29,8 @@ namespace Identity.Application.ApplicationUsers.Commands.ConfirmEmails
         public async Task<ServiceResult> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
-            var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
 
-            var confirmationResult = await _userManager.ConfirmEmailAsync(user, decodedToken);
+            var confirmationResult = await _userManager.ConfirmEmailAsync(user, request.Token);
 
             if (!confirmationResult.Succeeded)
             {
