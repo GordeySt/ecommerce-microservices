@@ -3,6 +3,7 @@ using Identity.API.Startup.Configurations;
 using Identity.API.Startup.Middlewares;
 using Identity.API.Startup.Settings;
 using Identity.Application.ApplicationUsers.Commands.SignupUsers;
+using Identity.Infrastructure.Services.Email;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,8 @@ namespace Identity.API.Startup
 
             services.RegisterAutoMapper();
             services.RegisterMediatr();
+
+            services.Configure<SmtpClientSettings>(Configuration.GetSection("SmtpClientSettings"));
 
             services.RegisterSwagger();
         }

@@ -1,6 +1,6 @@
 ﻿using Identity.Application.Common.Interfaces;
 using MailKit.Net.Smtp;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using System.Threading.Tasks;
 
@@ -8,8 +8,9 @@ namespace Identity.Infrastructure.Services.Email
 {
     public class EmailSender : IEmailSender
     {
-        private readonly IConfiguration _config;
-        public EmailSender(IConfiguration config)
+        private readonly IOptions<SmtpClientSettings> _config;
+
+        public EmailSender(IOptions<SmtpClientSettings> config)
         {
             _config = config;
         }
@@ -18,7 +19,7 @@ namespace Identity.Infrastructure.Services.Email
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("", _config["smtpClientSettings:senderMailLogin"]));
+            emailMessage.From.Add(new MailboxAddress("", _config.Value.SenderEmailLogin));
             emailMessage.To.Add(new MailboxAddress("", userEmail));
             emailMessage.Subject = emailSubject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -28,10 +29,10 @@ namespace Identity.Infrastructure.Services.Email
 
             using var client = new SmtpClient();
 
-            await client.ConnectAsync(_config["smtpClientSettings:host"], 587, false);
+            await client.ConnectAsync(_config.Value.Host, 587, false);
             client.AuthenticationMechanisms.Remove("XOAUTH2");
-            await client.AuthenticateAsync(_config["smtpClientSettings:senderMailLogin"],
-                _config["smtpClientSettings:senderMailPassword"]);
+            await client.AuthenticateAsync(_config.Value.SenderEmailLogin,
+                _config.Value.SenderEmailPassword);
             await client.SendAsync(emailMessage);
 
             await client.DisconnectAsync(true);
