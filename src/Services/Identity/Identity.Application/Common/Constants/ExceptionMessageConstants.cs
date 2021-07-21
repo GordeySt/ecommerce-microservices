@@ -19,5 +19,6 @@
     {
         public const string ExistedEmailMessage = "Email already exists";
         public const string InvalidTokenMessage = "Invalid token was recieved";
+        public const string ProblemDeletingItemMessage = "Problem deleting item";
     }
 }

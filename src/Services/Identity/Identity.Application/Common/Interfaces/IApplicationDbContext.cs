@@ -9,6 +9,7 @@ namespace Identity.Application.Common.Interfaces
     public interface IApplicationDbContext
     {
         DbSet<ApplicationUser> Users { get; set; }
+        DbSet<ApplicationRole> Roles { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class;
     }

@@ -1,9 +1,6 @@
 ﻿using Identity.Application.Common;
 using Identity.Application.Common.Interfaces;
-using Identity.Application.Common.Utilities;
-using Identity.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
@@ -20,17 +17,17 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
 
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ServiceResult>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IApplicationDbContext _dbContext;
 
-        public DeleteUserCommandHandler(UserManager<ApplicationUser> userManager)
+        public DeleteUserCommandHandler(IApplicationDbContext dbContext)
         {
-            _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public async Task<ServiceResult> Handle(DeleteUserCommand request,
             CancellationToken cancellationToken)
         {
-            var user = await _userManager.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (user is null)
@@ -39,12 +36,14 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
                     NotFoundExceptionMessageConstants.NotFoundItemMessage);
             }
 
-            var deleteUserResult = await _userManager.DeleteAsync(user);
+            user.IsDeleted = true;
 
-            if (!deleteUserResult.Succeeded)
+            var deleteUserResult = await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+
+            if (!deleteUserResult)
             {
                 return new ServiceResult(ServiceResultType.InternalServerError,
-                    DatabaseUtilities.CreateErrorMessage(deleteUserResult.Errors));
+                    ExceptionMessageConstants.ProblemDeletingItemMessage);
             }
 
             return new ServiceResult(ServiceResultType.Success);
