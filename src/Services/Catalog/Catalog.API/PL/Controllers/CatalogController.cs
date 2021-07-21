@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
-using Services.Common.Constants;
 using Services.Common.Enums;
 using Services.Common.Models;
 using System;
@@ -16,6 +15,7 @@ namespace Catalog.API.PL.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CatalogController : ControllerBase
     {
         private readonly ICatalogService _catalogService;

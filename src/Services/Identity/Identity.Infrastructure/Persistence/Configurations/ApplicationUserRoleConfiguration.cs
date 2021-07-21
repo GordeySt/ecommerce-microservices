@@ -21,6 +21,8 @@ namespace Identity.Infrastructure.Persistence.Configurations
                 .HasForeignKey(x => x.UserId)
                 .HasPrincipalKey(x => x.Id)
                 .IsRequired();
+
+            builder.HasQueryFilter(x => !x.AppUser.IsDeleted);
         }
     }
 }

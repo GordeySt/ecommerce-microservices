@@ -32,9 +32,9 @@ namespace Identity.API.Startup
                  });
 
             services.RegisterDatabase(appSettings);
-            services.RegisterAuthSettings();
+            services.RegisterAuthSettings(Configuration);
             services.RegisterIdentity();
-            services.RegisterIdentityServer();
+            services.RegisterIdentityServer(Configuration);
             services.ValidateSettingParameters(Configuration);
 
             services.RegisterServices(appSettings);
@@ -44,7 +44,7 @@ namespace Identity.API.Startup
 
             services.Configure<SmtpClientSettings>(Configuration.GetSection("SmtpClientSettings"));
 
-            services.RegisterSwagger();
+            services.RegisterSwagger(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

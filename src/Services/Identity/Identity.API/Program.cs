@@ -19,7 +19,7 @@ namespace Identity.API
         {
             var host = CreateHostBuilder(args).Build();
 
-            using (var scope = host.Services.CreateScope())
+            /*using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
 
@@ -42,7 +42,7 @@ namespace Identity.API
 
                     throw;
                 }
-            }
+            }*/
 
             await host.RunAsync();
         }

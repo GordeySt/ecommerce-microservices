@@ -1,6 +1,7 @@
 ﻿using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 namespace Identity.API.Configurations
@@ -41,7 +42,7 @@ namespace Identity.API.Configurations
 				new ApiScope("identityapi")
 			};
 
-		public static IEnumerable<Client> Clients =>
+		public static IEnumerable<Client> GetClients(IConfiguration configuration) =>
 			new List<Client>
 			{
 				new Client
@@ -49,7 +50,7 @@ namespace Identity.API.Configurations
 					ClientId = "client_id_catalog_swagger",
 					ClientSecrets = {  new Secret("client_secret_catalog_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedCorsOrigins = { "http://localhost:5000" },
+					AllowedCorsOrigins = { configuration["appUrls:catalogUrl"] },
 					AllowedScopes =
 					{
 						"roles",
@@ -65,7 +66,7 @@ namespace Identity.API.Configurations
 					ClientId = "client_id_identity_swagger",
 					ClientSecrets = {  new Secret("client_secret_identity_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedCorsOrigins = { "http://localhost:5010" },
+					AllowedCorsOrigins = { configuration["appUrls:identityUrl"] },
 					AllowedScopes =
 					{
 						"roles",

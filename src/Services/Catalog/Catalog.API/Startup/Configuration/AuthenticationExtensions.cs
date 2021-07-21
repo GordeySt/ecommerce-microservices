@@ -1,12 +1,14 @@
 ﻿using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.API.Startup.Configuration
 {
     public static class AuthenticationExtensions
     {
-        public static void RegisterAuthSettings(this IServiceCollection services)
+        public static void RegisterAuthSettings(this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddAuthentication(options =>
             {
@@ -16,7 +18,7 @@ namespace Catalog.API.Startup.Configuration
             })
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://localhost:5010";
+                    options.Authority = configuration["appUrls:identityServerUrl"];
                     options.ApiName = "catalogapi";
                     options.RequireHttpsMetadata = false;
                     options.RoleClaimType = "role";

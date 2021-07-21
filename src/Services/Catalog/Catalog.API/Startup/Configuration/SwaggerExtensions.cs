@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
@@ -10,7 +11,8 @@ namespace Catalog.API.Startup.Configuration
 {
     public static class SwaggerExtensions
     {
-        public static void RegisterSwagger(this IServiceCollection services)
+        public static void RegisterSwagger(this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddSwaggerGen(c =>
             {
@@ -27,7 +29,7 @@ namespace Catalog.API.Startup.Configuration
                     {
                         Password = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri("https://localhost:5010/connect/token"),
+                            TokenUrl = new Uri(configuration["appUrls:identityServerUrl"] + "/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
                                 { "catalogapi", "Catalog API" }
