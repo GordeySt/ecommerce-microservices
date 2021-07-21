@@ -2,6 +2,7 @@
 using Identity.Application.ApplicationRoles.Commands.DeleteRoles;
 using Identity.Application.ApplicationRoles.Commands.GrantRoleToUser;
 using Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser;
+using Identity.Application.ApplicationRoles.Commands.UpdateRoles;
 using Identity.Application.ApplicationRoles.DTOs;
 using Identity.Application.ApplicationRoles.Queries.GetRoles;
 using Microsoft.AspNetCore.Authorization;
@@ -65,13 +66,28 @@ namespace Identity.API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        public async Task<IActionResult> DeleteRole(Guid id)
         {
-            var deleteUserResult = await Mediator.Send(new DeleteRoleCommand { Id = id });
+            var deleteRoleResult = await Mediator.Send(new DeleteRoleCommand { Id = id });
 
-            if (deleteUserResult.Result is not ServiceResultType.Success)
+            if (deleteRoleResult.Result is not ServiceResultType.Success)
             {
-                return StatusCode((int)deleteUserResult.Result, deleteUserResult.Message);
+                return StatusCode((int)deleteRoleResult.Result, deleteRoleResult.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateRole(Guid id, UpdateRoleCommand command)
+        {
+            command.RoleId = id;
+
+            var updateRoleResult = await Mediator.Send(command);
+
+            if (updateRoleResult.Result is not ServiceResultType.Success)
+            {
+                return StatusCode((int)updateRoleResult.Result, updateRoleResult.Message);
             }
 
             return NoContent();
