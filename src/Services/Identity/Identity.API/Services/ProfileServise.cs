@@ -36,7 +36,7 @@ namespace Identity.API.Services
                 .Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
 
             claims.Add(new Claim(ClaimTypes.NameIdentifier, sub));
-            claims.Add(new Claim(ClaimTypes.Email, user.Email));
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
 
             if (_userManager.SupportsUserRole)
             {
