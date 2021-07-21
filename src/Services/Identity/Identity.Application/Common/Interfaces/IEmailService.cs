@@ -5,5 +5,6 @@ namespace Identity.Application.Common.Interfaces
     public interface IEmailService
     {
         Task SendEmailVerificationAsync(string token, string origin, string email);
+        Task SendResetPasswordEmail(string token, string origin, string email);
     }
 }

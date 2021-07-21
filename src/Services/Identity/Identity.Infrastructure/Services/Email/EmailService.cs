@@ -1,6 +1,4 @@
 ﻿using Identity.Application.Common.Interfaces;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.Services.Email
@@ -16,13 +14,22 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendEmailVerificationAsync(string token, string origin, string email)
         {
-            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-
             var verifyUrl = $"{origin}/user/verifyEmail?token={token}&email={email}";
 
             var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>{verifyUrl}></a></p>";
 
             var subject = "Please verify your email address";
+
+            await _emailSender.SendEmailAsync(email, subject, message);
+        }
+
+        public async Task SendResetPasswordEmail(string token, string origin, string email)
+        {
+            var resetPasswordUrl = $"{origin}/user/resetPassword?token={token}&email={email}";
+
+            var message = $"<p>Please click the below link to reset your password</p><p><a href='{resetPasswordUrl}'>{resetPasswordUrl}></a></p>";
+
+            var subject = "Reset password confirmation";
 
             await _emailSender.SendEmailAsync(email, subject, message);
         }
