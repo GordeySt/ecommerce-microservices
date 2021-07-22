@@ -20,8 +20,7 @@ namespace Identity.API.Startup.Settings
         [Required]
         public string Password { get; set; }
 
-        public string ConnectionString => $"Server={Host};Port={Port};Database={DatabaseName};" +
-            $"User Id={UserId};Password={Password};";
+        public string ConnectionString => $"Server={Host};Port={Port};Database={DatabaseName};User Id={UserId};Password={Password};";
 
         public void Validate()
         {

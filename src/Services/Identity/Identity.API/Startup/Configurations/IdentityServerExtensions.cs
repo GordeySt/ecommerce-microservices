@@ -10,7 +10,7 @@ namespace Identity.API.Startup.Configurations
         public static void RegisterIdentityServer(this IServiceCollection services, 
             IConfiguration configuration)
         {
-            services.AddIdentityServer()
+            services.AddIdentityServer(options => options.IssuerUri = configuration["appUrls:identityUrl"])
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddInMemoryApiResources(IdentityConfiguration.Apis)
                 .AddInMemoryApiScopes(IdentityConfiguration.Scopes)

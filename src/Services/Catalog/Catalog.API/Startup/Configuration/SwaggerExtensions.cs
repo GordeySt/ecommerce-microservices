@@ -29,7 +29,8 @@ namespace Catalog.API.Startup.Configuration
                     {
                         Password = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri(configuration["appUrls:identityServerUrl"] + "/connect/token"),
+                            TokenUrl = new Uri(configuration["appUrls:identityUrl"] + "/connect/token"),
+                            AuthorizationUrl = new Uri(configuration["appUrls:identityUrl"] + "/connect/authorize"),
                             Scopes = new Dictionary<string, string>
                             {
                                 { "catalogapi", "Catalog API" }

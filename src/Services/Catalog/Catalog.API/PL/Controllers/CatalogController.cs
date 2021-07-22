@@ -44,6 +44,7 @@ namespace Catalog.API.PL.Controllers
         /// <response code="200">Success</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
             ([FromQuery] PagingParams pagingParams) => await _catalogService.GetAllProductsAsync(pagingParams);
 

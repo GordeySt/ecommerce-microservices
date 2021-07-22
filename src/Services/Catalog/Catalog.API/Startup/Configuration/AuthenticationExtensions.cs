@@ -18,7 +18,7 @@ namespace Catalog.API.Startup.Configuration
             })
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = configuration["appUrls:identityServerUrl"];
+                    options.Authority = configuration["appUrls:identityUrl"];
                     options.ApiName = "catalogapi";
                     options.RequireHttpsMetadata = false;
                     options.RoleClaimType = "role";

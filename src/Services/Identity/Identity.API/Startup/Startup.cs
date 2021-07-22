@@ -42,7 +42,7 @@ namespace Identity.API.Startup
             services.RegisterAutoMapper();
             services.RegisterMediatr();
 
-            services.Configure<SmtpClientSettings>(Configuration.GetSection("SmtpClientSettings"));
+            services.Configure<SmtpClientSettings>(Configuration.GetSection(nameof(SmtpClientSettings)));
 
             services.RegisterSwagger(Configuration);
         }
