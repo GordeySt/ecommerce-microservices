@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "Identity.Grpc.Protos";
+
+service UserProtoService {
+	rpc GetCurrentUser (GetCurrentUserRequest) returns (ApplicationUserModel);
+}
+
+message GetCurrentUserRequest {
+	string id = 1;
+}
+message ApplicationUserModel {
+	string id = 1;
+	string userName = 2;
+}

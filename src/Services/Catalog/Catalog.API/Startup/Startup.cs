@@ -1,13 +1,16 @@
+using Catalog.API.PL.GrpcServices;
 using Catalog.API.Startup.Configuration;
 using Catalog.API.Startup.Middlewares;
 using Catalog.API.Startup.Settings;
 using HealthChecks.UI.Client;
+using Identity.Grpc.Protos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace Catalog.API.Startup
 {
@@ -31,6 +34,11 @@ namespace Catalog.API.Startup
             services.ValidateSettingParameters(Configuration);
             services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
+
+            services.AddGrpcClient<UserProtoService.UserProtoServiceClient>
+                (o => o.Address = new Uri("http://localhost:5001"));
+
+            services.AddScoped<UserGrpcService>();
 
             services.AddControllers()
                 .AddJsonOptions(options =>
