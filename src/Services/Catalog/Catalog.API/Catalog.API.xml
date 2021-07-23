@@ -230,5 +230,44 @@
             </summary>
             <example>60</example>
         </member>
+        <member name="T:Identity.Grpc.Protos.UserReflection">
+            <summary>Holder for reflection information generated from user.proto</summary>
+        </member>
+        <member name="P:Identity.Grpc.Protos.UserReflection.Descriptor">
+            <summary>File descriptor for user.proto</summary>
+        </member>
+        <member name="F:Identity.Grpc.Protos.GetCurrentUserRequest.IdFieldNumber">
+            <summary>Field number for the "id" field.</summary>
+        </member>
+        <member name="F:Identity.Grpc.Protos.ApplicationUserModel.IdFieldNumber">
+            <summary>Field number for the "id" field.</summary>
+        </member>
+        <member name="F:Identity.Grpc.Protos.ApplicationUserModel.UserNameFieldNumber">
+            <summary>Field number for the "userName" field.</summary>
+        </member>
+        <member name="P:Identity.Grpc.Protos.UserProtoService.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Identity.Grpc.Protos.UserProtoService.UserProtoServiceClient">
+            <summary>Client for UserProtoService</summary>
+        </member>
+        <member name="M:Identity.Grpc.Protos.UserProtoService.UserProtoServiceClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for UserProtoService</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Identity.Grpc.Protos.UserProtoService.UserProtoServiceClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for UserProtoService that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Identity.Grpc.Protos.UserProtoService.UserProtoServiceClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Identity.Grpc.Protos.UserProtoService.UserProtoServiceClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Identity.Grpc.Protos.UserProtoService.UserProtoServiceClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
     </members>
 </doc>
