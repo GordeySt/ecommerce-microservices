@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace Identity.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class AuthController : ApiControllerBase
     {
         /// <summary>

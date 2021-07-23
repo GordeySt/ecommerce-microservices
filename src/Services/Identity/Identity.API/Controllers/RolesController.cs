@@ -16,8 +16,6 @@ using System.Threading.Tasks;
 
 namespace Identity.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     [Authorize(Roles = ApplicationRolesConstants.AdministratorRole)]
     public class RolesController : ApiControllerBase
     {
