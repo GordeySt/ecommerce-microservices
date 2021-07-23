@@ -69,7 +69,7 @@ namespace Identity.API.Controllers
         /// <returns>Returns NoContent object result</returns>
         /// <response code="204">Success</response>
         /// <response code="400">If there are problems verifying email</response>
-        [HttpPost("verifyEmail")]
+        [HttpPost("verifyemail")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> VerifyEmail(ConfirmEmailCommand command)
@@ -102,7 +102,7 @@ namespace Identity.API.Controllers
         /// <returns>Returns NoContent object result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If user with this email not found</response>
-        [HttpGet("resendEmailVerification")]
+        [HttpGet("resendemailverification")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ResendEmailVerification([FromQuery] ResendEmailVerificationQuery query)
@@ -137,7 +137,7 @@ namespace Identity.API.Controllers
         /// <returns>Returns NoContent object result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If user with this email not found</response>
-        [HttpGet("sendResetPasswordEmail")]
+        [HttpGet("sendresetpasswordemail")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SendResetPasswordEmail([FromQuery] SendResetPasswordEmailQuery query)
@@ -177,7 +177,7 @@ namespace Identity.API.Controllers
         /// <response code="204">Success</response>
         /// <response code="400">If there are problems reseting password</response>
         /// <response code="404">If user with this email not found</response>
-        [HttpPost("resetPassword")]
+        [HttpPost("resetpassword")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

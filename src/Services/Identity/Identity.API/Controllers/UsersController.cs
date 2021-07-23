@@ -28,7 +28,7 @@ namespace Identity.API.Controllers
         /// <response code="400">If token is invalid and it is not even possible to get user from id claim</response>
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
-        [HttpGet("currentUser")]
+        [HttpGet("currentuser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
