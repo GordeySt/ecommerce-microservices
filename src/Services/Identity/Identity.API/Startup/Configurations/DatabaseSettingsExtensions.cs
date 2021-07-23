@@ -16,8 +16,7 @@ namespace Identity.API.Startup.Configurations
                 options.UseNpgsql(appSettings.DbSettings.ConnectionString);
             });
 
-            services.AddScoped<IApplicationDbContext>
-                (provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         }
     }
 }

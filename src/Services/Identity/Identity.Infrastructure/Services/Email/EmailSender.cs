@@ -19,8 +19,8 @@ namespace Identity.Infrastructure.Services.Email
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("", _config.Value.SenderEmailLogin));
-            emailMessage.To.Add(new MailboxAddress("", userEmail));
+            emailMessage.From.Add(new MailboxAddress(string.Empty, _config.Value.SenderEmailLogin));
+            emailMessage.To.Add(new MailboxAddress(string.Empty, userEmail));
             emailMessage.Subject = emailSubject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
@@ -29,7 +29,7 @@ namespace Identity.Infrastructure.Services.Email
 
             using var client = new SmtpClient();
 
-            await client.ConnectAsync(_config.Value.Host, 587, false);
+            await client.ConnectAsync(_config.Value.Host, _config.Value.Port, _config.Value.UseSsl);
             client.AuthenticationMechanisms.Remove("XOAUTH2");
             await client.AuthenticateAsync(_config.Value.SenderEmailLogin,
                 _config.Value.SenderEmailPassword);
