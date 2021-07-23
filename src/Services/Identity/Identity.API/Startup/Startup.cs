@@ -33,7 +33,7 @@ namespace Identity.API.Startup
 
             services.RegisterDatabase(appSettings);
             services.RegisterAuthSettings(Configuration);
-            services.RegisterIdentity();
+            services.RegisterIdentity(appSettings);
             services.RegisterIdentityServer(Configuration);
             services.ValidateSettingParameters(Configuration);
 
@@ -83,9 +83,13 @@ namespace Identity.API.Startup
             var dbSettings = configuration.GetSection(nameof(AppSettings.DbSettings))
                 .Get<DbSettings>();
 
+            var identitySettings = configuration.GetSection(nameof(AppSettings.IdentitySettings))
+                .Get<IdentitySettings>();
+
             return new AppSettings
             {
-                DbSettings = dbSettings
+                DbSettings = dbSettings,
+                IdentitySettings = identitySettings
             };
         }
     }
