@@ -13,11 +13,11 @@ namespace Catalog.API.PL.GrpcServices
             _userProtoService = userProtoService;
         }
 
-        public async Task<ApplicationUserModel> GetCurrentUser(Guid id)
+        public async Task<ApplicationUserModel> GetUserById(Guid id)
         {
-            var userRequest = new GetCurrentUserRequest { Id = id.ToString() };
+            var userRequest = new GetUserByIdRequest { Id = id.ToString() };
 
-            return await _userProtoService.GetCurrentUserAsync(userRequest);
+            return await _userProtoService.GetUserByIdAsync(userRequest);
         }
     }
 }
