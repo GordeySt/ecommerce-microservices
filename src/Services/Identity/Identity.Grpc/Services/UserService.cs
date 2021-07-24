@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Grpc.Core;
-using Identity.Application.ApplicationUsers.Queries.GetUsersByTokenInfo;
-using Identity.Application.Common;
-using Identity.Application.Common.Interfaces;
+using Identity.Application.ApplicationUsers.Queries.GetUserById;
 using Identity.Grpc.Protos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
@@ -16,27 +13,25 @@ namespace Identity.Grpc.Services
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private readonly IApplicationDbContext _dbContext;
 
-        public UserService(IMediator mediator, IMapper mapper, IApplicationDbContext dbContext)
+        public UserService(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _dbContext = dbContext;
         }
 
-        public override async Task<ApplicationUserModel> GetCurrentUser(GetCurrentUserRequest request,
+        public override async Task<ApplicationUserModel> GetUserById(GetUserByIdRequest request,
             ServerCallContext context)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == new Guid(request.Id));
+            var getUserByIdResult = await _mediator.Send(new GetUserByIdQuery(new Guid(request.Id)));
 
-            if (user is null)
+            if (getUserByIdResult.Result is not ServiceResultType.Success)
             {
-                throw new RpcException(new Status(StatusCode.Unauthenticated,
-                    NotFoundExceptionMessageConstants.NotFoundUserMessage));
+                throw new RpcException(new Status(StatusCode.NotFound,
+                    getUserByIdResult.Message));
             }
 
-            return _mapper.Map<ApplicationUserModel>(user);
+            return _mapper.Map<ApplicationUserModel>(getUserByIdResult.Data);
         }
     }
 }
