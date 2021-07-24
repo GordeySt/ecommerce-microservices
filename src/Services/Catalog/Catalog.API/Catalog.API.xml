@@ -236,7 +236,7 @@
         <member name="P:Identity.Grpc.Protos.UserReflection.Descriptor">
             <summary>File descriptor for user.proto</summary>
         </member>
-        <member name="F:Identity.Grpc.Protos.GetCurrentUserRequest.IdFieldNumber">
+        <member name="F:Identity.Grpc.Protos.GetUserByIdRequest.IdFieldNumber">
             <summary>Field number for the "id" field.</summary>
         </member>
         <member name="F:Identity.Grpc.Protos.ApplicationUserModel.IdFieldNumber">
