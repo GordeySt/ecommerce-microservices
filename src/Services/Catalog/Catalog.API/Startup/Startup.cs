@@ -30,11 +30,11 @@ namespace Catalog.API.Startup
 
             var appSettings = ReadAppSettings(Configuration, Env);
 
-            services.RegisterAuthSettings(Configuration);
+            services.RegisterAuthSettings(appSettings);
             services.ValidateSettingParameters(Configuration);
             services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
-            services.RegisterGrpcServices(Configuration);
+            services.RegisterGrpcServices(appSettings);
 
             services.AddControllers()
                 .AddJsonOptions(options =>
@@ -42,7 +42,7 @@ namespace Catalog.API.Startup
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
-            services.RegisterSwagger(Configuration);
+            services.RegisterSwagger(appSettings);
             services.RegisterHealthChecks(appSettings);
         }
 
@@ -90,6 +90,9 @@ namespace Catalog.API.Startup
             var cloudinarySettings = configuration.GetSection(nameof(AppSettings.CloudinarySettings))
                 .Get<CloudinarySettings>();
 
+            var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
+                .Get<AppUrlsSettings>();
+
             if (env.IsDevelopment())
             {
                 cloudinarySettings.ApiSecret = configuration["Cloudinary:ApiSecret"];
@@ -98,7 +101,8 @@ namespace Catalog.API.Startup
             return new AppSettings
             {
                 DbSettings = dbSettings,
-                CloudinarySettings = cloudinarySettings
+                CloudinarySettings = cloudinarySettings,
+                AppUrlsSettings = appUrlsSettings
             };
         }
     }
