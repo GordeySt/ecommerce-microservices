@@ -4,6 +4,7 @@ using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System;
@@ -32,7 +33,7 @@ namespace Identity.Application.ApplicationRoles.Commands.DeleteRoles
             if (role is null)
             {
                 return new ServiceResult(ServiceResultType.NotFound,
-                    NotFoundExceptionMessageConstants.NotFoundItemMessage);
+                    ExceptionConstants.NotFoundItemMessage);
             }
 
             var deleteUserResult = await _roleManager.DeleteAsync(role);

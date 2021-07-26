@@ -2,7 +2,6 @@
 {
     public static class NotFoundExceptionMessageConstants
     {
-        public const string NotFoundItemMessage = "Item not found";
         public const string NotFoundRoleMessage = "Role not found";
         public const string NotFoundUserMessage = "User not found";
     }
@@ -20,6 +19,5 @@
     {
         public const string ExistedEmailMessage = "Email already exists";
         public const string InvalidTokenMessage = "Invalid token was recieved";
-        public const string ProblemDeletingItemMessage = "Problem deleting item";
     }
 }
