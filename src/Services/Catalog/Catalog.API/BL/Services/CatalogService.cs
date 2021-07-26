@@ -9,6 +9,7 @@ using Services.Common.Enums;
 using Services.Common.Models;
 using Services.Common.ResultWrappers;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Catalog.API.BL.Services
@@ -43,6 +44,9 @@ namespace Catalog.API.BL.Services
 
             return await _productRepository.DeleteAsync(product);
         }
+
+        public async Task<IEnumerable<string>> GetPopularCategoriesAsync(int populerCategoriesCount) => 
+            await _productRepository.GetPopularCategoriesAsync(populerCategoriesCount);
 
         public async Task<PagedList<ProductDto>> GetAllProductsAsync(PagingParams pagingParams)
         {

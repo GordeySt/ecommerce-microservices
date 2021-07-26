@@ -1,8 +1,5 @@
 ﻿using Catalog.API.BL.Interfaces;
-using Catalog.API.PL.GrpcServices;
 using Catalog.API.PL.Models.DTOs;
-using Catalog.API.PL.Models.Params;
-using Identity.Grpc.Protos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Services.Common.Enums;
 using Services.Common.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Catalog.API.PL.Controllers
@@ -31,6 +29,12 @@ namespace Catalog.API.PL.Controllers
             _photoService = photoService;
         }
 
+        [HttpGet("get-popular")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<string>>> GetPopularCategories
+            ([FromQuery] int popularCategoriesCount) =>
+            Ok(await _catalogService.GetPopularCategoriesAsync(popularCategoriesCount));
+
         /// <summary>
         /// Gets the paginated list of products
         /// </summary>
@@ -44,8 +48,8 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns PagedList of ProductDto</returns>
         /// <response code="200">Success</response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
             ([FromQuery] PagingParams pagingParams) => await _catalogService.GetAllProductsAsync(pagingParams);
 

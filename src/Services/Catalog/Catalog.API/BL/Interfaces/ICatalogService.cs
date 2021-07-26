@@ -4,6 +4,7 @@ using Catalog.API.PL.Models.Params;
 using Services.Common.Models;
 using Services.Common.ResultWrappers;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Catalog.API.BL.Interfaces
@@ -15,6 +16,8 @@ namespace Catalog.API.BL.Interfaces
         public Task<ServiceResult> DeleteProductAsync(Guid id);
 
         public Task<PagedList<ProductDto>> GetAllProductsAsync(PagingParams pagingParams);
+
+        public Task<IEnumerable<string>> GetPopularCategoriesAsync(int populerCategoriesCount);
 
         public Task<ProductDto> GetProductByIdAsync(Guid id);
 
