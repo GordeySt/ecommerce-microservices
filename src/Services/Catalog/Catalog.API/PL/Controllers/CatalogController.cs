@@ -79,25 +79,6 @@ namespace Catalog.API.PL.Controllers
         }
 
         /// <summary>
-        /// Gets the products by category
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     GET /api/Catalog/GetProductsByCategory?categoryName=Computers&amp;pageNumber=2&amp;pageSize=3
-        ///     
-        /// </remarks>
-        /// <param name="categoryParams">CategoryParams object including PagingParams object</param>
-        /// <returns>Returns PagedList of ProductDto</returns>
-        /// <response code="200">Success</response>
-        [Route("[action]", Name = "GetProductsByCategory")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<PagedList<ProductDto>>> GetProductsByCategory
-            ([FromQuery] CategoryParams categoryParams) => 
-            await _catalogService.GetProductsByCategoryAsync(categoryParams);
-
-        /// <summary>
         /// Creates the product
         /// </summary>
         /// <remarks>
@@ -121,9 +102,14 @@ namespace Catalog.API.PL.Controllers
         public async Task<ActionResult<ProductDto>> CreateProduct
             ([BindRequired] CreateProductDto createProductDto)
         {
-            await _catalogService.AddProductAsync(createProductDto);
+            var creationResult = await _catalogService.AddProductAsync(createProductDto);
 
-            return CreatedAtAction(nameof(CreateProduct), createProductDto);
+            if (creationResult.Result is not ServiceResultType.Success)
+            {
+                return StatusCode((int)creationResult.Result, creationResult.Message);
+            }
+
+            return CreatedAtAction(nameof(CreateProduct), creationResult.Data);
         }
 
         /// <summary>
@@ -154,10 +140,9 @@ namespace Catalog.API.PL.Controllers
         {
             var result = await _catalogService.UpdateProductAsync(updateProductDto);
 
-            if (result.Result is ServiceResultType.NotFound)
+            if (result.Result is not ServiceResultType.Success)
             {
-                _logger.LogError($"Product with id: {updateProductDto.Id} not found");
-                return NotFound(result.Message);
+                return StatusCode((int)result.Result, result.Message);
             }
 
             return NoContent();
@@ -183,10 +168,9 @@ namespace Catalog.API.PL.Controllers
         {
             var result = await _catalogService.DeleteProductAsync(id);
 
-            if (result.Result is ServiceResultType.NotFound)
+            if (result.Result is not ServiceResultType.Success)
             {
-                _logger.LogError($"Product with id: {id} not found");
-                return NotFound(result.Message);
+                return StatusCode((int)result.Result, result.Message);
             }
 
             return NoContent();
@@ -206,17 +190,17 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns NoContent Result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If the product with id (guid) not found</response>
-        [HttpPost("{id:guid}/AddPhotoToProduct")]
+        [HttpPost("{id:guid}/add-photo")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddPhotoToProduct([FromForm(Name = "File")] IFormFile mainImage,
             Guid id)
         {
-            var result = await _photoService.AddPhotoAsync(mainImage, id);
+            var addPhotoResult = await _photoService.AddPhotoAsync(mainImage, id);
 
-            if (result.Result is ServiceResultType.NotFound)
+            if (addPhotoResult.Result is not ServiceResultType.NotFound)
             {
-                return NotFound(result.Message);
+                return StatusCode((int)addPhotoResult.Result, addPhotoResult.Message);
             }
 
             return NoContent();

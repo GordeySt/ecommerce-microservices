@@ -30,6 +30,7 @@ namespace Catalog.API.Startup
 
             var appSettings = ReadAppSettings(Configuration, Env);
 
+            services.RegisterDatabase(appSettings);
             services.RegisterAuthSettings(appSettings);
             services.ValidateSettingParameters(Configuration);
             services.RegisterServices(appSettings);

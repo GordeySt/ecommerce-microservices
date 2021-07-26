@@ -1,11 +1,17 @@
-﻿using Catalog.API.BL.Constants;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
+using Catalog.API.PL.Models.DTOs;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using Services.Common.Constatns;
 using Services.Common.Enums;
-using Services.Common.Models;
 using Services.Common.ResultWrappers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
@@ -13,74 +19,88 @@ namespace Catalog.API.DAL.Repositories
     public class AsyncBaseRepository<T> : IAsyncBaseRepository<T> where T 
         : EntityBase
     {
-        protected readonly IDatabaseContext DatabaseContext;
-        private readonly IMongoCollection<T> _collection;
+        protected readonly ApplicationDbContext DatabaseContext;
+        private readonly DbSet<T> _entity;
 
-        public AsyncBaseRepository(IDatabaseContext databaseContext)
+        protected AsyncBaseRepository(ApplicationDbContext databaseContext)
         {
             DatabaseContext = databaseContext;
-            _collection = DatabaseContext.GetCollection<T>(typeof(T).Name);
+            _entity = databaseContext.Set<T>();
         }
 
-        public async Task<PagedList<T>> GetAllItemsAsync(PagingParams pagingParams) => 
-            await PagedList<T>.CreateAsync(_collection, Builders<T>.Filter.Empty, 
-                pagingParams.PageNumber, pagingParams.PageSize);
+        public IQueryable<T> GetAllQueryable() => _entity.AsQueryable();
 
-        public async Task<T> GetItemByIdAsync(Guid id)
+        public async Task<IEnumerable<T>> GetAllAsync() => await _entity.ToListAsync();
+
+        public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate) => 
+            await _entity.Where(predicate).ToListAsync();
+
+        public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate = null, 
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool disableTracking = true)
         {
-            return await _collection
-                .Find(p => p.Id == id)
-                .FirstOrDefaultAsync();
+            IQueryable<T> query = _entity;
+
+            if (disableTracking) query = query.AsNoTracking();
+
+            if (predicate != null) query = query.Where(predicate);
+
+            if (orderBy != null)
+                return await orderBy(query).ToListAsync();
+
+            return await query.ToListAsync();
         }
 
-        public async Task AddItemAsync(T entity)
+        public async Task<T> GetByIdAsync(Guid id, bool disableTracking = true)
         {
-            try
+            if (disableTracking)
             {
-                await _collection
-                    .InsertOneAsync(entity);
-            }
-            catch
-            {
-                throw new Exception("Problem inserting data");
+                return await _entity.FirstOrDefaultAsync(x => x.Id == id);
             }
 
+            return await _entity.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ServiceResult> DeleteItemAsync(Guid id)
+        public async Task<ServiceResult<T>> AddAsync(T entity)
         {
-            var itemToDelete = await _collection
-                .Find(p => p.Id == id)
-                .FirstOrDefaultAsync();
+            _entity.Add(entity);
 
-            if (itemToDelete is null)
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
+
+            if (!success)
             {
-                return new ServiceResult(ServiceResultType.NotFound,
-                    ExceptionMessageConstants.NotFoundItemMessage);
+                return new ServiceResult<T>(ServiceResultType.InternalServerError,
+                    ExceptionConstants.ProblemCreatingItemMessage);
             }
 
-            var filter = Builders<T>.Filter.Eq(p => p.Id, id);
+            return new ServiceResult<T>(ServiceResultType.Success, entity);
+        }
 
-            var deleteResult = await _collection
-                .DeleteOneAsync(filter);
+        public async Task<ServiceResult> UpdateAsync(T entity)
+        {
+            _entity.Update(entity);
+
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
+
+            if (!success)
+            {
+                return new ServiceResult(ServiceResultType.InternalServerError,
+                    ExceptionConstants.ProblemUpdatingItemMessage);
+            }
 
             return new ServiceResult(ServiceResultType.Success);
         }
 
-        public async Task<ServiceResult> UpdateItemAsync(T entity)
+        public async Task<ServiceResult> DeleteAsync(T entity)
         {
-            var itemToUpdate = await _collection
-                .Find(p => p.Id == entity.Id)
-                .FirstOrDefaultAsync();
+            _entity.Remove(entity);
 
-            if (itemToUpdate is null)
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
+
+            if (!success)
             {
-                return new ServiceResult(ServiceResultType.NotFound,
-                    ExceptionMessageConstants.NotFoundItemMessage);
+                return new ServiceResult(ServiceResultType.InternalServerError, 
+                    ExceptionConstants.ProblemDeletingItemMessage);
             }
-
-            var updateResult = await _collection
-                .ReplaceOneAsync(filter: g => g.Id == entity.Id, replacement: entity);
 
             return new ServiceResult(ServiceResultType.Success);
         }

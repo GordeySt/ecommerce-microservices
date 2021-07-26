@@ -1,26 +1,26 @@
 ﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.Startup.Settings;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using System.Reflection;
 
 namespace Catalog.API.DAL
 {
-    public class DatabaseContext : IDatabaseContext
+    public class ApplicationDbContext : DbContext
     {
-        private readonly IMongoDatabase _mongoDatabase;
-        public DatabaseContext(AppSettings appSettings)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            var mongoClient = new MongoClient(appSettings.DbSettings.ConnectionString);
-            _mongoDatabase = mongoClient.GetDatabase(appSettings.DbSettings.DatabaseName);
-
-            Products = _mongoDatabase.GetCollection<Product>(appSettings.DbSettings.CollectionName);
-
-            DatabaseContextSeed.SeedData(Products);
+            Database.Migrate();
         }
 
-        public IMongoCollection<T> GetCollection<T>(string name) => 
-            _mongoDatabase.GetCollection<T>(name);
+        public DbSet<Product> Products { get; set; }
 
-        public IMongoCollection<Product> Products { get; private set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     }
 }

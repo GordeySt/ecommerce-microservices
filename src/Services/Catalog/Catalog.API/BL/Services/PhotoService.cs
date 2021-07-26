@@ -1,7 +1,7 @@
-﻿using Catalog.API.BL.Constants;
-using Catalog.API.BL.Interfaces;
+﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System;
@@ -23,21 +23,17 @@ namespace Catalog.API.BL.Services
 
         public async Task<ServiceResult> AddPhotoAsync(IFormFile mainImage, Guid productId)
         {
-            var photoUploadResult = await _photoCloudAccessor.AddPhotoToCloudAsync(mainImage);
-
-            var product = await _productRepository.GetItemByIdAsync(productId);
+            var product = await _productRepository.GetByIdAsync(productId);
 
             if (product is null)
             {
-                return new ServiceResult(ServiceResultType.NotFound, 
-                    ExceptionMessageConstants.NotFoundItemMessage);
+                return new ServiceResult(ServiceResultType.NotFound,
+                    ExceptionConstants.NotFoundItemMessage);
             }
 
-            product.MainImageUrl = photoUploadResult.Url;
+            var photoUploadResult = await _photoCloudAccessor.AddPhotoToCloudAsync(mainImage);
 
-            await _productRepository.UpdateMainImageAsync(product);
-
-            return new ServiceResult(ServiceResultType.Success);
+            return await _productRepository.UpdateMainImageAsync(product, photoUploadResult.Url);
         }
     }
 }

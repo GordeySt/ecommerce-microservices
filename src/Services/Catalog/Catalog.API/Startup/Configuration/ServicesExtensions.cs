@@ -18,9 +18,6 @@ namespace Catalog.API.Startup.Configuration
             //AppSettings
             services.AddSingleton(appSettings);
 
-            //Database context
-            services.AddScoped<IDatabaseContext, DatabaseContext>();
-
             //Services
             services.AddTransient<ICatalogService, CatalogService>();
             services.AddTransient<IPhotoCloudAccessor, PhotoCloudAccessor>();

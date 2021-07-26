@@ -33,20 +33,6 @@
             <response code="200">Success</response>
             <response code="404">If the product not found</response>
         </member>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetProductsByCategory(Catalog.API.PL.Models.Params.CategoryParams)">
-            <summary>
-            Gets the products by category
-            </summary>
-            <remarks>
-            Sample request:
-            
-                GET /api/Catalog/GetProductsByCategory?categoryName=Computers&amp;pageNumber=2&amp;pageSize=3
-                
-            </remarks>
-            <param name="categoryParams">CategoryParams object including PagingParams object</param>
-            <returns>Returns PagedList of ProductDto</returns>
-            <response code="200">Success</response>
-        </member>
         <member name="M:Catalog.API.PL.Controllers.CatalogController.CreateProduct(Catalog.API.PL.Models.DTOs.CreateProductDto)">
             <summary>
             Creates the product

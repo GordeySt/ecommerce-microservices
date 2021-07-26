@@ -15,9 +15,12 @@ namespace Catalog.API.Startup.Settings
         public string DatabaseName { get; set; }
 
         [Required]
-        public string CollectionName { get; set; }
+        public string UserId { get; set; }
 
-        public string ConnectionString => $"mongodb://{Host}:{Port}";
+        [Required]
+        public string Password { get; set; }
+
+        public string ConnectionString => $"Server={Host};Port={Port};Database={DatabaseName};User Id={UserId};Password={Password};";
 
         public void Validate()
         {

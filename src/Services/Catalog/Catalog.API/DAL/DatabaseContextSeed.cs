@@ -3,18 +3,20 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Catalog.API.DAL
 {
     public class DatabaseContextSeed
     {
-        public static void SeedData(IMongoCollection<Product> productCollection)
+        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
         {
-            bool existProduct = productCollection.Find(_ => true).Any();
-
-            if (!existProduct)
+            // Seed, if necessary
+            if (!context.Products.Any())
             {
-                productCollection.InsertManyAsync(GetPreconfiguredProducts());
+                context.Products.AddRange(GetPreconfiguredProducts());
+
+                await context.SaveChangesAsync();
             }
         }
 

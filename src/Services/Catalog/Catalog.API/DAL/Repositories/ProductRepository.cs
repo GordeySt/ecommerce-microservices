@@ -1,8 +1,12 @@
-﻿using Catalog.API.DAL.Entities;
+﻿using AutoMapper;
+using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.Models.Params;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
-using Services.Common.Models;
+using Services.Common.Constatns;
+using Services.Common.Enums;
+using Services.Common.ResultWrappers;
+using System;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
@@ -10,25 +14,22 @@ namespace Catalog.API.DAL.Repositories
     public class ProductRepository : AsyncBaseRepository<Product>,
         IProductRepository
     {
-        public ProductRepository(IDatabaseContext databaseContext) : base(databaseContext)
+        public ProductRepository(ApplicationDbContext databaseContext) : base(databaseContext)
         { }
 
-        public async Task<PagedList<Product>> GetProductsByCategory(CategoryParams categoryParams)
+        public async Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl)
         {
-            var filter = Builders<Product>.Filter
-                .Eq(p => p.Category, categoryParams.CategoryName);
+            product.MainImageUrl = photoUrl;
 
-            var collection = DatabaseContext.Products;
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
 
-            return await PagedList<Product>.CreateAsync(collection, filter, categoryParams.PageNumber,
-                categoryParams.PageSize);
-        }
+            if (!success)
+            {
+                return new ServiceResult(ServiceResultType.InternalServerError,
+                    ExceptionConstants.ProblemCreatingItemMessage);
+            }
 
-        public async Task UpdateMainImageAsync(Product product)
-        {
-            await DatabaseContext
-                .Products
-                .ReplaceOneAsync(filter: g => g.Id == product.Id, replacement: product);
+            return new ServiceResult(ServiceResultType.Success);
         }
     }
 }
