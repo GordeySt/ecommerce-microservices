@@ -10,6 +10,7 @@ using Services.Common.Enums;
 using Services.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Catalog.API.PL.Controllers
@@ -22,6 +23,7 @@ namespace Catalog.API.PL.Controllers
         private readonly ICatalogService _catalogService;
         private readonly ILogger<CatalogController> _logger;
         private readonly IPhotoService _photoService;
+
         public CatalogController(ICatalogService catalogService, ILogger<CatalogController> logger, 
             IPhotoService photoService)
         {
@@ -33,8 +35,12 @@ namespace Catalog.API.PL.Controllers
         [HttpGet("get-popular")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<string>>> GetPopularCategories
-            ([FromQuery] int popularCategoriesCount) =>
-            Ok(await _catalogService.GetPopularCategoriesAsync(popularCategoriesCount));
+            ([FromQuery] int popularCategoriesCount)
+        {
+            var categories = await _catalogService.GetPopularCategoriesAsync(popularCategoriesCount);
+
+            return categories.ToList();
+        }
 
         /// <summary>
         /// Gets the paginated list of products
