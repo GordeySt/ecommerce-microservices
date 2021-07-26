@@ -76,6 +76,30 @@ namespace Identity.API.Configurations
 						IdentityServerConstants.StandardScopes.OfflineAccess
 					},
 					AllowOfflineAccess = true
+				},
+				new Client
+                {
+					ClientName = "Postman",
+					AllowOfflineAccess = true,
+					AllowedScopes =
+                    {
+						IdentityServerConstants.StandardScopes.OpenId,
+						IdentityServerConstants.StandardScopes.Profile,
+						"roles",
+						"identityapi",
+						"catalogapi"
+                    },
+					RedirectUris =
+                    {
+						"https://www.getpostman.com/oauth2/callback"
+                    },
+					Enabled = true,
+					ClientId = "postman_id",
+                    ClientSecrets =
+                    {
+						new Secret("postman_secret".ToSha256())
+                    },
+					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword
 				}
 			};
 	}
