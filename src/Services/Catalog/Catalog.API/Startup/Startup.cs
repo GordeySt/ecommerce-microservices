@@ -27,6 +27,7 @@ namespace Catalog.API.Startup
         {
             var appSettings = ReadAppSettings(Configuration, Env);
 
+            services.RegisterAuthSettings(Configuration);
             services.ValidateSettingParameters(Configuration);
             services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
@@ -37,7 +38,7 @@ namespace Catalog.API.Startup
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
-            services.RegisterSwagger();
+            services.RegisterSwagger(Configuration);
             services.RegisterHealthChecks(appSettings);
         }
 
@@ -62,6 +63,7 @@ namespace Catalog.API.Startup
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

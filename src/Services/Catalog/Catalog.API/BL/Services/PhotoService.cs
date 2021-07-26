@@ -1,9 +1,9 @@
 ﻿using Catalog.API.BL.Constants;
-using Catalog.API.BL.Enums;
 using Catalog.API.BL.Interfaces;
-using Catalog.API.BL.ResultWrappers;
 using Catalog.API.DAL.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Services.Common.Enums;
+using Services.Common.ResultWrappers;
 using System;
 using System.Threading.Tasks;
 

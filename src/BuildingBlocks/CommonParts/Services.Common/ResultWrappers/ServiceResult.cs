@@ -1,6 +1,6 @@
-﻿using Catalog.API.BL.Enums;
+﻿using Services.Common.Enums;
 
-namespace Catalog.API.BL.ResultWrappers
+namespace Services.Common.ResultWrappers
 {
     public class ServiceResult
     {

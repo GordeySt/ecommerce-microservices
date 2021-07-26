@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Identity.API</name>
+    </assembly>
+    <members>
+        <member name="M:Identity.API.Controllers.AuthController.SignupUser(Identity.Application.ApplicationUsers.Commands.SignupUsers.SignupUserCommand)">
+            <summary>
+            SignUp Users
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/Auth/signup
+                { 
+                    "email": "snu23535@eoopy.com",
+                    "password": "password1",
+                    "origin": "string"
+                }
+            
+            </remarks>
+            <param name="command">SignUp Data</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="400">If Email already exists</response>
+        </member>
+        <member name="M:Identity.API.Controllers.AuthController.VerifyEmail(Identity.Application.ApplicationUsers.Commands.ConfirmEmails.ConfirmEmailCommand)">
+            <summary>
+            Verify User Email Address
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/Auth/verifyEmail
+                { 
+                    "token": "CfDJ8HhXpBD38pxKlQ59bbubbjVl7Aiv+mI3Nd9OMXO9DGC+BXXy
+                    wUJVNKodWrn6M+a3LC65BILD2SGzVahVxNy5AO7eCQyzXxUPy1Ym
+                    U0iqSCI7QKKHbordfy1vUh2B0venGjH0WRdWlknWWPa7oE0krqq7v
+                    IPAn428aub21/2qCehtim9gQAnVMRdu5WSzD/vqClnjWT3XN68+/uFaoTgeLXO3iVaHI2H4QUq0NP/IPWeu",
+                    "email": "snu23535@eoopy.com"
+                }
+            
+            </remarks>
+            <param name="command">Email Confirmation data</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="400">If there are problems verifying email</response>
+        </member>
+        <member name="M:Identity.API.Controllers.AuthController.ResendEmailVerification(Identity.Application.ApplicationUsers.Queries.ResendEmailVerifications.ResendEmailVerificationQuery)">
+            <summary>
+            Resend Email Verification to activate account
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/Auth/resendEmailVerification
+                { 
+                    "email": "snu23535@eoopy.com",
+                    "origin": "string"
+                }
+            
+            </remarks>
+            <param name="query">Email Confirmation data</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="404">If user with this email not found</response>
+        </member>
+        <member name="M:Identity.API.Controllers.AuthController.SendResetPasswordEmail(Identity.Application.ApplicationUsers.Queries.SendResetPasswordEmail.SendResetPasswordEmailQuery)">
+            <summary>
+            Send email for reseting password
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/Auth/sendResetPasswordEmail
+                { 
+                    "email": "snu23535@eoopy.com",
+                    "origin": "string"
+                }
+            
+            </remarks>
+            <param name="query">Email for reseting password data</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="404">If user with this email not found</response>
+        </member>
+        <member name="M:Identity.API.Controllers.AuthController.ResetPassword(Identity.Application.ApplicationUsers.Commands.ResetPasswords.ResetPasswordCommand)">
+            <summary>
+            Reset password
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/Auth/resetPassword
+                { 
+                    "email": "snu23535@eoopy.com",
+                    "token": "CfDJ8HhXpBD38pxKlQ59bbubbjVl7Aiv+mI3Nd9OMXO9DGC+BXXywUJVN
+                    KodWrn6M+a3LC65BILD2SGzVahVxNy5AO7eCQyzXxUPy1YmU0iqSCI7QKKHbordfy1v
+                    Uh2B0venGjH0WRdWlknWWPa7oE0krqq7vIPAn428aub21/2qCehtim9gQAnVMRdu5WS
+                    zD/vqClnjWT3XN68+/uFaoTgeLXO3iVaHI2H4QUq0NP/IPWeu",
+                    "password": "password2",
+                    "confirmPassword": "password2"
+                }
+            
+            </remarks>
+            <param name="command">Reset password data</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="400">If there are problems reseting password</response>
+            <response code="404">If user with this email not found</response>
+        </member>
+        <member name="M:Identity.API.Controllers.RolesController.GetRoles">
+            <summary>
+            Get List Of All Roles
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/Roles
+            
+            </remarks>
+            <returns>List of Roles Dto object</returns>
+            <response code="204">Success</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+        </member>
+        <member name="M:Identity.API.Controllers.RolesController.GrantRoleToUser(Identity.Application.ApplicationRoles.Commands.GrantRoleToUser.GrantRoleToUserCommand)">
+            <summary>
+            Grant Role To User
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/Roles/grant
+                { 
+                    "RoleId": "a22a7860-084e-4980-9f82-088067074716",
+                    "UserId": "3aac0c67-a8bf-49ca-ba38-bbc490aa9633"
+                }
+            
+            </remarks>
+            <param name="command">Grant Role To User Data</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="400">If user is already in that role</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+            <response code="404">If user or role not found</response>
+        </member>
+        <member name="M:Identity.API.Controllers.RolesController.RevokeRoleFromUser(Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser.RevokeRoleFromUserCommand)">
+            <summary>
+            Revoke Role From User
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/Roles/revoke
+                { 
+                    "RoleId": "a22a7860-084e-4980-9f82-088067074716",
+                    "UserId": "3aac0c67-a8bf-49ca-ba38-bbc490aa9633"
+                }
+            
+            </remarks>
+            <param name="command">Revoke Role From User Data</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="400">If user is not in that role</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+            <response code="404">If user or role not found</response>
+        </member>
+        <member name="M:Identity.API.Controllers.RolesController.CreateRole(Identity.Application.ApplicationRoles.Commands.CreateRoles.CreateRoleCommand)">
+            <summary>
+            Create role
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/Roles/create
+                { 
+                    "roleName": "Customer"
+                }
+            
+            </remarks>
+            <param name="command">Create Role Data</param>
+            <returns>Returns CreatedAtAction with ApplicationRole object</returns>
+            <response code="201">Success</response>
+            <response code="400">If role already exists</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+        </member>
+        <member name="M:Identity.API.Controllers.RolesController.DeleteRole(System.Guid)">
+            <summary>
+            Delete Role
+            </summary>
+            <remarks>
+            Sample request:
+            
+                DELETE /api/Roles/a22a7860-084e-4980-9f82-088067074716
+            
+            </remarks>
+            <param name="id">Role Id (guid)</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="404">If role not found</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+        </member>
+        <member name="M:Identity.API.Controllers.RolesController.UpdateRole(Identity.Application.ApplicationRoles.Commands.UpdateRoles.UpdateRoleCommand)">
+            <summary>
+            Update role
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PUT /api/Roles
+                { 
+                    "id": "a22a7860-084e-4980-9f82-088067074716",
+                    "roleName": "Administrator"
+                }
+            
+            </remarks>
+            <param name="command">Update Role Data</param>
+            <returns>Returns NoContent Object Result</returns>
+            <response code="204">Success</response>
+            <response code="404">If role not found</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+        </member>
+        <member name="M:Identity.API.Controllers.UsersController.GetCurrentUser">
+            <summary>
+            Get Current User
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/Users/currentUser
+            
+            </remarks>
+            <returns>Current user Dto object</returns>
+            <response code="201">Success</response>
+            <response code="400">If token is invalid and it is not even possible to get user from id claim</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+        </member>
+        <member name="M:Identity.API.Controllers.UsersController.DeleteUser(System.Guid)">
+            <summary>
+            Delete User
+            </summary>
+            <remarks>
+            Sample request:
+            
+                DELETE /api/Users/a22a7860-084e-4980-9f82-088067074716
+            
+            </remarks>
+            <param name="id">User Id (guid)</param>
+            <returns>Returns NoContent object result</returns>
+            <response code="204">Success</response>
+            <response code="404">If user not found</response>
+            <response code="401">If the user not authorized</response>
+            <response code="403">If action is forbidden (ex: not for user role)</response>
+        </member>
+    </members>
+</doc>

@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.BL.Exceptions
+﻿namespace Service.Common.Exceptions
 {
     public class AppException
     {

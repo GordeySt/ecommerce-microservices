@@ -1,10 +1,10 @@
 ﻿using Catalog.API.BL.Constants;
-using Catalog.API.BL.Enums;
-using Catalog.API.BL.ResultWrappers;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using MongoDB.Driver;
+using Services.Common.Enums;
 using Services.Common.Models;
+using Services.Common.ResultWrappers;
 using System;
 using System.Threading.Tasks;
 

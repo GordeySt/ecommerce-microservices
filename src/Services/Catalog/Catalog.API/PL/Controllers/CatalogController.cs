@@ -1,11 +1,12 @@
-﻿using Catalog.API.BL.Enums;
-using Catalog.API.BL.Interfaces;
+﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+using Services.Common.Enums;
 using Services.Common.Models;
 using System;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Catalog.API.PL.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CatalogController : ControllerBase
     {
         private readonly ICatalogService _catalogService;
@@ -42,6 +44,7 @@ namespace Catalog.API.PL.Controllers
         /// <response code="200">Success</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
             ([FromQuery] PagingParams pagingParams) => await _catalogService.GetAllProductsAsync(pagingParams);
 

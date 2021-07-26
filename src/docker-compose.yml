@@ -10,6 +10,38 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  identitydb:
+    container_name: identitydb
+    image: postgres
+    environment: 
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=IdentityDb
+    restart: always
+    ports:
+      - 5420:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  identityserver:
+    container_name: identityserver
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Services/Identity/Identity.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_HTTPS_PORT=8011
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Fumezo73
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    depends_on:
+      - identitydb
+    ports:
+      - 8011:443
+    volumes:
+      - ~/.aspnet/https:/https:ro
+
   catalog.api: 
     container_name: catalog.api
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -20,8 +52,21 @@ services:
        - ASPNETCORE_ENVIRONMENT=docker
     depends_on:
       - catalogdb
+      - identityserver
     ports:
       - 8000:80
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@test.com
+      - PGADMIN_DEFAULT_PASSWORD=admin1234
+    restart: always
+    ports:
+      - 5050:80
+    volumes:
+      - pgadmin_data:/root/.pgadmin
 
   elasticsearch:
     container_name: elasticsearch
@@ -62,3 +107,5 @@ services:
 volumes:
   mongo_data:
   elasticsearch-data:
+  postgres_data:
+  pgadmin_data:

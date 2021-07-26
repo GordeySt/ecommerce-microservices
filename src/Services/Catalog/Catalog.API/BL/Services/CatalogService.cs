@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Catalog.API.BL.Interfaces;
-using Catalog.API.BL.ResultWrappers;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
 using Services.Common.Models;
+using Services.Common.ResultWrappers;
 using System;
 using System.Threading.Tasks;
 

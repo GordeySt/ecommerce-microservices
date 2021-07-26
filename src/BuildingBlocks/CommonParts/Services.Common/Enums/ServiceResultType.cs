@@ -1,9 +1,9 @@
-﻿namespace Catalog.API.BL.Enums
+﻿namespace Services.Common.Enums
 {
     public enum ServiceResultType
     {
         Success = 200,
-        InvalidData = 400,
+        BadRequest = 400,
         NotFound = 404,
         InternalServerError = 500
     }
