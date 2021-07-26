@@ -30,14 +30,12 @@ namespace Identity.API.Controllers
         /// <returns>Returns NoContent object result</returns>
         /// <response code="204">Success</response>
         /// <response code="400">If Email already exists</response>
-        /// <response code="500">If there are problems with creating user</response>
         [HttpPost("signup")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> SignupUser(SignupUserCommand command)
         {
-            command.Origin = Request.Headers["origin"];
+            command.Origin = GetRequestOrigin();
 
             var signUpResult = await Mediator.Send(command);
 
@@ -69,7 +67,7 @@ namespace Identity.API.Controllers
         /// <returns>Returns NoContent object result</returns>
         /// <response code="204">Success</response>
         /// <response code="400">If there are problems verifying email</response>
-        [HttpPost("verifyEmail")]
+        [HttpPost("verify-email")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> VerifyEmail(ConfirmEmailCommand command)
@@ -102,12 +100,12 @@ namespace Identity.API.Controllers
         /// <returns>Returns NoContent object result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If user with this email not found</response>
-        [HttpGet("resendEmailVerification")]
+        [HttpGet("resend-email-verification")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ResendEmailVerification([FromQuery] ResendEmailVerificationQuery query)
         {
-            query.Origin = Request.Headers["origin"];
+            query.Origin = GetRequestOrigin();
 
             var resendEmailVerificationResult = await Mediator.Send(query);
 
@@ -137,12 +135,12 @@ namespace Identity.API.Controllers
         /// <returns>Returns NoContent object result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If user with this email not found</response>
-        [HttpGet("sendResetPasswordEmail")]
+        [HttpGet("send-resetpassword-email")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SendResetPasswordEmail([FromQuery] SendResetPasswordEmailQuery query)
         {
-            query.Origin = Request.Headers["origin"];
+            query.Origin = GetRequestOrigin();
 
             var sendEmailResult = await Mediator.Send(query);
 
@@ -177,7 +175,7 @@ namespace Identity.API.Controllers
         /// <response code="204">Success</response>
         /// <response code="400">If there are problems reseting password</response>
         /// <response code="404">If user with this email not found</response>
-        [HttpPost("resetPassword")]
+        [HttpPost("reset-password")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -192,5 +190,7 @@ namespace Identity.API.Controllers
 
             return NoContent();
         }
+
+        private string GetRequestOrigin() => Request.Headers["origin"];
     }
 }

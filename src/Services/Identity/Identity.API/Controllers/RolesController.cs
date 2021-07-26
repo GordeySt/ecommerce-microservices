@@ -59,14 +59,12 @@ namespace Identity.API.Controllers
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
         /// <response code="404">If user or role not found</response>
-        /// <response code="500">If there are problems granting role to user</response>
         [HttpPost("grant")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GrantRoleToUser(GrantRoleToUserCommand command)
         {
             var roleGrantResult = await Mediator.Send(command);
@@ -99,14 +97,12 @@ namespace Identity.API.Controllers
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
         /// <response code="404">If user or role not found</response>
-        /// <response code="500">If there are problems revoking role from user</response>
         [HttpPost("revoke")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> RevokeRoleFromUser(RevokeRoleFromUserCommand command)
         {
             var revokeRoleFromUserResult = await Mediator.Send(command);
@@ -138,13 +134,11 @@ namespace Identity.API.Controllers
         /// <response code="400">If role already exists</response>
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
-        /// <response code="500">If there are problems creating role</response>
         [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateRole(CreateRoleCommand command)
         {
             var roleCreationResult = await Mediator.Send(command);
@@ -173,13 +167,11 @@ namespace Identity.API.Controllers
         /// <response code="404">If role not found</response>
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
-        /// <response code="500">If there are problems deleting role</response>
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteRole(Guid id)
         {
             var deleteRoleResult = await Mediator.Send(new DeleteRoleCommand(id));
@@ -211,13 +203,11 @@ namespace Identity.API.Controllers
         /// <response code="404">If role not found</response>
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
-        /// <response code="500">If there are problems deleting role</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateRole(UpdateRoleCommand command)
         {
             var updateRoleResult = await Mediator.Send(command);

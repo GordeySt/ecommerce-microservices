@@ -14,9 +14,13 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendEmailVerificationAsync(string token, string origin, string email)
         {
-            var verifyUrl = $"{origin}/user/verifyEmail?token={token}&email={email}";
+            var prefixRoute = "user/verify-email";
 
-            var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>{verifyUrl}></a></p>";
+            var verifyUrl = GetUrl(origin, prefixRoute, token, email);
+
+            var messageTitle = "Click to verify email address";
+
+            var message = $"<a href='{verifyUrl}'>{messageTitle}</a>";
 
             var subject = "Please verify your email address";
 
@@ -25,13 +29,20 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendResetPasswordEmail(string token, string origin, string email)
         {
-            var resetPasswordUrl = $"{origin}/user/resetPassword?token={token}&email={email}";
+            var prefixRoute = "user/reset-password";
 
-            var message = $"<p>Please click the below link to reset your password</p><p><a href='{resetPasswordUrl}'>{resetPasswordUrl}></a></p>";
+            var resetPasswordUrl = GetUrl(origin, prefixRoute, token, email);
+
+            var messageTitle = "Click to reset password";
+
+            var message = $"<a href='{resetPasswordUrl}'>{messageTitle}</a>";
 
             var subject = "Reset password confirmation";
 
             await _emailSender.SendEmailAsync(email, subject, message);
         }
+
+        private static string GetUrl(string origin, string prefixRoute, string token, string email) =>
+            $"{origin}/{prefixRoute}?token={token}&email={email}";
     }
 }
