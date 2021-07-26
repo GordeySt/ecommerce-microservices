@@ -23,7 +23,6 @@
             <returns>Returns NoContent object result</returns>
             <response code="204">Success</response>
             <response code="400">If Email already exists</response>
-            <response code="500">If there are problems with creating user</response>
         </member>
         <member name="M:Identity.API.Controllers.AuthController.VerifyEmail(Identity.Application.ApplicationUsers.Commands.ConfirmEmails.ConfirmEmailCommand)">
             <summary>
@@ -146,7 +145,6 @@
             <response code="401">If the user not authorized</response>
             <response code="403">If action is forbidden (ex: not for user role)</response>
             <response code="404">If user or role not found</response>
-            <response code="500">If there are problems granting role to user</response>
         </member>
         <member name="M:Identity.API.Controllers.RolesController.RevokeRoleFromUser(Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser.RevokeRoleFromUserCommand)">
             <summary>
@@ -169,7 +167,6 @@
             <response code="401">If the user not authorized</response>
             <response code="403">If action is forbidden (ex: not for user role)</response>
             <response code="404">If user or role not found</response>
-            <response code="500">If there are problems revoking role from user</response>
         </member>
         <member name="M:Identity.API.Controllers.RolesController.CreateRole(Identity.Application.ApplicationRoles.Commands.CreateRoles.CreateRoleCommand)">
             <summary>
@@ -190,7 +187,6 @@
             <response code="400">If role already exists</response>
             <response code="401">If the user not authorized</response>
             <response code="403">If action is forbidden (ex: not for user role)</response>
-            <response code="500">If there are problems creating role</response>
         </member>
         <member name="M:Identity.API.Controllers.RolesController.DeleteRole(System.Guid)">
             <summary>
@@ -208,7 +204,6 @@
             <response code="404">If role not found</response>
             <response code="401">If the user not authorized</response>
             <response code="403">If action is forbidden (ex: not for user role)</response>
-            <response code="500">If there are problems deleting role</response>
         </member>
         <member name="M:Identity.API.Controllers.RolesController.UpdateRole(Identity.Application.ApplicationRoles.Commands.UpdateRoles.UpdateRoleCommand)">
             <summary>
@@ -230,7 +225,6 @@
             <response code="404">If role not found</response>
             <response code="401">If the user not authorized</response>
             <response code="403">If action is forbidden (ex: not for user role)</response>
-            <response code="500">If there are problems deleting role</response>
         </member>
         <member name="M:Identity.API.Controllers.UsersController.GetCurrentUser">
             <summary>
@@ -264,7 +258,6 @@
             <response code="404">If user not found</response>
             <response code="401">If the user not authorized</response>
             <response code="403">If action is forbidden (ex: not for user role)</response>
-            <response code="500">If there are problems deleting user</response>
         </member>
     </members>
 </doc>

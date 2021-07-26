@@ -29,7 +29,7 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendResetPasswordEmail(string token, string origin, string email)
         {
-            string prefixRoute = "user/resetpassword";
+            var prefixRoute = "user/resetpassword";
 
             var resetPasswordUrl = GetUrl(origin, prefixRoute, token, email);
 
@@ -42,7 +42,7 @@ namespace Identity.Infrastructure.Services.Email
             await _emailSender.SendEmailAsync(email, subject, message);
         }
 
-        private string GetUrl(string origin, string prefixRoute, string token, string email) =>
+        private static string GetUrl(string origin, string prefixRoute, string token, string email) =>
             $"{origin}/{prefixRoute}?token={token}&email={email}";
     }
 }

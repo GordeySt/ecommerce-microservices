@@ -28,7 +28,7 @@ namespace Identity.API.Controllers
         /// <response code="400">If token is invalid and it is not even possible to get user from id claim</response>
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
-        [HttpGet("currentuser")]
+        [HttpGet("current-user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -60,14 +60,12 @@ namespace Identity.API.Controllers
         /// <response code="404">If user not found</response>
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
-        /// <response code="500">If there are problems deleting user</response>
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = ApplicationRolesConstants.AdministratorRole)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             var deleteUserResult = await Mediator.Send(new DeleteUserCommand(id));
