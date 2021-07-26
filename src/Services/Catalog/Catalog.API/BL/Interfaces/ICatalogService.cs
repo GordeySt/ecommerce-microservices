@@ -15,7 +15,7 @@ namespace Catalog.API.BL.Interfaces
 
         public Task<ServiceResult> DeleteProductAsync(Guid id);
 
-        public Task<PagedList<ProductDto>> GetAllProductsAsync(PagingParams pagingParams);
+        public Task<PagedList<ProductDto>> GetAllProductsAsync(ProductsParams productsParams);
 
         public Task<IEnumerable<string>> GetPopularCategoriesAsync(int populerCategoriesCount);
 

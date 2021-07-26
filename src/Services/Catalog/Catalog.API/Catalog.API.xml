@@ -4,7 +4,7 @@
         <name>Catalog.API</name>
     </assembly>
     <members>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetProducts(Services.Common.Models.PagingParams)">
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetProducts(Catalog.API.PL.Models.Params.ProductsParams)">
             <summary>
             Gets the paginated list of products
             </summary>
@@ -14,7 +14,7 @@
                 GET /api/Catalog?pageNumber=4&amp;pageSize=4
             
             </remarks>
-            <param name="pagingParams"></param>
+            <param name="productsParams"></param>
             <returns>Returns PagedList of ProductDto</returns>
             <response code="200">Success</response>
         </member>

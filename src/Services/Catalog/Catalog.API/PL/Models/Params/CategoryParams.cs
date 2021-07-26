@@ -2,8 +2,8 @@
 
 namespace Catalog.API.PL.Models.Params
 {
-    public class CategoryParams : PagingParams
+    public class ProductsParams : PagingParams
     {
-        public string CategoryName { get; set; }
+        public string ProductName { get; set; }
     }
 }

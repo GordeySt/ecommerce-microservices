@@ -19,6 +19,8 @@ namespace Catalog.API.DAL.Interfaces
         public Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool disableTracking = true);
 
+        public IQueryable<T> GetQueryable(Expression<Func<T, bool>> expression);
+
         public Task<T> GetByIdAsync(Guid id, bool disableTracking = true);
 
         public Task<ServiceResult<T>> AddAsync(T entity);

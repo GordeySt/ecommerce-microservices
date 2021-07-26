@@ -1,5 +1,6 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.PL.Models.DTOs;
+using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,14 +45,15 @@ namespace Catalog.API.PL.Controllers
         ///     GET /api/Catalog?pageNumber=4&amp;pageSize=4
         /// 
         /// </remarks>
-        /// <param name="pagingParams"></param>
+        /// <param name="productsParams"></param>
         /// <returns>Returns PagedList of ProductDto</returns>
         /// <response code="200">Success</response>
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
-            ([FromQuery] PagingParams pagingParams) => await _catalogService.GetAllProductsAsync(pagingParams);
+            ([FromQuery] ProductsParams productsParams)
+            => await _catalogService.GetAllProductsAsync(productsParams);
 
         /// <summary>
         /// Gets the product by id

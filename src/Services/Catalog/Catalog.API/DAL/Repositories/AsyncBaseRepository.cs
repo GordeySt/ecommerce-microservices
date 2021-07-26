@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Catalog.API.DAL.Entities;
+﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Services.Common.Constatns;
@@ -34,6 +31,9 @@ namespace Catalog.API.DAL.Repositories
 
         public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate) => 
             await _entity.Where(predicate).ToListAsync();
+
+        public IQueryable<T> GetQueryable(Expression<Func<T, bool>> expression) => 
+            _entity.Where(expression);
 
         public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate = null, 
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool disableTracking = true)
