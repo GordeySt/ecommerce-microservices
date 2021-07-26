@@ -14,7 +14,7 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendEmailVerificationAsync(string token, string origin, string email)
         {
-            var prefixRoute = "user/verifyemail";
+            var prefixRoute = "user/verify-email";
 
             var verifyUrl = GetUrl(origin, prefixRoute, token, email);
 
@@ -29,7 +29,7 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendResetPasswordEmail(string token, string origin, string email)
         {
-            var prefixRoute = "user/resetpassword";
+            var prefixRoute = "user/reset-password";
 
             var resetPasswordUrl = GetUrl(origin, prefixRoute, token, email);
 
