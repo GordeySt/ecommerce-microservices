@@ -20,11 +20,13 @@ namespace Catalog.API.Startup.Configuration
 
             //Services
             services.AddTransient<ICatalogService, CatalogService>();
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPhotoCloudAccessor, PhotoCloudAccessor>();
             services.AddTransient<IPhotoService, PhotoService>();
 
             //Repository
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
 
             services.AddTransient<LoggingDelegatingHandler>();
         }

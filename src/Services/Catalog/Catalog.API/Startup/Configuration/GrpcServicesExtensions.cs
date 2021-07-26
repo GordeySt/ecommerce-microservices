@@ -1,4 +1,4 @@
-﻿using Catalog.API.PL.GrpcServices;
+﻿using Catalog.API.BL.Services.GrpcServices;
 using Catalog.API.Startup.HttpPolicies;
 using Catalog.API.Startup.Settings;
 using Common.Logging;

@@ -1,8 +1,5 @@
 ﻿using Catalog.API.DAL.Entities;
-using Catalog.API.DAL.Interfaces;
-using Catalog.API.Startup.Settings;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
 using System.Reflection;
 
 namespace Catalog.API.DAL
@@ -15,6 +12,7 @@ namespace Catalog.API.DAL
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
