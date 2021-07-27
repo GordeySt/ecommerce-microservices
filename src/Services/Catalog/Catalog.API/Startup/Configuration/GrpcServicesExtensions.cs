@@ -16,8 +16,8 @@ namespace Catalog.API.Startup.Configuration
             services.AddGrpcClient<UserProtoService.UserProtoServiceClient>
                 (o => o.Address = new Uri(appSettings.AppUrlsSettings.IdentityGrpcUrl))
                 .AddHttpMessageHandler<LoggingDelegatingHandler>()
-                .AddPolicyHandler(RetryPolicy.GetRetryPolicy())
-                .AddPolicyHandler(CircuitBreakerPolicy.GetCircuitBreakerPolicy());
+                .AddPolicyHandler(RetryPolicy.GetRetryPolicy(appSettings))
+                .AddPolicyHandler(CircuitBreakerPolicy.GetCircuitBreakerPolicy(appSettings));
 
             services.AddScoped<UserGrpcService>();
         }

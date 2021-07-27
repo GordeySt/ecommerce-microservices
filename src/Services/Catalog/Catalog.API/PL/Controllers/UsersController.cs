@@ -21,7 +21,7 @@ namespace Catalog.API.PL.Controllers
             _usersService = usersService;
         }
 
-        [HttpGet("{id:guid}/create-user")]
+        [HttpPost("create-user/id/{id:guid}")]
         public async Task<ActionResult<ApplicationUserModel>> CreateUser(Guid id) 
         {
             var user = await _userGrpcService.GetUserByIdAsync(id);

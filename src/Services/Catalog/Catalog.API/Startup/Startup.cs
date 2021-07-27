@@ -94,6 +94,12 @@ namespace Catalog.API.Startup
             var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
                 .Get<AppUrlsSettings>();
 
+            var retryPolicySettings = configuration.GetSection(nameof(AppSettings.RetryPolicySettings))
+                .Get<RetryPolicySettings>();
+
+            var circuitBreakerSettings = configuration.GetSection(nameof(AppSettings.CircuitBreakerSettings))
+                .Get<CircuitBreakerSettings>();
+
             if (env.IsDevelopment())
             {
                 cloudinarySettings.ApiSecret = configuration["Cloudinary:ApiSecret"];
@@ -103,7 +109,9 @@ namespace Catalog.API.Startup
             {
                 DbSettings = dbSettings,
                 CloudinarySettings = cloudinarySettings,
-                AppUrlsSettings = appUrlsSettings
+                AppUrlsSettings = appUrlsSettings,
+                RetryPolicySettings = retryPolicySettings,
+                CircuitBreakerSettings = circuitBreakerSettings
             };
         }
     }
