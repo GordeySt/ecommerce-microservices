@@ -4,6 +4,20 @@
         <name>Catalog.API</name>
     </assembly>
     <members>
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetPopularCategories(System.Int32)">
+            <summary>
+            Gets the most popular categories of products
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/get-popular?popularCategoriesCount=2
+            
+            </remarks>
+            <param name="popularCategoriesCount">Count of the popular categories</param>
+            <returns>Returns PagedList of ProductDto</returns>
+            <response code="200">Success</response>
+        </member>
         <member name="M:Catalog.API.PL.Controllers.CatalogController.GetProducts(Catalog.API.PL.Models.Params.ProductsParams)">
             <summary>
             Gets the paginated list of products
@@ -107,6 +121,39 @@
             <returns>Returns NoContent Result</returns>
             <response code="204">Success</response>
             <response code="404">If the product with id (guid) not found</response>
+        </member>
+        <member name="M:Catalog.API.PL.Controllers.ProductRatingsController.AddRatingToProduct(System.Guid,System.Int32)">
+            <summary>
+            Rate product
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/add-ratings/id/e0c40c25-52f7-48df-91fc-441dadca0a0f
+            
+            </remarks>
+            <param name="id">Product Id (guid)</param>
+            <param name="ratingCount">Rating Count</param>
+            <returns>Returns NoContent Object Result</returns>
+            <response code="200">Success</response>
+            <response code="400">If rating already exists</response>
+            <response code="404">If product rating not found (user or product not found)</response>
+        </member>
+        <member name="M:Catalog.API.PL.Controllers.ProductRatingsController.ChangeRatingAtProduct(System.Guid,System.Int32)">
+            <summary>
+            Update product rating
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/change-ratings/id/e0c40c25-52f7-48df-91fc-441dadca0a0f
+            
+            </remarks>
+            <param name="id">Product Id (guid)</param>
+            <param name="ratingCount">Rating Count</param>
+            <returns>Returns NoContent Object Result</returns>
+            <response code="200">Success</response>
+            <response code="404">If product rating not found (user or product not found)</response>
         </member>
         <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Name">
             <summary>

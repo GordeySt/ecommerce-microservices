@@ -33,9 +33,22 @@ namespace Catalog.API.PL.Controllers
             _photoService = photoService;
         }
 
+        /// <summary>
+        /// Gets the most popular categories of products
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/get-popular?popularCategoriesCount=2
+        /// 
+        /// </remarks>
+        /// <param name="popularCategoriesCount">Count of the popular categories</param>
+        /// <returns>Returns PagedList of ProductDto</returns>
+        /// <response code="200">Success</response>
         [HttpGet("get-popular")]
         [PopularCategoriesParamValidation]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<string>>> GetPopularCategories
             ([FromQuery] int popularCategoriesCount)
         {
