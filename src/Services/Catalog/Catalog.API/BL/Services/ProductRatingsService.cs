@@ -70,5 +70,59 @@ namespace Catalog.API.BL.Services
             Product = product,
             Rating = ratingCount
         };
+
+        public async Task<ServiceResult> UpdateRatingAtProductAsync(Guid productId, int ratingCount)
+        {
+            var userId = new Guid(_currentUserSerivce.UserId);
+
+            var user = await _usersRepository.GetUserByIdAsync(userId);
+
+            if (user is null)
+            {
+                return new ServiceResult(ServiceResultType.NotFound,
+                    ExceptionMessageConstants.NotFoundItemMessage);
+            }
+
+            var product = await _productRepository.GetProductByIdAsync(productId);
+
+            if (product is null)
+            {
+                return new ServiceResult(ServiceResultType.NotFound,
+                    ExceptionMessageConstants.NotFoundItemMessage);
+            }
+
+            var productRating = await _productRatingsRepository.GetProductRatingByIdsAsync(productId, userId);
+
+            if (productRating is null)
+            {
+                return new ServiceResult(ServiceResultType.NotFound,
+                    ExceptionMessageConstants.NotFoundItemMessage);
+            }
+
+            var lastProductRating = productRating.Rating;
+
+            UpdateProductRating(productRating, ratingCount);
+
+            var updateRatingResult = await _productRatingsRepository.UpdateAsync(productRating);
+
+            if (updateRatingResult.Result is ServiceResultType.Success)
+            {
+                UpdateProductTotalRating(product, lastProductRating, ratingCount);
+            }
+
+            var updateTotalRatingResult = await _productRepository.UpdateAsync(product);
+
+            return updateTotalRatingResult;
+        }
+
+        private static void UpdateProductRating(ProductRating productRating, int ratingCount)
+        {
+            productRating.Rating = ratingCount;
+        }
+
+        private static void UpdateProductTotalRating(Product product, int lastProductRating, int ratingCount)
+        {
+             product.TotalRating = product.TotalRating - lastProductRating + ratingCount;
+        }
     }
 }
