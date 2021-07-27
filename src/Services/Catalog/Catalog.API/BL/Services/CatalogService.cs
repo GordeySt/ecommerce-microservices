@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Catalog.API.BL.Enums;
 using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
@@ -54,23 +55,11 @@ namespace Catalog.API.BL.Services
         {
             var products = _productRepository.GetAllQueryable();
 
-            if (productsParams.CategoryName is not null)
-            {
-                products = _productRepository
-                    .GetQueryable(ref products, x => x.Category == productsParams.CategoryName);
-            }
+            FilterByCategory(ref products, productsParams.CategoryName);
 
-            if (productsParams.PriceOrderType is not null)
-            {
-                products = _productRepository
-                    .SortProductsByPrice(ref products, productsParams.PriceOrderType);
-            }
+            FilterByAgeRating(ref products, (int)productsParams.MinimumAge);
 
-            if (productsParams.MinimumAge >= 0)
-            {
-                products = _productRepository
-                    .GetQueryable(ref products, x => (int)x.AgeRating >= (int)productsParams.MinimumAge);
-            }
+            SortByPrice(ref products, productsParams.PriceOrderType);
 
             SearchByName(ref products, productsParams.ProductName);
 
@@ -79,6 +68,32 @@ namespace Catalog.API.BL.Services
 
             return await PagedList<ProductDto>.CreateAsync(productsDto, productsParams.PageNumber,
                 productsParams.PageSize);
+        }
+
+        private void FilterByCategory(ref IQueryable<Product> products, string categoryName)
+        {
+            if (categoryName is not null)
+            {
+                products = _productRepository
+                    .GetQueryable(ref products, x => x.Category == categoryName);
+            }
+        }
+
+        private void FilterByAgeRating(ref IQueryable<Product> products, int minimumAge)
+        {
+            if (minimumAge >= 0)
+            {
+                products = _productRepository
+                    .GetQueryable(ref products, x => (int)x.AgeRating >= minimumAge);
+            }
+        }
+        private void SortByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType)
+        {
+            if (priceOrderType is not null)
+            {
+                products = _productRepository
+                    .SortProductsByPrice(ref products, priceOrderType);
+            }
         }
 
         private void SearchByName(ref IQueryable<Product> products, string productName)
