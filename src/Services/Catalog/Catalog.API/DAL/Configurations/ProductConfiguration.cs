@@ -9,6 +9,10 @@ namespace Catalog.API.DAL.Configurations
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasIndex(t => t.Name);
+
+            builder
+                .Property(t => t.AgeRating)
+                .HasConversion<int>();
         }
     }
 }

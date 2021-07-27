@@ -1,4 +1,5 @@
 ﻿using Catalog.API.DAL.Entities;
+using Catalog.API.DAL.Enums;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Catalog.API.DAL
                     Price = 950.00M,
                     Category = "Smart Phone",
                     Count = 6,
-                    AgeRating = 6
+                    AgeRating = AgeRating.AboveThree
                 },
                 new Product()
                 {
@@ -46,7 +47,7 @@ namespace Catalog.API.DAL
                     Price = 840.00M,
                     Category = "Smart Phone",
                     Count = 10,
-                    AgeRating = 12
+                    AgeRating = AgeRating.AboveThree
                 },
                 new Product()
                 {
@@ -58,7 +59,7 @@ namespace Catalog.API.DAL
                     Price = 650.00M,
                     Category = "White Appliances",
                     Count = 15,
-                    AgeRating = 6
+                    AgeRating = AgeRating.AboveSixteen
                 },
                 new Product()
                 {
@@ -70,7 +71,7 @@ namespace Catalog.API.DAL
                     Price = 470.00M,
                     Category = "White Appliances",
                     Count = 6,
-                    AgeRating = 18
+                    AgeRating = AgeRating.AboveSixteen
                 },
                 new Product()
                 {
@@ -82,19 +83,19 @@ namespace Catalog.API.DAL
                     Price = 380.00M,
                     Category = "Smart Phone",
                     Count = 11,
-                    AgeRating = 18
+                    AgeRating = AgeRating.AboveSixteen
                 },
                 new Product()
                 {
                     Id = Guid.NewGuid(),
-                    Name = "LG G7 ThinQ",
+                    Name = "LG G7 Thin",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 240.00M,
                     Category = "Home Kitchen",
                     Count = 20,
-                    AgeRating = 6
+                    AgeRating = AgeRating.AboveEighteen
                 }
             };
         }
