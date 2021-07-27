@@ -56,7 +56,7 @@ namespace Catalog.API.DAL.Repositories
                 .ToListAsync();
         }
 
-        public IQueryable<Product> SortProductsByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType)
+        public void SortProductsByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType)
         {
             switch (priceOrderType)
             {
@@ -67,8 +67,19 @@ namespace Catalog.API.DAL.Repositories
                     products = products.OrderByDescending(t => t.Price);
                     break;
             }
+        }
 
-            return products;
+        public void SortProductByRating(ref IQueryable<Product> products, RatingOrderType? ratingOrderType)
+        {
+            switch (ratingOrderType)
+            {
+                case RatingOrderType.Asc:
+                    products = products.OrderBy(t => t.TotalRating);
+                    break;
+                case RatingOrderType.Desc:
+                    products = products.OrderByDescending(t => t.TotalRating);
+                    break;
+            }
         }
     }
 }

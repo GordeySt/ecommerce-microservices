@@ -61,6 +61,8 @@ namespace Catalog.API.BL.Services
 
             SortByPrice(ref products, productsParams.PriceOrderType);
 
+            SortByRating(ref products, productsParams.RatingOrderType);
+
             SearchByName(ref products, productsParams.ProductName);
 
             var productsDto = products
@@ -91,8 +93,15 @@ namespace Catalog.API.BL.Services
         {
             if (priceOrderType is not null)
             {
-                products = _productRepository
-                    .SortProductsByPrice(ref products, priceOrderType);
+                _productRepository.SortProductsByPrice(ref products, priceOrderType);
+            }
+        }
+
+        private void SortByRating(ref IQueryable<Product> products, RatingOrderType? ratingOrderType)
+        {
+            if (ratingOrderType is not null)
+            {
+                _productRepository.SortProductByRating(ref products, ratingOrderType);
             }
         }
 

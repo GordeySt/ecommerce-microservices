@@ -12,7 +12,8 @@ namespace Catalog.API.DAL.Interfaces
     {
         public Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl);
         public Task<IEnumerable<string>> GetPopularCategoriesAsync(int popularCategoriesCount);
-        public IQueryable<Product> SortProductsByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType);
+        public void SortProductsByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType);
+        public void SortProductByRating(ref IQueryable<Product> products, RatingOrderType? ratingOrderType);
         public Task<Product> GetProductByIdAsync(Guid id, bool disableTracking = true);
     }
 }
