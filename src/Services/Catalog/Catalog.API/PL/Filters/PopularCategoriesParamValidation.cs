@@ -15,7 +15,7 @@ namespace Catalog.API.PL.Filters
                 return;
             }
 
-            if (!(context.ActionArguments[popularCategoriesCountKey] is int popularCategoriesCount))
+            if (context.ActionArguments[popularCategoriesCountKey] is not int popularCategoriesCount)
             {
                 context.Result = new BadRequestResult();
                 return;

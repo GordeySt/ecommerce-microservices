@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Interfaces
 {
-    public interface IAsyncBaseRepository<T> where T : EntityBase
+    public interface IAsyncBaseRepository<T> where T : class
     {
         public Task<IEnumerable<T>> GetAllAsync();
 
@@ -17,8 +17,6 @@ namespace Catalog.API.DAL.Interfaces
         public Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate);
 
         public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression);
-
-        public Task<T> GetByIdAsync(Guid id, bool disableTracking = true);
 
         public Task<ServiceResult<T>> AddAsync(T entity);
 

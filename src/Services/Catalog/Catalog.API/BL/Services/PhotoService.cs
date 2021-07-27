@@ -23,7 +23,7 @@ namespace Catalog.API.BL.Services
 
         public async Task<ServiceResult> AddPhotoAsync(IFormFile mainImage, Guid productId)
         {
-            var product = await _productRepository.GetByIdAsync(productId);
+            var product = await _productRepository.GetProductByIdAsync(productId);
 
             if (product is null)
             {

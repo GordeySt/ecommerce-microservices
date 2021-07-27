@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Catalog.API.DAL.Repositories
 {
     public class AsyncBaseRepository<T> : IAsyncBaseRepository<T> where T 
-        : EntityBase
+        : class
     {
         protected readonly ApplicationDbContext DatabaseContext;
         private readonly DbSet<T> _entity;
@@ -34,16 +34,6 @@ namespace Catalog.API.DAL.Repositories
 
         public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression) => 
             entity.Where(expression);
-
-        public async Task<T> GetByIdAsync(Guid id, bool disableTracking = true)
-        {
-            if (disableTracking)
-            {
-                return await _entity.FirstOrDefaultAsync(x => x.Id == id);
-            }
-
-            return await _entity.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-        }
 
         public async Task<ServiceResult<T>> AddAsync(T entity)
         {

@@ -37,7 +37,7 @@ namespace Catalog.API.BL.Services
            
         public async Task<ServiceResult> DeleteProductAsync(Guid id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _productRepository.GetProductByIdAsync(id);
 
             if (product is null)
             {
@@ -107,14 +107,14 @@ namespace Catalog.API.BL.Services
 
         public async Task<ProductDto> GetProductByIdAsync(Guid id)
         {
-            var proudct = await _productRepository.GetByIdAsync(id);
+            var proudct = await _productRepository.GetProductByIdAsync(id);
 
             return proudct is not null ? _mapper.Map<ProductDto>(proudct) : default;
         }
 
         public async Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto)
         {
-            var product = await _productRepository.GetByIdAsync(updateProductDto.Id, false);
+            var product = await _productRepository.GetProductByIdAsync(updateProductDto.Id, false);
 
             if (product is null)
             {

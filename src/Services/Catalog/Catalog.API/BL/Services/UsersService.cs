@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Catalog.API.BL.Constants;
 using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
@@ -23,7 +24,7 @@ namespace Catalog.API.BL.Services
 
         public async Task<ServiceResult<User>> AddUserAsync(ApplicationUserModel userModel)
         {
-            var user = await _usersRepository.GetByIdAsync(new Guid(userModel.Id));
+            var user = await _usersRepository.GetUserByIdAsync(new Guid(userModel.Id));
 
             if (user is not null)
             {

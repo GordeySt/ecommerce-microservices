@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,16 @@ namespace Catalog.API.DAL.Repositories
     {
         public ProductRepository(ApplicationDbContext databaseContext) : base(databaseContext)
         { }
+
+        public async Task<Product> GetProductByIdAsync(Guid id, bool disableTracking = true)
+        {
+            if (disableTracking)
+            {
+                return await DatabaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
+            }
+
+            return await DatabaseContext.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        }
 
         public async Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl)
         {
