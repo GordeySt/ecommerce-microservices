@@ -62,6 +62,12 @@ namespace Catalog.API.PL.Models.DTOs
         /// <example>10</example>
         public int Count { get; set; }
 
+        /// <summary>
+        /// Total Rating of the product
+        /// </summary>
+        /// <example>10</example>
+        public int TotalRating { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Product, ProductDto>();

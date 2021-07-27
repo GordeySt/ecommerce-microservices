@@ -204,6 +204,12 @@
             </summary>
             <example>10</example>
         </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.TotalRating">
+            <summary>
+            Total Rating of the product
+            </summary>
+            <example>10</example>
+        </member>
         <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Id">
             <summary>
             Id (guid) of the product
