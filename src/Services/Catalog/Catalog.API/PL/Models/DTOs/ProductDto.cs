@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Catalog.API.BL.Mappings;
 using Catalog.API.DAL.Entities;
-using Catalog.API.DAL.Enums;
 using System;
 
 namespace Catalog.API.PL.Models.DTOs
@@ -54,7 +53,8 @@ namespace Catalog.API.PL.Models.DTOs
         /// Age Rating of the product
         /// </summary>
         /// <example>6</example>
-        public AgeRating AgeRating { get; set; }
+        
+        public int AgeRating { get; set; }
 
         /// <summary>
         /// Count of the product

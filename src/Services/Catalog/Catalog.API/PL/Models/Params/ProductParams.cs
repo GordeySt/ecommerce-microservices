@@ -1,4 +1,5 @@
 ﻿using Catalog.API.BL.Enums;
+using Catalog.API.DAL.Enums;
 using Services.Common.Models;
 
 namespace Catalog.API.PL.Models.Params
@@ -7,7 +8,7 @@ namespace Catalog.API.PL.Models.Params
     {
         public string ProductName { get; set; }
         public string CategoryName { get; set; }
-        public int MinimumAge { get; set; }
+        public AgeRating MinimumAge { get; set; }
         public PriceOrderType? PriceOrderType { get; set; }
         public RatingOrderType? RatingOrderType { get; set; }
     }

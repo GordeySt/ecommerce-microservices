@@ -69,7 +69,7 @@ namespace Catalog.API.BL.Services
             if (productsParams.MinimumAge >= 0)
             {
                 products = _productRepository
-                    .GetQueryable(ref products, x => (int)x.AgeRating >= productsParams.MinimumAge);
+                    .GetQueryable(ref products, x => (int)x.AgeRating >= (int)productsParams.MinimumAge);
             }
 
             SearchByName(ref products, productsParams.ProductName);
