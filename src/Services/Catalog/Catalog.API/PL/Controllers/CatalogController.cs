@@ -1,4 +1,5 @@
 ﻿using Catalog.API.BL.Interfaces;
+using Catalog.API.PL.Filters;
 using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,7 @@ namespace Catalog.API.PL.Controllers
         }
 
         [HttpGet("get-popular")]
+        [PopularCategoriesParamValidation]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<string>>> GetPopularCategories
             ([FromQuery] int popularCategoriesCount)
