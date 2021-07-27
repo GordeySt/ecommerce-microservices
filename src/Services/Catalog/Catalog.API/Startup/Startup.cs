@@ -34,7 +34,6 @@ namespace Catalog.API.Startup
             services.RegisterDatabase(appSettings);
             services.RegisterAuthSettings(appSettings);
             services.ValidateSettingParameters(Configuration);
-            services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
             services.RegisterGrpcServices(appSettings);
 
@@ -44,6 +43,8 @@ namespace Catalog.API.Startup
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
+
+            services.RegisterServices(appSettings);
 
             services.RegisterSwagger(appSettings);
             services.RegisterHealthChecks(appSettings);
