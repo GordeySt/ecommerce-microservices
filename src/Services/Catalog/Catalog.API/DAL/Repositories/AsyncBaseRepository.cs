@@ -32,23 +32,8 @@ namespace Catalog.API.DAL.Repositories
         public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate) => 
             await _entity.Where(predicate).ToListAsync();
 
-        public IQueryable<T> GetQueryable(Expression<Func<T, bool>> expression) => 
-            _entity.Where(expression);
-
-        public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate = null, 
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool disableTracking = true)
-        {
-            IQueryable<T> query = _entity;
-
-            if (disableTracking) query = query.AsNoTracking();
-
-            if (predicate != null) query = query.Where(predicate);
-
-            if (orderBy != null)
-                return await orderBy(query).ToListAsync();
-
-            return await query.ToListAsync();
-        }
+        public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression) => 
+            entity.Where(expression);
 
         public async Task<T> GetByIdAsync(Guid id, bool disableTracking = true)
         {

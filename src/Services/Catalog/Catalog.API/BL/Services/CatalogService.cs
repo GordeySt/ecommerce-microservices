@@ -54,6 +54,24 @@ namespace Catalog.API.BL.Services
         {
             var products = _productRepository.GetAllQueryable();
 
+            if (productsParams.CategoryName is not null)
+            {
+                products = _productRepository
+                    .GetQueryable(ref products, x => x.Category == productsParams.CategoryName);
+            }
+
+            if (productsParams.PriceOrderType is not null)
+            {
+                products = _productRepository
+                    .SortProductsByPrice(ref products, productsParams.PriceOrderType);
+            }
+
+            if (productsParams.MinimumAge >= 0)
+            {
+                products = _productRepository
+                    .GetQueryable(ref products, x => x.AgeRating >= productsParams.MinimumAge);
+            }
+
             SearchByName(ref products, productsParams.ProductName);
 
             var productsDto = products
@@ -69,7 +87,7 @@ namespace Catalog.API.BL.Services
                 return;
 
             products = _productRepository
-                .GetQueryable(o => o.Name.ToLower().Contains(productName.Trim().ToLower()));
+                .GetQueryable(ref products, o => o.Name.ToLower().Contains(productName.Trim().ToLower()));
         }
 
         public async Task<ProductDto> GetProductByIdAsync(Guid id)

@@ -32,7 +32,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 950.00M,
-                    Category = "Smart Phone"
+                    Category = "Smart Phone",
+                    Count = 6,
+                    AgeRating = 6
                 },
                 new Product()
                 {
@@ -42,7 +44,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 840.00M,
-                    Category = "Smart Phone"
+                    Category = "Smart Phone",
+                    Count = 10,
+                    AgeRating = 12
                 },
                 new Product()
                 {
@@ -52,7 +56,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 650.00M,
-                    Category = "White Appliances"
+                    Category = "White Appliances",
+                    Count = 15,
+                    AgeRating = 6
                 },
                 new Product()
                 {
@@ -62,7 +68,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 470.00M,
-                    Category = "White Appliances"
+                    Category = "White Appliances",
+                    Count = 6,
+                    AgeRating = 18
                 },
                 new Product()
                 {
@@ -72,7 +80,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 380.00M,
-                    Category = "Smart Phone"
+                    Category = "Smart Phone",
+                    Count = 11,
+                    AgeRating = 18
                 },
                 new Product()
                 {
@@ -82,7 +92,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 240.00M,
-                    Category = "Home Kitchen"
+                    Category = "Home Kitchen",
+                    Count = 20,
+                    AgeRating = 6
                 }
             };
         }

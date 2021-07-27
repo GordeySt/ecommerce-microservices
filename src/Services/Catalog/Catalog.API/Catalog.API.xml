@@ -138,6 +138,18 @@
             </summary>
             <example>60</example>
         </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.AgeRating">
+            <summary>
+            Age Rating of the product
+            </summary>
+            <example>6</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Count">
+            <summary>
+            Count of the product
+            </summary>
+            <example>10</example>
+        </member>
         <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Id">
             <summary>
             Id (guid) of the product
@@ -180,6 +192,18 @@
             </summary>
             <example>60</example>
         </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.AgeRating">
+            <summary>
+            Age Rating of the product
+            </summary>
+            <example>6</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Count">
+            <summary>
+            Count of the product
+            </summary>
+            <example>10</example>
+        </member>
         <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Id">
             <summary>
             Id (guid) of the product
@@ -215,6 +239,18 @@
             Price of the product
             </summary>
             <example>60</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.AgeRating">
+            <summary>
+            Age Rating of the product
+            </summary>
+            <example>6</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Count">
+            <summary>
+            Count of the product
+            </summary>
+            <example>10</example>
         </member>
         <member name="T:Identity.Grpc.Protos.UserReflection">
             <summary>Holder for reflection information generated from user.proto</summary>

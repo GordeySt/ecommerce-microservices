@@ -1,4 +1,5 @@
-﻿using Catalog.API.DAL.Entities;
+﻿using Catalog.API.BL.Enums;
+using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
@@ -42,6 +43,21 @@ namespace Catalog.API.DAL.Repositories
                 .Select(x => x.Category)
                 .Take(popularCategoriesCount)
                 .ToListAsync();
+        }
+
+        public IQueryable<Product> SortProductsByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType)
+        {
+            switch (priceOrderType)
+            {
+                case PriceOrderType.Asc:
+                    products = products.OrderBy(t => t.Price);
+                    break;
+                case PriceOrderType.Desc:
+                    products = products.OrderByDescending(t => t.Price);
+                    break;
+            }
+
+            return products;
         }
     }
 }

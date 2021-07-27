@@ -49,6 +49,18 @@ namespace Catalog.API.PL.Models.DTOs
         /// <example>60</example>
         public decimal Price { get; set; }
 
+        /// <summary>
+        /// Age Rating of the product
+        /// </summary>
+        /// <example>6</example>
+        public int AgeRating { get; set; }
+
+        /// <summary>
+        /// Count of the product
+        /// </summary>
+        /// <example>10</example>
+        public int Count { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Product, ProductDto>();
