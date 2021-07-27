@@ -10,6 +10,10 @@ namespace Catalog.API.DAL.Configurations
         {
             builder.HasIndex(t => t.Name);
 
+            builder.HasIndex(t => t.Category);
+
+            builder.HasIndex(t => t.AgeRating);
+
             builder
                 .Property(t => t.AgeRating)
                 .HasConversion<int>();
