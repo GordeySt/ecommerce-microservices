@@ -23,10 +23,14 @@ namespace Catalog.API.DAL.Repositories
         {
             if (disableTracking)
             {
-                return await DatabaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
+                return await DatabaseContext.Products
+                    .Include(t => t.Ratings)
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
 
-            return await DatabaseContext.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await DatabaseContext.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl)

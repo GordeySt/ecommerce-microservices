@@ -12,12 +12,20 @@ namespace Catalog.API.DAL.Repositories
         public UsersRepository(ApplicationDbContext databaseContext) : base(databaseContext)
         { }
 
-        public async Task<User> GetUserByIdAsync(Guid id) =>
-            await DatabaseContext
-            .Users
-            .AsNoTracking()
-            .Include(t => t.Ratings)
-            .ThenInclude(t => t.Product)
-            .FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<User> GetUserByIdAsync(Guid id, bool disableTracking = true)
+        {
+            if (disableTracking)
+            {
+               return await DatabaseContext.Users
+                    .Include(t => t.Ratings)
+                    .FirstOrDefaultAsync(x => x.Id == id);
+            }
+
+            return await DatabaseContext.Users
+                .Include(t => t.Ratings)
+                .ThenInclude(t => t.Product)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

@@ -57,7 +57,9 @@ namespace Catalog.API.BL.Services
 
             var newProductRating = CreateNewProductRating(user, product, ratingCount);
 
-            product.TotalRating += ratingCount;
+            UpdateProductTotalRating(product, ratingCount);
+
+            UpdateProductAverageRating(product, isAfterCreate: true);
 
             var result = await _productRatingsRepository.AddAsync(newProductRating);
 
@@ -70,6 +72,11 @@ namespace Catalog.API.BL.Services
             Product = product,
             Rating = ratingCount
         };
+
+        private static void UpdateProductTotalRating(Product product, int ratingCount)
+        {
+            product.TotalRating += ratingCount;
+        }
 
         public async Task<ServiceResult> UpdateRatingAtProductAsync(Guid productId, int ratingCount)
         {
@@ -101,13 +108,14 @@ namespace Catalog.API.BL.Services
 
             var lastProductRating = productRating.Rating;
 
-            UpdateProductRating(productRating, ratingCount);
+            UpdateProductRatingFromUser(productRating, ratingCount);
 
             var updateRatingResult = await _productRatingsRepository.UpdateAsync(productRating);
 
             if (updateRatingResult.Result is ServiceResultType.Success)
             {
                 UpdateProductTotalRating(product, lastProductRating, ratingCount);
+                UpdateProductAverageRating(product, isAfterCreate: false);
             }
 
             var updateTotalRatingResult = await _productRepository.UpdateAsync(product);
@@ -115,7 +123,7 @@ namespace Catalog.API.BL.Services
             return updateTotalRatingResult;
         }
 
-        private static void UpdateProductRating(ProductRating productRating, int ratingCount)
+        private static void UpdateProductRatingFromUser(ProductRating productRating, int ratingCount)
         {
             productRating.Rating = ratingCount;
         }
@@ -123,6 +131,22 @@ namespace Catalog.API.BL.Services
         private static void UpdateProductTotalRating(Product product, int lastProductRating, int ratingCount)
         {
              product.TotalRating = product.TotalRating - lastProductRating + ratingCount;
+        }
+
+        private static void UpdateProductAverageRating(Product product, bool isAfterCreate)
+        {
+            if (product.Ratings.Count > 0 && isAfterCreate)
+            {
+                product.AverageRating = (double)product.TotalRating / (product.Ratings.Count + 1);
+            }
+            else if (!isAfterCreate) 
+            {
+                product.AverageRating = (double)product.TotalRating / product.Ratings.Count;
+            }
+            else
+            {
+                product.AverageRating = product.TotalRating;
+            }
         }
     }
 }

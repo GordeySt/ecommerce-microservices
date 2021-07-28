@@ -6,6 +6,6 @@ namespace Catalog.API.DAL.Interfaces
 {
     public interface IUsersRepository : IAsyncBaseRepository<User>
     {
-        public Task<User> GetUserByIdAsync(Guid id);
+        public Task<User> GetUserByIdAsync(Guid id, bool disableTracking = true);
     }
 }

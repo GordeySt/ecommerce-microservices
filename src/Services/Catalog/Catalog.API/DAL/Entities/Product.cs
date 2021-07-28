@@ -14,6 +14,7 @@ namespace Catalog.API.DAL.Entities
         public int Count { get; set; }
         public decimal Price { get; set; }
         public ICollection<ProductRating> Ratings { get; set; }
+        public double AverageRating { get; set; }
         public int TotalRating { get; set; }
     }
 }

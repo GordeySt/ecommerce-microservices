@@ -251,7 +251,7 @@
             </summary>
             <example>10</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.TotalRating">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.AverageRating">
             <summary>
             Total Rating of the product
             </summary>

@@ -39,7 +39,7 @@ namespace Catalog.API.BL.Services
 
         public async Task<UserDto> GetUserByIdAsync(Guid id) 
         {
-            var user = await _usersRepository.GetUserByIdAsync(id);
+            var user = await _usersRepository.GetUserByIdAsync(id, disableTracking: false);
 
             return _mapper.Map<UserDto>(user);
         }
