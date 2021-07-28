@@ -23,6 +23,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  identitygrpc:
+    container_name: identitygrpc
+    image: ${DOCKER_REGISTRY-}identitygrpc
+    build:
+      context: .
+      dockerfile: Services/Identity/Identity.Grpc/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+    depends_on:
+      - identitydb
+    ports:
+      - 8001:80
+
   identityserver:
     container_name: identityserver
     image: ${DOCKER_REGISTRY-}identityapi
@@ -53,6 +66,7 @@ services:
     depends_on:
       - catalogdb
       - identityserver
+      - identitygrpc
     ports:
       - 8000:80
 

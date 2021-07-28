@@ -5,6 +5,7 @@ using Catalog.API.DAL;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.DAL.Repositories;
 using Catalog.API.Startup.Settings;
+using Common.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.API.Startup.Configuration
@@ -27,6 +28,8 @@ namespace Catalog.API.Startup.Configuration
 
             //Repository
             services.AddTransient<IProductRepository, ProductRepository>();
+
+            services.AddTransient<LoggingDelegatingHandler>();
         }
     }
 }

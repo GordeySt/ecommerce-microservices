@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 
 namespace Catalog.API.Startup
 {
@@ -25,12 +26,15 @@ namespace Catalog.API.Startup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
+
             var appSettings = ReadAppSettings(Configuration, Env);
 
-            services.RegisterAuthSettings(Configuration);
+            services.RegisterAuthSettings(appSettings);
             services.ValidateSettingParameters(Configuration);
             services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
+            services.RegisterGrpcServices(appSettings);
 
             services.AddControllers()
                 .AddJsonOptions(options =>
@@ -38,7 +42,7 @@ namespace Catalog.API.Startup
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
-            services.RegisterSwagger(Configuration);
+            services.RegisterSwagger(appSettings);
             services.RegisterHealthChecks(appSettings);
         }
 
@@ -86,6 +90,9 @@ namespace Catalog.API.Startup
             var cloudinarySettings = configuration.GetSection(nameof(AppSettings.CloudinarySettings))
                 .Get<CloudinarySettings>();
 
+            var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
+                .Get<AppUrlsSettings>();
+
             if (env.IsDevelopment())
             {
                 cloudinarySettings.ApiSecret = configuration["Cloudinary:ApiSecret"];
@@ -94,7 +101,8 @@ namespace Catalog.API.Startup
             return new AppSettings
             {
                 DbSettings = dbSettings,
-                CloudinarySettings = cloudinarySettings
+                CloudinarySettings = cloudinarySettings,
+                AppUrlsSettings = appUrlsSettings
             };
         }
     }

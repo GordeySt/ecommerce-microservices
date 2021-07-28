@@ -1,13 +1,11 @@
-﻿using Identity.API.Services;
-using Identity.API.Startup.Settings;
-using Identity.Application.Common.Interfaces;
+﻿using Identity.Application.Common.Interfaces;
+using Identity.Grpc.Startup.Settings;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Services;
 using Identity.Infrastructure.Services.Email;
-using IdentityServer4.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Identity.API.Startup.Configurations
+namespace Identity.Grpc.Startup.Configurations
 {
     public static class ServicesExtensions
     {
@@ -18,7 +16,6 @@ namespace Identity.API.Startup.Configurations
             services.AddSingleton(appSettings);
 
             //Services
-            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();

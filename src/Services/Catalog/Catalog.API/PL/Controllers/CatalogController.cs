@@ -1,6 +1,8 @@
 ﻿using Catalog.API.BL.Interfaces;
+using Catalog.API.PL.GrpcServices;
 using Catalog.API.PL.Models.DTOs;
 using Catalog.API.PL.Models.Params;
+using Identity.Grpc.Protos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +23,8 @@ namespace Catalog.API.PL.Controllers
         private readonly ICatalogService _catalogService;
         private readonly ILogger<CatalogController> _logger;
         private readonly IPhotoService _photoService;
-
-        public CatalogController(ICatalogService catalogService, 
-            ILogger<CatalogController> logger, IPhotoService photoService)
+        public CatalogController(ICatalogService catalogService, ILogger<CatalogController> logger, 
+            IPhotoService photoService)
         {
             _catalogService = catalogService;
             _logger = logger;
