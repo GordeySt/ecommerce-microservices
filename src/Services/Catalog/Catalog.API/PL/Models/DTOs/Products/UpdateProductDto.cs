@@ -5,7 +5,7 @@ using Catalog.API.DAL.Enums;
 using Catalog.API.PL.Validation;
 using System;
 
-namespace Catalog.API.PL.Models.DTOs
+namespace Catalog.API.PL.Models.DTOs.Products
 {
     public class UpdateProductDto : IMapFrom<UpdateProductDto>
     {

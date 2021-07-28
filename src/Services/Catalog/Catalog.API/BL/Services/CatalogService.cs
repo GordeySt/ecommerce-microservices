@@ -4,7 +4,7 @@ using Catalog.API.BL.Enums;
 using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.Models.DTOs;
+using Catalog.API.PL.Models.DTOs.Products;
 using Catalog.API.PL.Models.Params;
 using Services.Common.Constatns;
 using Services.Common.Enums;

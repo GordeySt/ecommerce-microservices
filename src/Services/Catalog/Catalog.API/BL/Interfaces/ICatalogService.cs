@@ -1,5 +1,5 @@
 ﻿using Catalog.API.DAL.Entities;
-using Catalog.API.PL.Models.DTOs;
+using Catalog.API.PL.Models.DTOs.Products;
 using Catalog.API.PL.Models.Params;
 using Services.Common.Models;
 using Services.Common.ResultWrappers;

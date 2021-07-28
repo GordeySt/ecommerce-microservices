@@ -3,7 +3,7 @@ using Catalog.API.BL.Mappings;
 using Catalog.API.DAL.Entities;
 using System;
 
-namespace Catalog.API.PL.Models.DTOs
+namespace Catalog.API.PL.Models.DTOs.Products
 {
     public class ProductDto : IMapFrom<Product>
     {

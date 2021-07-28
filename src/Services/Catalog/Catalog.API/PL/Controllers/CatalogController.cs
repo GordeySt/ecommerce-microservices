@@ -1,6 +1,6 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.PL.Filters;
-using Catalog.API.PL.Models.DTOs;
+using Catalog.API.PL.Models.DTOs.Products;
 using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

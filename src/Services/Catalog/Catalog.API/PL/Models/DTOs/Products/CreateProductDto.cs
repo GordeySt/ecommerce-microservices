@@ -4,7 +4,7 @@ using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Enums;
 using Catalog.API.PL.Validation;
 
-namespace Catalog.API.PL.Models.DTOs
+namespace Catalog.API.PL.Models.DTOs.Products
 {
     public class CreateProductDto : IMapFrom<CreateProductDto>
     {
