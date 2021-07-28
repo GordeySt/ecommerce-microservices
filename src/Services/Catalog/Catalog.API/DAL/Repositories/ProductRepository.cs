@@ -78,10 +78,10 @@ namespace Catalog.API.DAL.Repositories
             switch (ratingOrderType)
             {
                 case RatingOrderType.Asc:
-                    products = products.OrderBy(t => t.TotalRating);
+                    products = products.OrderBy(t => t.AverageRating);
                     break;
                 case RatingOrderType.Desc:
-                    products = products.OrderByDescending(t => t.TotalRating);
+                    products = products.OrderByDescending(t => t.AverageRating);
                     break;
             }
         }
