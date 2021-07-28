@@ -217,7 +217,7 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns NoContent Result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If the product with id (guid) not found</response>
-        [HttpPost("{id:guid}/add-photo")]
+        [HttpPost("add-photo/id/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddPhotoToProduct([FromForm(Name = "File")] IFormFile mainImage,
