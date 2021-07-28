@@ -1,5 +1,6 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.BL.Services.GrpcServices;
+using Catalog.API.PL.Models.DTOs.Users;
 using Identity.Grpc.Protos;
 using Microsoft.AspNetCore.Mvc;
 using Services.Common.Enums;
@@ -34,6 +35,19 @@ namespace Catalog.API.PL.Controllers
             }
 
             return CreatedAtAction(nameof(CreateUser), userCreationResult.Data);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<UserDto>> GetUserById(Guid id)
+        {
+            var user = await _usersService.GetUserByIdAsync(id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            return user;
         }
     }
 }

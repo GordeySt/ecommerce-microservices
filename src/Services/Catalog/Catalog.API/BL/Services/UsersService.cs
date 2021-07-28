@@ -3,6 +3,7 @@ using Catalog.API.BL.Constants;
 using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
+using Catalog.API.PL.Models.DTOs.Users;
 using Identity.Grpc.Protos;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
@@ -34,6 +35,13 @@ namespace Catalog.API.BL.Services
             var userEntity = _mapper.Map<User>(userModel);
 
             return await _usersRepository.AddAsync(userEntity);
+        }
+
+        public async Task<UserDto> GetUserByIdAsync(Guid id) 
+        {
+            var user = await _usersRepository.GetUserByIdAsync(id);
+
+            return _mapper.Map<UserDto>(user);
         }
     }
 }
