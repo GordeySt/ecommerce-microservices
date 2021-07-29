@@ -18,7 +18,15 @@ namespace Catalog.Tests.Shared.Services
         public static User CreateUserEntity() => new()
         {
             Id = new Guid("f7434651-5d37-4657-989e-13cf3498c485"),
-            UserName = "TestUsername"
+            UserName = "TestUsername",
+            Ratings = new List<ProductRating>()
+            {
+                new ProductRating
+                {
+                    Rating = 4,
+                    Product = CatalogServiceTestData.CreateProductEntity()
+                }
+            }
         };
 
         public static UserDto CreateUserDto() => new()

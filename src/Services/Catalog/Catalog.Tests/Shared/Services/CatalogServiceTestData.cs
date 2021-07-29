@@ -1,6 +1,5 @@
 ﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Enums;
-using Catalog.API.PL.Models.DTOs.ProductRatings;
 using Catalog.API.PL.Models.DTOs.Products;
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace Catalog.Tests.Shared.Services
 
         public static UpdateProductDto CreateUpdateProductDto() => new()
         {
-            Id = Guid.NewGuid(),
+            Id = new Guid("38b4afa4-9c15-4d8e-8011-8f4576694d04"),
             Category = "TestCategory",
             AgeRating = AgeRating.AboveThree,
             Count = 10,
@@ -34,7 +33,7 @@ namespace Catalog.Tests.Shared.Services
 
         public static Product CreateProductEntity() => new()
         {
-            Id = Guid.NewGuid(),
+            Id = new Guid("38b4afa4-9c15-4d8e-8011-8f4576694d04"),
             Category = "TestCategory",
             AgeRating = AgeRating.AboveThree,
             Count = 10,
@@ -44,7 +43,7 @@ namespace Catalog.Tests.Shared.Services
             Price = 10,
             AverageRating = 0,
             TotalRating = 0,
-            MainImageUrl = "ImageUrl",
+            MainImageUrl = "TestUrl",
             Ratings = new List<ProductRating>()
             {
                 new ProductRating
@@ -56,7 +55,7 @@ namespace Catalog.Tests.Shared.Services
 
         public static ProductDto CreateProductDto() => new()
         {
-            Id = Guid.NewGuid(),
+            Id = new Guid("38b4afa4-9c15-4d8e-8011-8f4576694d04"),
             Category = "TestCategory",
             AgeRating = 3,
             Count = 10,

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Catalog.API.BL.Mappings;
 using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.Models.DTOs.Products;
 using Catalog.Tests.Shared.Services;
 using FluentAssertions;
 using Moq;
@@ -18,8 +18,19 @@ namespace Catalog.Tests.Services
     public class CatalogServiceTests
     {
         private readonly Mock<IProductRepository> _repositoryStub = new();
-        private readonly Mock<IMapper> _mapperStub = new();
         private readonly Random _rand = new();
+        private readonly IConfigurationProvider _configuration;
+        private readonly IMapper _mapper;
+
+        public CatalogServiceTests()
+        {
+            _configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+            });
+
+            _mapper = _configuration.CreateMapper();
+        }
 
         [Fact]
         public async Task AddProductAsync_WithExistingProduct_ReturnsSuccessfulResultWithCreatedProduct()
@@ -34,7 +45,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.AddAsync(It.IsAny<Product>()))
                 .ReturnsAsync(expectedServiceResult);
 
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var creationResult = await catalogService.AddProductAsync(productToCreate);
@@ -61,7 +72,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
                 .ReturnsAsync((Product)null);
 
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var deleteResult = await catalogService.DeleteProductAsync(productId);
@@ -89,7 +100,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.DeleteAsync(It.IsAny<Product>()))
                 .ReturnsAsync(expectedServiceResult);
 
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var deleteResult = await catalogService.DeleteProductAsync(productId);
@@ -112,7 +123,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetPopularCategoriesAsync(popularCategoriesCount))
                 .ReturnsAsync(popularCategories);
 
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var categories = await catalogService.GetPopularCategoriesAsync(popularCategoriesCount);
@@ -133,7 +144,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), false))
                 .ReturnsAsync((Product)null);
 
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var product = await catalogService.GetProductByIdAsync(productId);
@@ -156,11 +167,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), false))
                 .ReturnsAsync(expectedProduct);
 
-            _mapperStub
-                .Setup(t => t.Map<ProductDto>(It.IsAny<Product>()))
-                .Returns(expectedProductDto);
-
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var product = await catalogService.GetProductByIdAsync(productId);
@@ -183,7 +190,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
                 .ReturnsAsync((Product)null);
 
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var updateResult = await catalogService.UpdateProductAsync(updateProductDto);
@@ -208,14 +215,10 @@ namespace Catalog.Tests.Services
                 .ReturnsAsync(productToUpdate);
 
             _repositoryStub
-                .Setup(t => t.UpdateAsync(productToUpdate))
+                .Setup(t => t.UpdateAsync(It.IsAny<Product>()))
                 .ReturnsAsync(expectedServiceResult);
 
-            _mapperStub
-                .Setup(t => t.Map<Product>(updateProductDto))
-                .Returns(productToUpdate);
-
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
 
             // Act
             var updateResult = await catalogService.UpdateProductAsync(updateProductDto);
@@ -225,7 +228,6 @@ namespace Catalog.Tests.Services
 
             _repositoryStub.Verify(x => x.UpdateAsync(It.IsAny<Product>()));
             _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
-            _mapperStub.Verify(x => x.Map<Product>(It.IsAny<UpdateProductDto>()));
         }
 
         /*[Fact]

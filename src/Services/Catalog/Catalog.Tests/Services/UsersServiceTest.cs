@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using Catalog.API.BL.Mappings;
 using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.Models.DTOs.Users;
 using Catalog.Tests.Shared.Services;
 using FluentAssertions;
-using Identity.Grpc.Protos;
 using Moq;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
@@ -18,7 +17,18 @@ namespace Catalog.Tests.Services
     public class UsersServiceTest
     {
         private readonly Mock<IUsersRepository> _repositoryStub = new();
-        private readonly Mock<IMapper> _mapperStub = new();
+        private readonly IConfigurationProvider _configuration;
+        private readonly IMapper _mapper;
+
+        public UsersServiceTest()
+        {
+            _configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+            });
+
+            _mapper = _configuration.CreateMapper();
+        }
 
         [Fact]
         public async Task AddUserAsync_WithExistingUser_ReturnsBadRequestServiceResult()
@@ -32,7 +42,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetUserByIdAsync(new Guid(userModel.Id), true))
                 .ReturnsAsync(userEntity);
 
-            var usersService = new UsersService(_repositoryStub.Object, _mapperStub.Object);
+            var usersService = new UsersService(_repositoryStub.Object, _mapper);
 
             // Act
             var creationgResult = await usersService.AddUserAsync(userModel);
@@ -51,14 +61,10 @@ namespace Catalog.Tests.Services
                 userEntity);
 
             _repositoryStub
-                .Setup(t => t.AddAsync(userEntity))
+                .Setup(t => t.AddAsync(It.IsAny<User>()))
                 .ReturnsAsync(expectedServiceResult);
 
-            _mapperStub
-                .Setup(t => t.Map<User>(userModel))
-                .Returns(userEntity);
-
-            var usersService = new UsersService(_repositoryStub.Object, _mapperStub.Object);
+            var usersService = new UsersService(_repositoryStub.Object, _mapper);
 
             // Act
             var creationResult = await usersService.AddUserAsync(userModel);
@@ -68,7 +74,6 @@ namespace Catalog.Tests.Services
             creationResult.Result.Should().Be(ServiceResultType.Success);
 
             _repositoryStub.Verify(x => x.AddAsync(It.IsAny<User>()));
-            _mapperStub.Verify(x => x.Map<User>(It.IsAny<ApplicationUserModel>()));
         }
 
         [Fact]
@@ -81,7 +86,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetUserByIdAsync(It.IsAny<Guid>(), false))
                 .ReturnsAsync((User)null);
 
-            var usersService = new UsersService(_repositoryStub.Object, _mapperStub.Object);
+            var usersService = new UsersService(_repositoryStub.Object, _mapper);
 
             // Act
             var user = await usersService.GetUserByIdAsync(userId);
@@ -104,11 +109,7 @@ namespace Catalog.Tests.Services
                 .Setup(t => t.GetUserByIdAsync(It.IsAny<Guid>(), false))
                 .ReturnsAsync(expectedUser);
 
-            _mapperStub
-                .Setup(t => t.Map<UserDto>(It.IsAny<User>()))
-                .Returns(expectedUserDto);
-
-            var usersService = new UsersService(_repositoryStub.Object, _mapperStub.Object);
+            var usersService = new UsersService(_repositoryStub.Object, _mapper);
 
             // Act
             var user = await usersService.GetUserByIdAsync(userId);
