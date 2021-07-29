@@ -1,5 +1,6 @@
 ﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Enums;
+using Catalog.API.PL.Models.DTOs.ProductRatings;
 using Catalog.API.PL.Models.DTOs.Products;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,14 @@ namespace Catalog.Tests.Shared.Services
             Price = 10,
             AverageRating = 0,
             TotalRating = 0,
-            MainImageUrl = "ImageUrl"
+            MainImageUrl = "ImageUrl",
+            Ratings = new List<ProductRating>()
+            {
+                new ProductRating
+                {
+                    Rating = 4
+                }
+            }
         };
 
         public static ProductDto CreateProductDto() => new()
