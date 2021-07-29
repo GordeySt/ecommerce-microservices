@@ -9,6 +9,7 @@ using Services.Common.ResultWrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
@@ -60,28 +61,16 @@ namespace Catalog.API.DAL.Repositories
                 .ToListAsync();
         }
 
-        public void SortProductsByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType)
+        public void SortProductsByDefinition<T>(ref IQueryable<Product> products, OrderType? orderType,
+            Expression<Func<Product, T>> sortDefinition)
         {
-            switch (priceOrderType)
+            switch (orderType)
             {
-                case PriceOrderType.Asc:
-                    products = products.OrderBy(t => t.Price);
+                case OrderType.Asc:
+                    products = products.OrderBy(sortDefinition);
                     break;
-                case PriceOrderType.Desc:
-                    products = products.OrderByDescending(t => t.Price);
-                    break;
-            }
-        }
-
-        public void SortProductByRating(ref IQueryable<Product> products, RatingOrderType? ratingOrderType)
-        {
-            switch (ratingOrderType)
-            {
-                case RatingOrderType.Asc:
-                    products = products.OrderBy(t => t.AverageRating);
-                    break;
-                case RatingOrderType.Desc:
-                    products = products.OrderByDescending(t => t.AverageRating);
+                case OrderType.Desc:
+                    products = products.OrderByDescending(sortDefinition);
                     break;
             }
         }

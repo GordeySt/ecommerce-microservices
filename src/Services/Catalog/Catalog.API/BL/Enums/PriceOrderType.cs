@@ -1,6 +1,6 @@
 ﻿namespace Catalog.API.BL.Enums
 {
-    public enum PriceOrderType
+    public enum OrderType
     {
         Asc,
         Desc

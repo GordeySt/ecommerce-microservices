@@ -1,5 +1,4 @@
-﻿using Catalog.API.DAL.Entities;
-using Catalog.API.DAL.Interfaces;
+﻿using Catalog.API.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Services.Common.Constatns;

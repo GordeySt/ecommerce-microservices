@@ -66,7 +66,7 @@ namespace Catalog.API.PL.Models.DTOs.Products
         /// Total Rating of the product
         /// </summary>
         /// <example>10</example>
-        public int AverageRating { get; set; }
+        public double AverageRating { get; set; }
 
         public void Mapping(Profile profile)
         {

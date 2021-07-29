@@ -9,7 +9,7 @@ namespace Catalog.API.PL.Models.Params
         public string ProductName { get; set; }
         public string CategoryName { get; set; }
         public AgeRating MinimumAge { get; set; }
-        public PriceOrderType? PriceOrderType { get; set; }
-        public RatingOrderType? RatingOrderType { get; set; }
+        public OrderType? PriceOrderType { get; set; }
+        public OrderType? RatingOrderType { get; set; }
     }
 }

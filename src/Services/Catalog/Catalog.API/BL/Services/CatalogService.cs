@@ -89,19 +89,21 @@ namespace Catalog.API.BL.Services
                     .GetQueryable(ref products, x => (int)x.AgeRating >= minimumAge);
             }
         }
-        private void SortByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType)
+        private void SortByPrice(ref IQueryable<Product> products, OrderType? priceOrderType)
         {
             if (priceOrderType is not null)
             {
-                _productRepository.SortProductsByPrice(ref products, priceOrderType);
+                _productRepository.SortProductsByDefinition(ref products, priceOrderType, 
+                    t => t.Price);
             }
         }
 
-        private void SortByRating(ref IQueryable<Product> products, RatingOrderType? ratingOrderType)
+        private void SortByRating(ref IQueryable<Product> products, OrderType? ratingOrderType)
         {
             if (ratingOrderType is not null)
             {
-                _productRepository.SortProductByRating(ref products, ratingOrderType);
+                _productRepository.SortProductsByDefinition(ref products, ratingOrderType,
+                    t => t.AverageRating);
             }
         }
 
