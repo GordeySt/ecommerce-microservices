@@ -3,17 +3,13 @@ using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.PL.Models.DTOs.Products;
-using Catalog.API.PL.Models.Params;
 using Catalog.Tests.Shared.Services;
 using FluentAssertions;
-using MockQueryable.Moq;
 using Moq;
 using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
