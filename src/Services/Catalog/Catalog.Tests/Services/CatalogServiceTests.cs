@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
 using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
-using Catalog.API.DAL.Enums;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.Controllers;
 using Catalog.API.PL.Models.DTOs.Products;
+using Catalog.API.PL.Models.Params;
+using Catalog.Tests.Shared.Services;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
+using MockQueryable.Moq;
 using Moq;
+using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,8 +29,14 @@ namespace Catalog.Tests.Services
         public async Task AddProductAsync_WithExistingProduct_ReturnsSuccessfulResultWithCreatedProduct()
         {
             // Arrange
-            var productToCreate = CreateCreateProductDto();
-            var productEntity = CreateProductEntity();
+            var productToCreate = CatalogServiceTestData.CreateCreateProductDto();
+            var productEntity = CatalogServiceTestData.CreateProductEntity();
+            var expectedServiceResult = new ServiceResult<Product>(ServiceResultType.Success, 
+                productEntity);
+
+            _repositoryStub
+                .Setup(t => t.AddAsync(It.IsAny<Product>()))
+                .ReturnsAsync(expectedServiceResult);
 
             var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
 
@@ -35,34 +44,235 @@ namespace Catalog.Tests.Services
             var creationResult = await catalogService.AddProductAsync(productToCreate);
 
             // Assert
-            productToCreate.Should().BeEquivalentTo(creationResult.Data);
             creationResult.Data.Id.Should().NotBeEmpty();
+            creationResult.Data.Should().BeEquivalentTo(
+                productToCreate,
+                options => options.ComparingByMembers<Product>());
             creationResult.Result.Should().Be(ServiceResultType.Success);
+
+            _repositoryStub.Verify(x => x.AddAsync(It.IsAny<Product>()));
         }
 
-        private CreateProductDto CreateCreateProductDto() => new()
+        [Fact]
+        public async Task DeleteProductAsync_WithUnexistingItem_ReturnsNotFoundServiceResult()
         {
-            Category = "TestCategory",
-            AgeRating = AgeRating.AboveThree,
-            Count = 10,
-            Description = "TestDescription",
-            Name = "TestName",
-            Summary = "TestSummary",
-            Price = 10
-        };
+            // Arrange
+            var productId = Guid.NewGuid();
+            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound, 
+                ExceptionConstants.NotFoundItemMessage);
 
-        private Product CreateProductEntity() => new()
+            _repositoryStub
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
+                .ReturnsAsync((Product)null);
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var deleteResult = await catalogService.DeleteProductAsync(productId);
+
+            // Assert
+            deleteResult.Result.Should().Be(ServiceResultType.NotFound);
+            deleteResult.Message.Should().Be(ExceptionConstants.NotFoundItemMessage);
+
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
+        }
+
+        [Fact]
+        public async Task DeleteProductAsync_WithExistingItem_ReturnsNotFoundServiceResult()
         {
-            Id = Guid.NewGuid(),
-            Category = "TestCategory",
-            AgeRating = AgeRating.AboveThree,
-            Count = 10,
-            Description = "TestDescription",
-            Name = "TestName",
-            Summary = "TestSummary",
-            Price = 10,
-            AverageRating = 0,
-            TotalRating = 0
-        };
+            // Arrange
+            var productId = Guid.NewGuid();
+            var productToDelete = CatalogServiceTestData.CreateProductEntity();
+            var expectedServiceResult = new ServiceResult(ServiceResultType.Success);
+
+            _repositoryStub
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
+                .ReturnsAsync(productToDelete);
+
+            _repositoryStub
+                .Setup(t => t.DeleteAsync(It.IsAny<Product>()))
+                .ReturnsAsync(expectedServiceResult);
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var deleteResult = await catalogService.DeleteProductAsync(productId);
+
+            // Assert
+            deleteResult.Result.Should().Be(ServiceResultType.Success);
+
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
+            _repositoryStub.Verify(x => x.DeleteAsync(It.IsAny<Product>()));
+        }
+
+        [Fact]
+        public async Task GetPopularCategoriesAsync_WithExistingCategories_ReturnsGivenAmountOfPopularCategories()
+        {
+            // Arrange
+            var popularCategoriesCount = _rand.Next(5);
+            var popularCategories = CatalogServiceTestData.GetPopularCategories(popularCategoriesCount);
+
+            _repositoryStub
+                .Setup(t => t.GetPopularCategoriesAsync(popularCategoriesCount))
+                .ReturnsAsync(popularCategories);
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var categories = await catalogService.GetPopularCategoriesAsync(popularCategoriesCount);
+
+            // Assert
+            categories.Should().HaveCount(popularCategoriesCount);
+
+            _repositoryStub.Verify(x => x.GetPopularCategoriesAsync(popularCategoriesCount));
+        }
+
+        [Fact]
+        public async Task GetProductByIdAsync_WithUnexistingProduct_ReturnsNull()
+        {
+            // Arrange
+            var productId = Guid.NewGuid();
+
+            _repositoryStub
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), false))
+                .ReturnsAsync((Product)null);
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var product = await catalogService.GetProductByIdAsync(productId);
+
+            // Assert
+            product.Should().BeNull();
+
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), false));
+        }
+
+        [Fact]
+        public async Task GetProductByIdAsync_WithUnexistingProduct_ReturnsExpectedProductDto()
+        {
+            // Arrange
+            var productId = Guid.NewGuid();
+            var expectedProduct = CatalogServiceTestData.CreateProductEntity();
+            var expectedProductDto = CatalogServiceTestData.CreateProductDto();
+
+            _repositoryStub
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), false))
+                .ReturnsAsync(expectedProduct);
+
+            _mapperStub
+                .Setup(t => t.Map<ProductDto>(It.IsAny<Product>()))
+                .Returns(expectedProductDto);
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var product = await catalogService.GetProductByIdAsync(productId);
+
+            // Assert
+            product.Should().BeEquivalentTo(expectedProductDto);
+
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), false));
+        }
+
+        [Fact]
+        public async Task UpdateProductAsync_WithUnexistingProduct_ReturnsNotFoundServiceResult()
+        {
+            // Arrange
+            var updateProductDto = CatalogServiceTestData.CreateUpdateProductDto();
+            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound,
+                ExceptionConstants.NotFoundItemMessage);
+
+            _repositoryStub
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
+                .ReturnsAsync((Product)null);
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var updateResult = await catalogService.UpdateProductAsync(updateProductDto);
+
+            // Assert
+            updateResult.Result.Should().Be(ServiceResultType.NotFound);
+            updateResult.Message.Should().Be(ExceptionConstants.NotFoundItemMessage);
+
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
+        }
+
+        [Fact]
+        public async Task UpdateProductAsync_WithExistingProduct_ReturnsSuccessfulServiceResult()
+        {
+            // Arrange
+            var updateProductDto = CatalogServiceTestData.CreateUpdateProductDto();
+            var productToUpdate = CatalogServiceTestData.CreateProductEntity();
+            var expectedServiceResult = new ServiceResult(ServiceResultType.Success);
+
+            _repositoryStub
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
+                .ReturnsAsync(productToUpdate);
+
+            _repositoryStub
+                .Setup(t => t.UpdateAsync(productToUpdate))
+                .ReturnsAsync(expectedServiceResult);
+
+            _mapperStub
+                .Setup(t => t.Map<Product>(updateProductDto))
+                .Returns(productToUpdate);
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var updateResult = await catalogService.UpdateProductAsync(updateProductDto);
+
+            // Assert
+            updateResult.Result.Should().Be(ServiceResultType.Success);
+
+            _repositoryStub.Verify(x => x.UpdateAsync(It.IsAny<Product>()));
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
+            _mapperStub.Verify(x => x.Map<Product>(It.IsAny<UpdateProductDto>()));
+        }
+
+        /*[Fact]
+        public async Task GetAllProductsAsync_WithoutFilteringParams_ReturnsAllProducts()
+        {
+            // Arrange
+            var products = new List<Product>()
+            {
+                CatalogServiceTestData.CreateProductEntity(),
+                CatalogServiceTestData.CreateProductEntity(),
+                CatalogServiceTestData.CreateProductEntity(),
+                CatalogServiceTestData.CreateProductEntity()
+            };
+
+            var productsDto = new List<ProductDto>()
+            {
+                CatalogServiceTestData.CreateProductDto(),
+                CatalogServiceTestData.CreateProductDto(),
+                CatalogServiceTestData.CreateProductDto(),
+                CatalogServiceTestData.CreateProductDto()
+            };
+
+            var productsParams = new ProductsParams();
+
+            var productsMock = products.AsQueryable().BuildMock();
+
+            _repositoryStub
+                .Setup(t => t.GetAllQueryable())
+                .Returns(productsMock.Object);
+
+            _mapperStub.Setup(x => x.ConfigurationProvider)
+                .Returns(
+                    () => new MapperConfiguration(
+                        cfg => { cfg.CreateMap<Product, ProductDto>(); 
+                    }));
+
+            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
+
+            // Act
+            var productsToRetrieve = await catalogService.GetAllProductsAsync(productsParams);
+
+            // Assert
+            productsToRetrieve.Should().HaveCount(products.Count);
+        }*/
     }
 }
