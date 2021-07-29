@@ -41,7 +41,7 @@ namespace Catalog.API.BL.Services
         {
             var user = await _usersRepository.GetUserByIdAsync(id, disableTracking: false);
 
-            return _mapper.Map<UserDto>(user);
+            return user is not null ? _mapper.Map<UserDto>(user) : default;
         }
     }
 }

@@ -116,9 +116,9 @@ namespace Catalog.API.BL.Services
 
         public async Task<ProductDto> GetProductByIdAsync(Guid id)
         {
-            var proudct = await _productRepository.GetProductByIdAsync(id, disableTracking: false);
+            var product = await _productRepository.GetProductByIdAsync(id, disableTracking: false);
 
-            return proudct is not null ? _mapper.Map<ProductDto>(proudct) : default;
+            return product is not null ? _mapper.Map<ProductDto>(product) : default;
         }
 
         public async Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto)
