@@ -229,48 +229,5 @@ namespace Catalog.Tests.Services
             _repositoryStub.Verify(x => x.UpdateAsync(It.IsAny<Product>()));
             _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
         }
-
-        /*[Fact]
-        public async Task GetAllProductsAsync_WithoutFilteringParams_ReturnsAllProducts()
-        {
-            // Arrange
-            var products = new List<Product>()
-            {
-                CatalogServiceTestData.CreateProductEntity(),
-                CatalogServiceTestData.CreateProductEntity(),
-                CatalogServiceTestData.CreateProductEntity(),
-                CatalogServiceTestData.CreateProductEntity()
-            };
-
-            var productsDto = new List<ProductDto>()
-            {
-                CatalogServiceTestData.CreateProductDto(),
-                CatalogServiceTestData.CreateProductDto(),
-                CatalogServiceTestData.CreateProductDto(),
-                CatalogServiceTestData.CreateProductDto()
-            };
-
-            var productsParams = new ProductsParams();
-
-            var productsMock = products.AsQueryable().BuildMock();
-
-            _repositoryStub
-                .Setup(t => t.GetAllQueryable())
-                .Returns(productsMock.Object);
-
-            _mapperStub.Setup(x => x.ConfigurationProvider)
-                .Returns(
-                    () => new MapperConfiguration(
-                        cfg => { cfg.CreateMap<Product, ProductDto>(); 
-                    }));
-
-            var catalogService = new CatalogService(_repositoryStub.Object, _mapperStub.Object);
-
-            // Act
-            var productsToRetrieve = await catalogService.GetAllProductsAsync(productsParams);
-
-            // Assert
-            productsToRetrieve.Should().HaveCount(products.Count);
-        }*/
     }
 }
