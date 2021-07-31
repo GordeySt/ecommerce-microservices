@@ -36,7 +36,7 @@ namespace Identity.Application.ApplicationUsers.Queries.SendResetPasswordEmail
             if (user is null)
             {
                 return new ServiceResult(ServiceResultType.NotFound,
-                    NotFoundExceptionMessageConstants.NotFoundRoleMessage);
+                    NotFoundExceptionMessageConstants.NotFoundUserMessage);
             }
 
             var token = await _userManger.GeneratePasswordResetTokenAsync(user);

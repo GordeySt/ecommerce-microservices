@@ -2,6 +2,7 @@
 using Identity.Application.Common.Interfaces;
 using Identity.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
@@ -15,17 +16,17 @@ namespace Identity.Application.ApplicationUsers.Queries.GetUserById
 
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ServiceResult<ApplicationUser>>
     {
-        private readonly IApplicationDbContext _dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GetUserByIdQueryHandler(IApplicationDbContext dbContext)
+        public GetUserByIdQueryHandler(UserManager<ApplicationUser> userManager)
         {
-            _dbContext = dbContext;
+            _userManager = userManager;
         }
 
         public async Task<ServiceResult<ApplicationUser>> Handle(GetUserByIdQuery request, 
             CancellationToken cancellationToken)
         {
-            var user = await _dbContext.Users
+            var user = await _userManager.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
