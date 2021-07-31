@@ -3,7 +3,6 @@ using Identity.Application.Common.Utilities;
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System;
@@ -30,8 +29,7 @@ namespace Identity.Application.ApplicationRoles.Commands.GrantRoleToUser
         public async Task<ServiceResult> Handle(GrantRoleToUserCommand request,
             CancellationToken cancellationToken)
         {
-            var appRole = await _roleManager.Roles
-                .FirstOrDefaultAsync(x => x.Id == request.RoleId, cancellationToken);
+            var appRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
 
             if (appRole is null)
             {
@@ -39,8 +37,7 @@ namespace Identity.Application.ApplicationRoles.Commands.GrantRoleToUser
                     NotFoundExceptionMessageConstants.NotFoundRoleMessage);
             }
 
-            var appUser = await _userManager.Users
-                .FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
+            var appUser = await _userManager.FindByIdAsync(request.UserId.ToString());
 
             if (appUser is null)
             {

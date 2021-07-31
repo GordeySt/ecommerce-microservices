@@ -4,7 +4,6 @@ using Identity.Application.Common.Utilities;
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Services.Common.Constants;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
@@ -35,7 +34,7 @@ namespace Identity.Application.ApplicationUsers.Commands.SignupUsers
         public async Task<ServiceResult> Handle(SignupUserCommand request, 
             CancellationToken cancellationToken)
         {
-            if (await _userManager.Users.AnyAsync(x => x.Email == request.Email, cancellationToken))
+            if (await _userManager.FindByEmailAsync(request.Email) is not null)
             {
                 return new ServiceResult(ServiceResultType.BadRequest,
                     ExceptionMessageConstants.ExistedEmailMessage);
