@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using FluentAssertions;
-using Identity.Application.ApplicationUsers.Queries.GetUsersByTokenInfo;
+﻿using FluentAssertions;
+using Identity.Application.ApplicationUsers.Queries.GetUserById;
 using Identity.Application.Common;
-using Identity.Application.Common.Interfaces;
-using Identity.Application.Common.Mappings;
 using Identity.Domain.Entities;
 using Identity.Tests.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
@@ -18,25 +15,12 @@ using System.Threading.Tasks;
 
 namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
 {
-    public class GetCurrentUserQueryTests
+    public class GetUserByIdQueryTests
     {
         private readonly Mock<IUserStore<ApplicationUser>> _userStoreStub = new();
-        private readonly Mock<ICurrentUserService> _currentUserServiceStub = new();
-        private readonly IConfigurationProvider _configuration;
-        private readonly IMapper _mapper;
-
-        public GetCurrentUserQueryTests()
-        {
-            _configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<MappingProfile>();
-            });
-
-            _mapper = _configuration.CreateMapper();
-        }
 
         [Test]
-        public async Task ShouldNotReturnCurrentUserIfInvalidToken()
+        public async Task ShouldNotReturnUserByIdIfInvalidId()
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
@@ -49,28 +33,22 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
             var expectedUserId = Guid.NewGuid();
             var mockUsers = users.AsQueryable().BuildMock();
 
-            var query = new GetCurrentUserQuery();
+            var query = new GetUserByIdQuery(expectedUserId);
 
-            var handler = new GetCurrentUserQueryHandler(_currentUserServiceStub.Object,
-                userManagerStub.Object, _mapper);
+            var handler = new GetUserByIdQueryHandler(userManagerStub.Object);
 
             userManagerStub
                 .Setup(t => t.Users)
                 .Returns(mockUsers.Object);
 
-            _currentUserServiceStub
-                .Setup(t => t.UserId)
-                .Returns(expectedUserId.ToString());
-
             // Act
             var result = await handler.Handle(query, default);
 
             // Assert
-            result.Result.Should().Be(ServiceResultType.BadRequest);
-            result.Message.Should().Be(ExceptionMessageConstants.InvalidTokenMessage);
+            result.Result.Should().Be(ServiceResultType.NotFound);
+            result.Message.Should().Be(NotFoundExceptionMessageConstants.NotFoundUserMessage);
 
             userManagerStub.Verify(t => t.Users);
-            _currentUserServiceStub.Verify(t => t.UserId);
         }
 
         [Test]
@@ -87,18 +65,13 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
             var expectedUserId = new Guid("edbf4592-f282-4cfe-afc8-1204a8231549");
             var mockUsers = users.AsQueryable().BuildMock();
 
+            var query = new GetUserByIdQuery(expectedUserId);
+
+            var handler = new GetUserByIdQueryHandler(userManagerStub.Object);
+
             userManagerStub
                 .Setup(t => t.Users)
                 .Returns(mockUsers.Object);
-
-            _currentUserServiceStub
-                .Setup(t => t.UserId)
-                .Returns(expectedUserId.ToString());
-
-            var query = new GetCurrentUserQuery();
-
-            var handler = new GetCurrentUserQueryHandler(_currentUserServiceStub.Object,
-                userManagerStub.Object, _mapper);
 
             // Act
             var result = await handler.Handle(query, default);
@@ -109,7 +82,6 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
             result.Data.Email.Should().Be(users.First().Email);
 
             userManagerStub.Verify(t => t.Users);
-            _currentUserServiceStub.Verify(t => t.UserId);
         }
     }
 }
