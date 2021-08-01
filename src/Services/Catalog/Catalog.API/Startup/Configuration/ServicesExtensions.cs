@@ -1,6 +1,7 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.BL.Services;
 using Catalog.API.BL.Services.CloudinaryService;
+using Catalog.API.BL.Services.ResponseCaching;
 using Catalog.API.DAL;
 using Catalog.API.DAL.Interfaces;
 using Catalog.API.DAL.Repositories;
@@ -23,6 +24,7 @@ namespace Catalog.API.Startup.Configuration
 
             //Services
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             services.AddTransient<ICatalogService, CatalogService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPhotoCloudAccessor, PhotoCloudAccessor>();

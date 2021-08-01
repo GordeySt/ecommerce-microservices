@@ -1,5 +1,6 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Catalog.API.PL.Filters;
+using Catalog.API.PL.Filters.ResponseCaching;
 using Catalog.API.PL.Models.DTOs.Products;
 using Catalog.API.PL.Models.Params;
 using Microsoft.AspNetCore.Authorization;
@@ -47,6 +48,7 @@ namespace Catalog.API.PL.Controllers
         /// <response code="200">Success</response>
         [HttpGet("get-popular")]
         [PopularCategoriesParamValidation]
+        [CachedFilter(600)]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<string>>> GetPopularCategories
@@ -125,6 +127,7 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns CreatedAtAction with CreateProductDto object</returns>
         /// <response code="201">Success</response>
         [HttpPost]
+        [EraseCacheFilter]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<ProductDto>> CreateProduct
             ([BindRequired] CreateProductDto createProductDto)
@@ -161,6 +164,7 @@ namespace Catalog.API.PL.Controllers
         /// <response code="204">Success</response>
         /// <response code="404">If the product not found</response>
         [HttpPut]
+        [EraseCacheFilter]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateProduct([BindRequired] UpdateProductDto updateProductDto)
@@ -189,6 +193,7 @@ namespace Catalog.API.PL.Controllers
         /// <response code="204">Success</response>
         /// <response code="404">If the product not found</response>
         [HttpDelete("{id:guid}", Name = "DeleteProduct")]
+        [EraseCacheFilter]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteProduct(Guid id)
