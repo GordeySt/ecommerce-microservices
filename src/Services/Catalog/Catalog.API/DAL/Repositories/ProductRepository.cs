@@ -52,7 +52,8 @@ namespace Catalog.API.DAL.Repositories
         {
             var products = GetAllQueryable();
 
-            return await products.GroupBy(x => x.Category)
+            return await products
+                .GroupBy(x => x.Category)
                 .OrderByDescending(x => x.Count())
                 .Select(x => x.Key)
                 .Take(popularCategoriesCount)

@@ -11,7 +11,11 @@ namespace Catalog.API.Startup.Settings
         [Required]
         public string Host { get; set; }
 
-        public string ConnectionString => $"{Host}:{Port}";
+        [Required]
+        public int Database { get; set; }
+
+        [Required]
+        public bool AllowAdmin { get; set; }
 
         public void Validate()
         {

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.API.PL.Filters.ResponseCaching
 {
+    [AttributeUsage(AttributeTargets.Method)]
     public class CachedFilterAttribute : Attribute, IAsyncActionFilter
     {
         private readonly int _timeToLiveSeconds;
@@ -23,7 +24,8 @@ namespace Catalog.API.PL.Filters.ResponseCaching
         {
             var cacheService = context.HttpContext.RequestServices.GetRequiredService<IResponseCacheService>();
 
-            var cachedResponse = await cacheService.GetCachedResponseAsync("PopularCategories");
+            var cacheKey = GenerateCacheKeyFromRequest(context.HttpContext.Request);
+            var cachedResponse = await cacheService.GetCachedResponseAsync(cacheKey);
 
             if (!string.IsNullOrEmpty(cachedResponse))
             {
@@ -42,7 +44,7 @@ namespace Catalog.API.PL.Filters.ResponseCaching
 
             if (executedContext.Result is ObjectResult ObjectResult)
             {
-                await cacheService.CacheResponseAsync("PopularCategories", ObjectResult.Value, 
+                await cacheService.CacheResponseAsync(cacheKey, ObjectResult.Value, 
                     TimeSpan.FromSeconds(_timeToLiveSeconds));
             }
         }

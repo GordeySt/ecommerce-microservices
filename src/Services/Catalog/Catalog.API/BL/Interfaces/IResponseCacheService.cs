@@ -9,6 +9,6 @@ namespace Catalog.API.BL.Interfaces
 
         Task<string> GetCachedResponseAsync(string cachedKey);
 
-        Task RemoveCachedResponseAsync(string cacheKey);
+        Task FlushCachedResponsesAsync();
     }
 }
