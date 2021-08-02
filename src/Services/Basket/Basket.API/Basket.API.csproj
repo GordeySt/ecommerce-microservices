@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Startup\Configurations\" />
+    <Folder Include="Startup\Settings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\CommonParts\Services.Common\Services.Common.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Logging\Common.Logging\Common.Logging.csproj" />
+  </ItemGroup>
+
+</Project>
