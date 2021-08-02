@@ -1,6 +1,5 @@
 ﻿using Catalog.API.Startup.Settings;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Catalog.API.Startup.Configuration
 {
@@ -10,10 +9,7 @@ namespace Catalog.API.Startup.Configuration
             AppSettings appSettings)
         {
             services.AddHealthChecks()
-                .AddMongoDb(
-                    appSettings.DbSettings.ConnectionString,
-                    "Catalog MongoDB Health",
-                    HealthStatus.Degraded);
+                .AddNpgSql(appSettings.DbSettings.ConnectionString);
         }
     }
 }
