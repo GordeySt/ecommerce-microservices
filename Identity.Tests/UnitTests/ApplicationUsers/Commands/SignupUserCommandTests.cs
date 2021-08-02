@@ -90,7 +90,6 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedUser = TestData.CreateAppUser();
-            var expectedErrorMessage = TestData.ErrorMessage;
             var expectedConfirmationToken = "TestToken";
             var command = new SignupUserCommand
             {

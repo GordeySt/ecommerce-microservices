@@ -1,5 +1,4 @@
-﻿using Catalog.API.DAL.Entities;
-using Catalog.API.DAL.Interfaces;
+﻿using Catalog.API.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Services.Common.Constatns;
@@ -27,9 +26,9 @@ namespace Catalog.API.DAL.Repositories
 
         public IQueryable<T> GetAllQueryable() => _entity.AsQueryable();
 
-        public async Task<IEnumerable<T>> GetAllAsync() => await _entity.ToListAsync();
+        public async Task<List<T>> GetAllAsync() => await _entity.ToListAsync();
 
-        public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate) => 
+        public async Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate) => 
             await _entity.Where(predicate).ToListAsync();
 
         public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression) => 

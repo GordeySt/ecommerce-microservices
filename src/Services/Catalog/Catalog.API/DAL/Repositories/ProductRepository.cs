@@ -9,6 +9,7 @@ using Services.Common.ResultWrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
@@ -48,7 +49,7 @@ namespace Catalog.API.DAL.Repositories
             return new ServiceResult(ServiceResultType.Success);
         }
 
-        public async Task<IEnumerable<string>> GetPopularCategoriesAsync(int popularCategoriesCount)
+        public async Task<List<string>> GetPopularCategoriesAsync(int popularCategoriesCount)
         {
             var products = GetAllQueryable();
 
@@ -60,30 +61,15 @@ namespace Catalog.API.DAL.Repositories
                 .ToListAsync();
         }
 
-        public void SortProductsByPrice(ref IQueryable<Product> products, PriceOrderType? priceOrderType)
+        public void SortProductsByDefinition<T>(ref IQueryable<Product> products, OrderType? orderType,
+            Expression<Func<Product, T>> sortDefinition)
         {
-            switch (priceOrderType)
+            products = orderType switch
             {
-                case PriceOrderType.Asc:
-                    products = products.OrderBy(t => t.Price);
-                    break;
-                case PriceOrderType.Desc:
-                    products = products.OrderByDescending(t => t.Price);
-                    break;
-            }
-        }
-
-        public void SortProductByRating(ref IQueryable<Product> products, RatingOrderType? ratingOrderType)
-        {
-            switch (ratingOrderType)
-            {
-                case RatingOrderType.Asc:
-                    products = products.OrderBy(t => t.AverageRating);
-                    break;
-                case RatingOrderType.Desc:
-                    products = products.OrderByDescending(t => t.AverageRating);
-                    break;
-            }
+                OrderType.Asc => products.OrderBy(sortDefinition),
+                OrderType.Desc => products.OrderByDescending(sortDefinition),
+                _ => products
+            };
         }
     }
 }

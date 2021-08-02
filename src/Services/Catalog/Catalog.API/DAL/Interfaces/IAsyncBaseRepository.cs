@@ -10,11 +10,11 @@ namespace Catalog.API.DAL.Interfaces
 {
     public interface IAsyncBaseRepository<T> where T : class
     {
-        public Task<IEnumerable<T>> GetAllAsync();
+        public Task<List<T>> GetAllAsync();
 
         public IQueryable<T> GetAllQueryable();
 
-        public Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> predicate);
+        public Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate);
 
         public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression);
 

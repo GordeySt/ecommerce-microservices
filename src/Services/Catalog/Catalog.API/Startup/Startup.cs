@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
+using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 
 namespace Catalog.API.Startup
@@ -45,7 +46,8 @@ namespace Catalog.API.Startup
                 })
                 .AddNewtonsoftJson(options => 
                 {
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
             services.RegisterServices(appSettings);

@@ -6,8 +6,8 @@ using System.Collections.Generic;
 
 namespace Identity.API.Configurations
 {
-    public static class IdentityConfiguration
-    {
+	public static class IdentityConfiguration
+	{
 		public static IEnumerable<IdentityResource> IdentityResources =>
 			new List<IdentityResource>
 			{
@@ -20,12 +20,12 @@ namespace Identity.API.Configurations
 			new ApiResource[]
 			{
 				new ApiResource()
-                {
+				{
 					Name = "catalogapi",
 					Enabled = true,
 					Scopes = new List<string> { "catalogapi" },
 					UserClaims = new List<string> { "role" }
-                },
+				},
 				new ApiResource()
 				{
 					Name = "identityapi",
@@ -46,7 +46,7 @@ namespace Identity.API.Configurations
 			new List<Client>
 			{
 				new Client
-                {
+				{
 					ClientId = "client_id_catalog_swagger",
 					ClientSecrets = {  new Secret("client_secret_catalog_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
@@ -57,7 +57,7 @@ namespace Identity.API.Configurations
 						"catalogapi",
 						IdentityServerConstants.StandardScopes.OpenId,
 						IdentityServerConstants.StandardScopes.Profile,
-					    IdentityServerConstants.StandardScopes.OfflineAccess
+						IdentityServerConstants.StandardScopes.OfflineAccess
 					},
 					AllowOfflineAccess = true
 				},
@@ -78,27 +78,27 @@ namespace Identity.API.Configurations
 					AllowOfflineAccess = true
 				},
 				new Client
-                {
+				{
 					ClientName = "Postman",
 					AllowOfflineAccess = true,
 					AllowedScopes =
-                    {
+					{
 						IdentityServerConstants.StandardScopes.OpenId,
 						IdentityServerConstants.StandardScopes.Profile,
 						"roles",
 						"identityapi",
 						"catalogapi"
-                    },
+					},
 					RedirectUris =
-                    {
+					{
 						"https://www.getpostman.com/oauth2/callback"
-                    },
+					},
 					Enabled = true,
 					ClientId = "postman_id",
-                    ClientSecrets =
-                    {
+					ClientSecrets =
+					{
 						new Secret("postman_secret".ToSha256())
-                    },
+					},
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword
 				}
 			};

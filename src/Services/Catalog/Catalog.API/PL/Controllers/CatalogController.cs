@@ -47,17 +47,15 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns PagedList of ProductDto</returns>
         /// <response code="200">Success</response>
         [HttpGet("get-popular")]
-        [PopularCategoriesParamValidation]
+        [PopularCategoriesParamFilter]
         [CachedFilter(600)]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<string>>> GetPopularCategories
-            ([FromQuery] int popularCategoriesCount)
-        {
-            var categories = await _catalogService.GetPopularCategoriesAsync(popularCategoriesCount);
+        public async Task<ActionResult<List<string>>> GetPopularCategories
+            ([FromQuery] int popularCategoriesCount) => 
+            (await _catalogService.GetPopularCategoriesAsync(popularCategoriesCount)).ToList();
 
-            return categories.ToList();
-        }
+
 
         /// <summary>
         /// Gets the paginated list of products
@@ -92,6 +90,7 @@ namespace Catalog.API.PL.Controllers
         /// <response code="200">Success</response>
         /// <response code="404">If the product not found</response>
         [HttpGet("{id:guid}", Name = "GetProduct")]
+        [CachedFilter(600)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductDto>> GetProductById(Guid id)

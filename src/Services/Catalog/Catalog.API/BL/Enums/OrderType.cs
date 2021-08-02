@@ -1,6 +1,6 @@
 ﻿namespace Catalog.API.BL.Enums
 {
-    public enum RatingOrderType
+    public enum OrderType
     {
         Asc,
         Desc

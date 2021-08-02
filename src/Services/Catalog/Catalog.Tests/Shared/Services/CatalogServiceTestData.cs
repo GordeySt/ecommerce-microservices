@@ -67,7 +67,7 @@ namespace Catalog.Tests.Shared.Services
             MainImageUrl = "TestUrl"
         };
 
-        public static IEnumerable<string> GetPopularCategories(int popularCategoriesCount)
+        public static List<string> GetPopularCategories(int popularCategoriesCount)
         {
             var popularCategories = new List<string>();
 
