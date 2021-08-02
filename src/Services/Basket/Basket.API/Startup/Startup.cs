@@ -1,10 +1,11 @@
+using Basket.API.Startup.Configurations;
 using Basket.API.Startup.Middlewares;
+using Basket.API.Startup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace Basket.API.Startup
 {
@@ -20,12 +21,13 @@ namespace Basket.API.Startup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettings = ReadAppSettings(Configuration);
+
+            services.RegisterAuthSettings(appSettings);
+            services.ValidateSettingParameters(Configuration);
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" });
-            });
+            services.RegisterSwagger(appSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,9 +38,9 @@ namespace Basket.API.Startup
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API v1"));
             }
+
+            app.UseSwaggerApplication();
 
             app.UseRouting();
 
@@ -48,6 +50,17 @@ namespace Basket.API.Startup
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static AppSettings ReadAppSettings(IConfiguration configuration)
+        { 
+            var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
+                .Get<AppUrlsSettings>();
+
+            return new AppSettings
+            {
+                AppUrlsSettings = appUrlsSettings
+            };
         }
     }
 }

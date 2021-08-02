@@ -32,14 +32,22 @@ namespace Identity.API.Configurations
 					Enabled = true,
 					Scopes = new List<string> { "identityapi" },
 					UserClaims = new List<string> { "role" }
-				}
+				},
+				new ApiResource()
+                {
+					Name = "basketapi",
+					Enabled = true,
+					Scopes = new List<string> { "basketapi" },
+					UserClaims = new List<string> { "role" }
+                }
 			};
 
 		public static IEnumerable<ApiScope> Scopes =>
 			new ApiScope[]
 			{
 				new ApiScope("catalogapi"),
-				new ApiScope("identityapi")
+				new ApiScope("identityapi"),
+				new ApiScope("basketapi")
 			};
 
 		public static IEnumerable<Client> GetClients(IConfiguration configuration) =>
@@ -71,6 +79,22 @@ namespace Identity.API.Configurations
 					{
 						"roles",
 						"identityapi",
+						IdentityServerConstants.StandardScopes.OpenId,
+						IdentityServerConstants.StandardScopes.Profile,
+						IdentityServerConstants.StandardScopes.OfflineAccess
+					},
+					AllowOfflineAccess = true
+				},
+				new Client
+				{
+					ClientId = "client_id_basket_swagger",
+					ClientSecrets = {  new Secret("client_secret_basket_swagger".ToSha256()) },
+					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+					AllowedCorsOrigins = { configuration["appUrls:basketUrl"] },
+					AllowedScopes =
+					{
+						"roles",
+						"basketapi",
 						IdentityServerConstants.StandardScopes.OpenId,
 						IdentityServerConstants.StandardScopes.Profile,
 						IdentityServerConstants.StandardScopes.OfflineAccess
