@@ -5,6 +5,7 @@ using Catalog.API.DAL.Interfaces;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Catalog.API.BL.Services
@@ -135,7 +136,7 @@ namespace Catalog.API.BL.Services
 
         private static void UpdateProductAverageRating(Product product, bool isAfterCreate)
         {
-            if (product.Ratings.Count > 0 && isAfterCreate)
+            if (product.Ratings.Any() && isAfterCreate)
             {
                 product.AverageRating = (double)product.TotalRating / (product.Ratings.Count + 1);
             }

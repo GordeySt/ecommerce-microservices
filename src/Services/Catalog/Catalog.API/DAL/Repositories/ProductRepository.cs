@@ -49,7 +49,7 @@ namespace Catalog.API.DAL.Repositories
             return new ServiceResult(ServiceResultType.Success);
         }
 
-        public async Task<IEnumerable<string>> GetPopularCategoriesAsync(int popularCategoriesCount)
+        public async Task<List<string>> GetPopularCategoriesAsync(int popularCategoriesCount)
         {
             var products = GetAllQueryable();
 
@@ -64,15 +64,12 @@ namespace Catalog.API.DAL.Repositories
         public void SortProductsByDefinition<T>(ref IQueryable<Product> products, OrderType? orderType,
             Expression<Func<Product, T>> sortDefinition)
         {
-            switch (orderType)
+            products = orderType switch
             {
-                case OrderType.Asc:
-                    products = products.OrderBy(sortDefinition);
-                    break;
-                case OrderType.Desc:
-                    products = products.OrderByDescending(sortDefinition);
-                    break;
-            }
+                OrderType.Asc => products.OrderBy(sortDefinition),
+                OrderType.Desc => products.OrderByDescending(sortDefinition),
+                _ => products
+            };
         }
     }
 }

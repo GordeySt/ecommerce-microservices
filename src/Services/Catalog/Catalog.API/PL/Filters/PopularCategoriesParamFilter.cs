@@ -3,35 +3,42 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Catalog.API.PL.Filters
 {
-    public class PopularCategoriesParamValidationAttribute : ActionFilterAttribute
+    public class PopularCategoriesParamFilter : ActionFilterAttribute
     {
+        private const string InvalidNumberErrorMessage = "Number cannot be negative";
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var popularCategoriesCountKey = "popularCategoriesCount";
 
             if (!context.ActionArguments.ContainsKey(popularCategoriesCountKey))
             {
-                context.Result = new BadRequestResult();
+                SetBadRequestResultToContextResult(context);
                 return;
             }
 
             if (context.ActionArguments[popularCategoriesCountKey] is not int popularCategoriesCount)
             {
-                context.Result = new BadRequestResult();
+                SetBadRequestResultToContextResult(context);
                 return;
             }
 
             if (popularCategoriesCount < 0)
             {
-                context.Result = new BadRequestObjectResult(new
+                SetBadRequestResultToContextResult(context, new
                 {
-                    Error = "Number cannot be negative"
+                    Error = InvalidNumberErrorMessage
                 });
 
                 return;
             }
 
-            base.OnActionExecuting(context);
+            OnActionExecuting(context);
+        }
+
+        private void SetBadRequestResultToContextResult(ActionExecutingContext context, object error = null)
+        {
+            context.Result = new BadRequestObjectResult(error);
         }
     }
 }

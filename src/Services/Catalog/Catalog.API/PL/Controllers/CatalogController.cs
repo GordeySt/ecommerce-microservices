@@ -46,16 +46,14 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns PagedList of ProductDto</returns>
         /// <response code="200">Success</response>
         [HttpGet("get-popular")]
-        [PopularCategoriesParamValidation]
+        [PopularCategoriesParamFilter]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<string>>> GetPopularCategories
-            ([FromQuery] int popularCategoriesCount)
-        {
-            var categories = await _catalogService.GetPopularCategoriesAsync(popularCategoriesCount);
+        public async Task<ActionResult<List<string>>> GetPopularCategories
+            ([FromQuery] int popularCategoriesCount) => 
+            (await _catalogService.GetPopularCategoriesAsync(popularCategoriesCount)).ToList();
 
-            return categories.ToList();
-        }
+
 
         /// <summary>
         /// Gets the paginated list of products

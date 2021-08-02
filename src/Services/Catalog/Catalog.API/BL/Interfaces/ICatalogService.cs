@@ -17,7 +17,7 @@ namespace Catalog.API.BL.Interfaces
 
         public Task<PagedList<ProductDto>> GetAllProductsAsync(ProductsParams productsParams);
 
-        public Task<IEnumerable<string>> GetPopularCategoriesAsync(int populerCategoriesCount);
+        public Task<List<string>> GetPopularCategoriesAsync(int populerCategoriesCount);
 
         public Task<ProductDto> GetProductByIdAsync(Guid id);
 
