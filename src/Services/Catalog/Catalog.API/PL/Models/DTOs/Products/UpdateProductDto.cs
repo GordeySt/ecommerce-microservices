@@ -1,12 +1,21 @@
 ﻿using AutoMapper;
 using Catalog.API.BL.Mappings;
 using Catalog.API.DAL.Entities;
+using Catalog.API.DAL.Enums;
 using Catalog.API.PL.Validation;
+using System;
 
-namespace Catalog.API.PL.Models.DTOs
+namespace Catalog.API.PL.Models.DTOs.Products
 {
-    public class CreateProductDto : IMapFrom<CreateProductDto>
+    public class UpdateProductDto : IMapFrom<UpdateProductDto>
     {
+        /// <summary>
+        /// Id (guid) of the product
+        /// </summary>
+        /// <example>0e39f30d-4754-48c0-8191-755f673e2269</example>
+        [DefaultValue]
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Name of the product
         /// </summary>
@@ -42,9 +51,23 @@ namespace Catalog.API.PL.Models.DTOs
         [DefaultValue]
         public decimal Price { get; set; }
 
+        /// <summary>
+        /// Age Rating of the product
+        /// </summary>
+        /// <example>6</example>
+        [DefaultValue]
+        public AgeRating AgeRating { get; set; }
+
+        /// <summary>
+        /// Count of the product
+        /// </summary>
+        /// <example>10</example>
+        [DefaultValue]
+        public int Count { get; set; }
+
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateProductDto, Product>();
+            profile.CreateMap<UpdateProductDto, Product>();
         }
     }
 }

@@ -3,6 +3,7 @@ using Identity.Application.Common.Interfaces;
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
 using System;
@@ -31,7 +32,7 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
             if (user is null)
             {
                 return new ServiceResult(ServiceResultType.NotFound,
-                    NotFoundExceptionMessageConstants.NotFoundItemMessage);
+                    ExceptionConstants.NotFoundItemMessage);
             }
 
             DeleteUser(user);
@@ -41,7 +42,7 @@ namespace Identity.Application.ApplicationUsers.Commands.DeleteUsers
             if (!deleteUserResult)
             {
                 return new ServiceResult(ServiceResultType.InternalServerError,
-                    ExceptionMessageConstants.ProblemDeletingItemMessage);
+                    ExceptionConstants.ProblemDeletingItemMessage);
             }
 
             return new ServiceResult(ServiceResultType.Success);

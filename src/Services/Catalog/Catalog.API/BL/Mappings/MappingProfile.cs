@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Catalog.API.DAL.Entities;
+using Identity.Grpc.Protos;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +11,7 @@ namespace Catalog.API.BL.Mappings
     {
         public MappingProfile()
         {
+            CreateMap<ApplicationUserModel, User>();
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
         }
 

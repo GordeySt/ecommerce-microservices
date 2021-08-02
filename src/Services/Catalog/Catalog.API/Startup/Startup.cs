@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Catalog.API.Startup
 {
@@ -30,17 +32,24 @@ namespace Catalog.API.Startup
 
             var appSettings = ReadAppSettings(Configuration, Env);
 
+            services.RegisterDatabase(appSettings);
             services.RegisterAuthSettings(appSettings);
             services.ValidateSettingParameters(Configuration);
-            services.RegisterServices(appSettings);
             services.RegisterAutoMapper();
             services.RegisterGrpcServices(appSettings);
 
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                })
+                .AddNewtonsoftJson(options => 
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+
+            services.RegisterServices(appSettings);
 
             services.RegisterSwagger(appSettings);
             services.RegisterHealthChecks(appSettings);
@@ -93,6 +102,12 @@ namespace Catalog.API.Startup
             var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
                 .Get<AppUrlsSettings>();
 
+            var retryPolicySettings = configuration.GetSection(nameof(AppSettings.RetryPolicySettings))
+                .Get<RetryPolicySettings>();
+
+            var circuitBreakerSettings = configuration.GetSection(nameof(AppSettings.CircuitBreakerSettings))
+                .Get<CircuitBreakerSettings>();
+
             if (env.IsDevelopment())
             {
                 cloudinarySettings.ApiSecret = configuration["Cloudinary:ApiSecret"];
@@ -102,7 +117,9 @@ namespace Catalog.API.Startup
             {
                 DbSettings = dbSettings,
                 CloudinarySettings = cloudinarySettings,
-                AppUrlsSettings = appUrlsSettings
+                AppUrlsSettings = appUrlsSettings,
+                RetryPolicySettings = retryPolicySettings,
+                CircuitBreakerSettings = circuitBreakerSettings
             };
         }
     }

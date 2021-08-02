@@ -1,20 +1,23 @@
 ﻿using Catalog.API.DAL.Entities;
+using Catalog.API.DAL.Enums;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Catalog.API.DAL
 {
     public class DatabaseContextSeed
     {
-        public static void SeedData(IMongoCollection<Product> productCollection)
+        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
         {
-            bool existProduct = productCollection.Find(_ => true).Any();
-
-            if (!existProduct)
+            // Seed, if necessary
+            if (!context.Products.Any())
             {
-                productCollection.InsertManyAsync(GetPreconfiguredProducts());
+                context.Products.AddRange(GetPreconfiguredProducts());
+
+                await context.SaveChangesAsync();
             }
         }
 
@@ -30,7 +33,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 950.00M,
-                    Category = "Smart Phone"
+                    Category = "Smart Phone",
+                    Count = 6,
+                    AgeRating = AgeRating.AboveThree
                 },
                 new Product()
                 {
@@ -40,7 +45,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 840.00M,
-                    Category = "Smart Phone"
+                    Category = "Smart Phone",
+                    Count = 10,
+                    AgeRating = AgeRating.AboveThree
                 },
                 new Product()
                 {
@@ -50,7 +57,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 650.00M,
-                    Category = "White Appliances"
+                    Category = "White Appliances",
+                    Count = 15,
+                    AgeRating = AgeRating.AboveSixteen
                 },
                 new Product()
                 {
@@ -60,7 +69,9 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 470.00M,
-                    Category = "White Appliances"
+                    Category = "White Appliances",
+                    Count = 6,
+                    AgeRating = AgeRating.AboveSixteen
                 },
                 new Product()
                 {
@@ -70,17 +81,21 @@ namespace Catalog.API.DAL
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 380.00M,
-                    Category = "Smart Phone"
+                    Category = "Smart Phone",
+                    Count = 11,
+                    AgeRating = AgeRating.AboveSixteen
                 },
                 new Product()
                 {
                     Id = Guid.NewGuid(),
-                    Name = "LG G7 ThinQ",
+                    Name = "LG G7 Thin",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     MainImageUrl = null,
                     Price = 240.00M,
-                    Category = "Home Kitchen"
+                    Category = "Home Kitchen",
+                    Count = 20,
+                    AgeRating = AgeRating.AboveEighteen
                 }
             };
         }

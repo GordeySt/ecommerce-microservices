@@ -3,7 +3,7 @@ using Catalog.API.BL.Mappings;
 using Catalog.API.DAL.Entities;
 using System;
 
-namespace Catalog.API.PL.Models.DTOs
+namespace Catalog.API.PL.Models.DTOs.Products
 {
     public class ProductDto : IMapFrom<Product>
     {
@@ -48,6 +48,25 @@ namespace Catalog.API.PL.Models.DTOs
         /// </summary>
         /// <example>60</example>
         public decimal Price { get; set; }
+
+        /// <summary>
+        /// Age Rating of the product
+        /// </summary>
+        /// <example>6</example>
+        
+        public int AgeRating { get; set; }
+
+        /// <summary>
+        /// Count of the product
+        /// </summary>
+        /// <example>10</example>
+        public int Count { get; set; }
+
+        /// <summary>
+        /// Total Rating of the product
+        /// </summary>
+        /// <example>10</example>
+        public double AverageRating { get; set; }
 
         public void Mapping(Profile profile)
         {

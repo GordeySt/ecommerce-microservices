@@ -1,8 +1,15 @@
-﻿using Catalog.API.DAL.Entities;
+﻿using Catalog.API.BL.Enums;
+using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.API.PL.Models.Params;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
-using Services.Common.Models;
+using Services.Common.Constatns;
+using Services.Common.Enums;
+using Services.Common.ResultWrappers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
@@ -10,25 +17,59 @@ namespace Catalog.API.DAL.Repositories
     public class ProductRepository : AsyncBaseRepository<Product>,
         IProductRepository
     {
-        public ProductRepository(IDatabaseContext databaseContext) : base(databaseContext)
+        public ProductRepository(ApplicationDbContext databaseContext) : base(databaseContext)
         { }
 
-        public async Task<PagedList<Product>> GetProductsByCategory(CategoryParams categoryParams)
+        public async Task<Product> GetProductByIdAsync(Guid id, bool disableTracking = true)
         {
-            var filter = Builders<Product>.Filter
-                .Eq(p => p.Category, categoryParams.CategoryName);
+            if (disableTracking)
+            {
+                return await DatabaseContext.Products
+                    .Include(t => t.Ratings)
+                    .FirstOrDefaultAsync(x => x.Id == id);
+            }
 
-            var collection = DatabaseContext.Products;
-
-            return await PagedList<Product>.CreateAsync(collection, filter, categoryParams.PageNumber,
-                categoryParams.PageSize);
+            return await DatabaseContext.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task UpdateMainImageAsync(Product product)
+        public async Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl)
         {
-            await DatabaseContext
-                .Products
-                .ReplaceOneAsync(filter: g => g.Id == product.Id, replacement: product);
+            product.MainImageUrl = photoUrl;
+
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
+
+            if (!success)
+            {
+                return new ServiceResult(ServiceResultType.InternalServerError,
+                    ExceptionConstants.ProblemCreatingItemMessage);
+            }
+
+            return new ServiceResult(ServiceResultType.Success);
+        }
+
+        public async Task<List<string>> GetPopularCategoriesAsync(int popularCategoriesCount)
+        {
+            var products = GetAllQueryable();
+
+            return await products.GroupBy(x => x.Category)
+                .Select(x => new { Category = x.Key, Count = x.Count() })
+                .OrderByDescending(x => x.Count)
+                .Select(x => x.Category)
+                .Take(popularCategoriesCount)
+                .ToListAsync();
+        }
+
+        public void SortProductsByDefinition<T>(ref IQueryable<Product> products, OrderType? orderType,
+            Expression<Func<Product, T>> sortDefinition)
+        {
+            products = orderType switch
+            {
+                OrderType.Asc => products.OrderBy(sortDefinition),
+                OrderType.Desc => products.OrderByDescending(sortDefinition),
+                _ => products
+            };
         }
     }
 }

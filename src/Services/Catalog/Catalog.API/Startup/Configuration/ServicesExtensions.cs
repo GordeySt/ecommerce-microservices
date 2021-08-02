@@ -6,6 +6,7 @@ using Catalog.API.DAL.Interfaces;
 using Catalog.API.DAL.Repositories;
 using Catalog.API.Startup.Settings;
 using Common.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.API.Startup.Configuration
@@ -18,16 +19,20 @@ namespace Catalog.API.Startup.Configuration
             //AppSettings
             services.AddSingleton(appSettings);
 
-            //Database context
-            services.AddScoped<IDatabaseContext, DatabaseContext>();
+            services.AddHttpContextAccessor();
 
             //Services
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddTransient<ICatalogService, CatalogService>();
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPhotoCloudAccessor, PhotoCloudAccessor>();
             services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IProductRatingsService, ProductRatingsService>();
 
             //Repository
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IProductRatingsRepository, ProductRatingsRepository>();
 
             services.AddTransient<LoggingDelegatingHandler>();
         }

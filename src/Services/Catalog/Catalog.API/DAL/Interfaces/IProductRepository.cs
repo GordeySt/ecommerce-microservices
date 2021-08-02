@@ -1,13 +1,20 @@
-﻿using Catalog.API.DAL.Entities;
-using Catalog.API.PL.Models.Params;
-using Services.Common.Models;
+﻿using Catalog.API.BL.Enums;
+using Catalog.API.DAL.Entities;
+using Services.Common.ResultWrappers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Interfaces
 {
     public interface IProductRepository : IAsyncBaseRepository<Product>
     {
-        Task<PagedList<Product>> GetProductsByCategory(CategoryParams categoryParams);
-        Task UpdateMainImageAsync(Product product);
+        public Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl);
+        public Task<List<string>> GetPopularCategoriesAsync(int popularCategoriesCount);
+        public void SortProductsByDefinition<T>(ref IQueryable<Product> products, OrderType? orderType,
+            Expression<Func<Product, T>> sortDefinition);
+        public Task<Product> GetProductByIdAsync(Guid id, bool disableTracking = true);
     }
 }

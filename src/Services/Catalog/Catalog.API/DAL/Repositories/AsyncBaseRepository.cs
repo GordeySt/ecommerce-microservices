@@ -1,86 +1,80 @@
-﻿using Catalog.API.BL.Constants;
-using Catalog.API.DAL.Entities;
-using Catalog.API.DAL.Interfaces;
+﻿using Catalog.API.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using Services.Common.Constatns;
 using Services.Common.Enums;
-using Services.Common.Models;
 using Services.Common.ResultWrappers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Repositories
 {
     public class AsyncBaseRepository<T> : IAsyncBaseRepository<T> where T 
-        : EntityBase
+        : class
     {
-        protected readonly IDatabaseContext DatabaseContext;
-        private readonly IMongoCollection<T> _collection;
+        protected readonly ApplicationDbContext DatabaseContext;
+        private readonly DbSet<T> _entity;
 
-        public AsyncBaseRepository(IDatabaseContext databaseContext)
+        protected AsyncBaseRepository(ApplicationDbContext databaseContext)
         {
             DatabaseContext = databaseContext;
-            _collection = DatabaseContext.GetCollection<T>(typeof(T).Name);
+            _entity = databaseContext.Set<T>();
         }
 
-        public async Task<PagedList<T>> GetAllItemsAsync(PagingParams pagingParams) => 
-            await PagedList<T>.CreateAsync(_collection, Builders<T>.Filter.Empty, 
-                pagingParams.PageNumber, pagingParams.PageSize);
+        public IQueryable<T> GetAllQueryable() => _entity.AsQueryable();
 
-        public async Task<T> GetItemByIdAsync(Guid id)
+        public async Task<List<T>> GetAllAsync() => await _entity.ToListAsync();
+
+        public async Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate) => 
+            await _entity.Where(predicate).ToListAsync();
+
+        public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression) => 
+            entity.Where(expression);
+
+        public async Task<ServiceResult<T>> AddAsync(T entity)
         {
-            return await _collection
-                .Find(p => p.Id == id)
-                .FirstOrDefaultAsync();
+            _entity.Add(entity);
+
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
+
+            if (!success)
+            {
+                return new ServiceResult<T>(ServiceResultType.InternalServerError,
+                    ExceptionConstants.ProblemCreatingItemMessage);
+            }
+
+            return new ServiceResult<T>(ServiceResultType.Success, entity);
         }
 
-        public async Task AddItemAsync(T entity)
+        public async Task<ServiceResult> UpdateAsync(T entity)
         {
-            try
+            _entity.Update(entity);
+
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
+
+            if (!success)
             {
-                await _collection
-                    .InsertOneAsync(entity);
+                return new ServiceResult(ServiceResultType.InternalServerError,
+                    ExceptionConstants.ProblemUpdatingItemMessage);
             }
-            catch
-            {
-                throw new Exception("Problem inserting data");
-            }
-
-        }
-
-        public async Task<ServiceResult> DeleteItemAsync(Guid id)
-        {
-            var itemToDelete = await _collection
-                .Find(p => p.Id == id)
-                .FirstOrDefaultAsync();
-
-            if (itemToDelete is null)
-            {
-                return new ServiceResult(ServiceResultType.NotFound,
-                    ExceptionMessageConstants.NotFoundItemMessage);
-            }
-
-            var filter = Builders<T>.Filter.Eq(p => p.Id, id);
-
-            var deleteResult = await _collection
-                .DeleteOneAsync(filter);
 
             return new ServiceResult(ServiceResultType.Success);
         }
 
-        public async Task<ServiceResult> UpdateItemAsync(T entity)
+        public async Task<ServiceResult> DeleteAsync(T entity)
         {
-            var itemToUpdate = await _collection
-                .Find(p => p.Id == entity.Id)
-                .FirstOrDefaultAsync();
+            _entity.Remove(entity);
 
-            if (itemToUpdate is null)
+            var success = await DatabaseContext.SaveChangesAsync() > 0;
+
+            if (!success)
             {
-                return new ServiceResult(ServiceResultType.NotFound,
-                    ExceptionMessageConstants.NotFoundItemMessage);
+                return new ServiceResult(ServiceResultType.InternalServerError, 
+                    ExceptionConstants.ProblemDeletingItemMessage);
             }
-
-            var updateResult = await _collection
-                .ReplaceOneAsync(filter: g => g.Id == entity.Id, replacement: entity);
 
             return new ServiceResult(ServiceResultType.Success);
         }

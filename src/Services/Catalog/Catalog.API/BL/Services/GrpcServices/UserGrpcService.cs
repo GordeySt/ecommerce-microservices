@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Catalog.API.PL.GrpcServices
+namespace Catalog.API.BL.Services.GrpcServices
 {
     public class UserGrpcService
     {
@@ -13,7 +13,7 @@ namespace Catalog.API.PL.GrpcServices
             _userProtoService = userProtoService;
         }
 
-        public async Task<ApplicationUserModel> GetUserById(Guid id)
+        public async Task<ApplicationUserModel> GetUserByIdAsync(Guid id)
         {
             var userRequest = new GetUserByIdRequest { Id = id.ToString() };
 

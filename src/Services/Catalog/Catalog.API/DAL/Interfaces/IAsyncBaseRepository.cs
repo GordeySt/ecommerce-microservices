@@ -1,18 +1,28 @@
 ﻿using Catalog.API.DAL.Entities;
-using Services.Common.Models;
 using Services.Common.ResultWrappers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.API.DAL.Interfaces
 {
-    public interface IAsyncBaseRepository<T> where T : EntityBase
+    public interface IAsyncBaseRepository<T> where T : class
     {
-		Task<PagedList<T>> GetAllItemsAsync(PagingParams pagingParams);
-		Task<T> GetItemByIdAsync(Guid id);
-		Task AddItemAsync(T entity);
-		Task<ServiceResult> UpdateItemAsync(T entity);
-		Task<ServiceResult> DeleteItemAsync(Guid Id);
-	}
+        public Task<List<T>> GetAllAsync();
+
+        public IQueryable<T> GetAllQueryable();
+
+        public Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate);
+
+        public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression);
+
+        public Task<ServiceResult<T>> AddAsync(T entity);
+
+        public Task<ServiceResult> UpdateAsync(T entity);
+
+        public Task<ServiceResult> DeleteAsync(T entity);
+    }
 }
 

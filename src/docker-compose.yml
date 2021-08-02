@@ -25,7 +25,6 @@ services:
 
   identitygrpc:
     container_name: identitygrpc
-    image: ${DOCKER_REGISTRY-}identitygrpc
     build:
       context: .
       dockerfile: Services/Identity/Identity.Grpc/Dockerfile
@@ -38,7 +37,6 @@ services:
 
   identityserver:
     container_name: identityserver
-    image: ${DOCKER_REGISTRY-}identityapi
     build:
       context: .
       dockerfile: Services/Identity/Identity.API/Dockerfile
@@ -57,7 +55,6 @@ services:
 
   catalog.api: 
     container_name: catalog.api
-    image: ${DOCKER_REGISTRY-}catalogapi
     build: 
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
@@ -107,7 +104,6 @@ services:
 
   webstatus:
     container_name: webstatus
-    image: ${DOCKER_REGISTRY-}webstatus
     build:
       context: .
       dockerfile: WebApps/WebStatus/Dockerfile

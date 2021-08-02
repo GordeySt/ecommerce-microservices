@@ -4,7 +4,21 @@
         <name>Catalog.API</name>
     </assembly>
     <members>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetProducts(Services.Common.Models.PagingParams)">
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetPopularCategories(System.Int32)">
+            <summary>
+            Gets the most popular categories of products
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/get-popular?popularCategoriesCount=2
+            
+            </remarks>
+            <param name="popularCategoriesCount">Count of the popular categories</param>
+            <returns>Returns PagedList of ProductDto</returns>
+            <response code="200">Success</response>
+        </member>
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetProducts(Catalog.API.PL.Models.Params.ProductsParams)">
             <summary>
             Gets the paginated list of products
             </summary>
@@ -14,7 +28,7 @@
                 GET /api/Catalog?pageNumber=4&amp;pageSize=4
             
             </remarks>
-            <param name="pagingParams"></param>
+            <param name="productsParams"></param>
             <returns>Returns PagedList of ProductDto</returns>
             <response code="200">Success</response>
         </member>
@@ -33,21 +47,7 @@
             <response code="200">Success</response>
             <response code="404">If the product not found</response>
         </member>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.GetProductsByCategory(Catalog.API.PL.Models.Params.CategoryParams)">
-            <summary>
-            Gets the products by category
-            </summary>
-            <remarks>
-            Sample request:
-            
-                GET /api/Catalog/GetProductsByCategory?categoryName=Computers&amp;pageNumber=2&amp;pageSize=3
-                
-            </remarks>
-            <param name="categoryParams">CategoryParams object including PagingParams object</param>
-            <returns>Returns PagedList of ProductDto</returns>
-            <response code="200">Success</response>
-        </member>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.CreateProduct(Catalog.API.PL.Models.DTOs.CreateProductDto)">
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.CreateProduct(Catalog.API.PL.Models.DTOs.Products.CreateProductDto)">
             <summary>
             Creates the product
             </summary>
@@ -68,7 +68,7 @@
             <returns>Returns CreatedAtAction with CreateProductDto object</returns>
             <response code="201">Success</response>
         </member>
-        <member name="M:Catalog.API.PL.Controllers.CatalogController.UpdateProduct(Catalog.API.PL.Models.DTOs.UpdateProductDto)">
+        <member name="M:Catalog.API.PL.Controllers.CatalogController.UpdateProduct(Catalog.API.PL.Models.DTOs.Products.UpdateProductDto)">
             <summary>
             Updates the product
             </summary>
@@ -122,113 +122,188 @@
             <response code="204">Success</response>
             <response code="404">If the product with id (guid) not found</response>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Name">
+        <member name="M:Catalog.API.PL.Controllers.ProductRatingsController.AddRatingToProduct(System.Guid,System.Int32)">
+            <summary>
+            Rate product
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/add-ratings/id/e0c40c25-52f7-48df-91fc-441dadca0a0f
+            
+            </remarks>
+            <param name="id">Product Id (guid)</param>
+            <param name="ratingCount">Rating Count</param>
+            <returns>Returns NoContent Object Result</returns>
+            <response code="200">Success</response>
+            <response code="400">If rating already exists</response>
+            <response code="404">If product rating not found (user or product not found)</response>
+        </member>
+        <member name="M:Catalog.API.PL.Controllers.ProductRatingsController.ChangeRatingAtProduct(System.Guid,System.Int32)">
+            <summary>
+            Update product rating
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/change-ratings/id/e0c40c25-52f7-48df-91fc-441dadca0a0f
+            
+            </remarks>
+            <param name="id">Product Id (guid)</param>
+            <param name="ratingCount">Rating Count</param>
+            <returns>Returns NoContent Object Result</returns>
+            <response code="200">Success</response>
+            <response code="404">If product rating not found (user or product not found)</response>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.CreateProductDto.Name">
             <summary>
             Name of the product
             </summary>
             <example>IPhone X</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Description">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.CreateProductDto.Description">
             <summary>
             Description of the product
             </summary>
             <example>Tim Cooks child</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Summary">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.CreateProductDto.Summary">
             <summary>
             Summary about the product
             </summary>
             <example>New Smart Phone</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Category">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.CreateProductDto.Category">
             <summary>
             Category of the product
             </summary>
             <example>Smart Phones</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.CreateProductDto.Price">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.CreateProductDto.Price">
             <summary>
             Price of the product
             </summary>
             <example>60</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Id">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.CreateProductDto.AgeRating">
+            <summary>
+            Age Rating of the product
+            </summary>
+            <example>6</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.CreateProductDto.Count">
+            <summary>
+            Count of the product
+            </summary>
+            <example>10</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.Id">
             <summary>
             Id (guid) of the product
             </summary>
             <example>0e39f30d-4754-48c0-8191-755f673e2269</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Name">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.Name">
             <summary>
             Name of the product
             </summary>
             <example>IPhone X</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Category">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.Category">
             <summary>
             Category of the product
             </summary>
             <example>Smart Phones</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Summary">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.Summary">
             <summary>
             Summary about the product
             </summary>
             <example>New Smart Phone</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Description">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.Description">
             <summary>
             Description of the product
             </summary>
             <example>Tim Cooks child</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.MainImageUrl">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.MainImageUrl">
             <summary>
             Url from the cloud for the proudct main image
             </summary>
             <example>https://res.cloudinary.com/student-gordey/image/upload/v1626446506/alclnjzmwf3pqcizvfrb.jpg</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.ProductDto.Price">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.Price">
             <summary>
             Price of the product
             </summary>
             <example>60</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Id">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.AgeRating">
+            <summary>
+            Age Rating of the product
+            </summary>
+            <example>6</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.Count">
+            <summary>
+            Count of the product
+            </summary>
+            <example>10</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.ProductDto.AverageRating">
+            <summary>
+            Total Rating of the product
+            </summary>
+            <example>10</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.Id">
             <summary>
             Id (guid) of the product
             </summary>
             <example>0e39f30d-4754-48c0-8191-755f673e2269</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Name">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.Name">
             <summary>
             Name of the product
             </summary>
             <example>IPhone X</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Description">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.Description">
             <summary>
             Description of the product
             </summary>
             <example>Tim Cooks child</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Summary">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.Summary">
             <summary>
             Summary about the product
             </summary>
             <example>New Smart Phone</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Category">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.Category">
             <summary>
             Category of the product
             </summary>
             <example>Smart Phones</example>
         </member>
-        <member name="P:Catalog.API.PL.Models.DTOs.UpdateProductDto.Price">
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.Price">
             <summary>
             Price of the product
             </summary>
             <example>60</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.AgeRating">
+            <summary>
+            Age Rating of the product
+            </summary>
+            <example>6</example>
+        </member>
+        <member name="P:Catalog.API.PL.Models.DTOs.Products.UpdateProductDto.Count">
+            <summary>
+            Count of the product
+            </summary>
+            <example>10</example>
         </member>
         <member name="T:Identity.Grpc.Protos.UserReflection">
             <summary>Holder for reflection information generated from user.proto</summary>
