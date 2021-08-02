@@ -1,5 +1,4 @@
 ﻿using Catalog.API.BL.Interfaces;
-using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using StackExchange.Redis.Extensions.Core.Abstractions;
 using System;

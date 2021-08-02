@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Catalog.API.PL.Filters.ResponseCaching
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class EraseCacheFilterAttribute : Attribute, IAsyncActionFilter
+    public class FlushCacheFilterAttribute : Attribute, IAsyncActionFilter
     { 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
