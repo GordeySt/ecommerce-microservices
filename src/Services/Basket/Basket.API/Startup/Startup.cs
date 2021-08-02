@@ -25,6 +25,7 @@ namespace Basket.API.Startup
 
             services.RegisterAuthSettings(appSettings);
             services.ValidateSettingParameters(Configuration);
+            services.RegisterRedisCache(appSettings);
 
             services.AddControllers();
             services.RegisterSwagger(appSettings);
@@ -57,9 +58,13 @@ namespace Basket.API.Startup
             var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
                 .Get<AppUrlsSettings>();
 
+            var redisCacheSettings = configuration.GetSection(nameof(AppSettings.RedisCacheSettings))
+                .Get<RedisCacheSettings>();
+
             return new AppSettings
             {
-                AppUrlsSettings = appUrlsSettings
+                AppUrlsSettings = appUrlsSettings,
+                RedisCacheSettings = redisCacheSettings
             };
         }
     }
