@@ -19,7 +19,8 @@ namespace Basket.API.Startup.Configurations
                         Host = appSettings.RedisCacheSettings.Host,
                         Port = appSettings.RedisCacheSettings.Port
                     }
-                }
+                },
+                Database = appSettings.RedisCacheSettings.Database
             };
 
             services

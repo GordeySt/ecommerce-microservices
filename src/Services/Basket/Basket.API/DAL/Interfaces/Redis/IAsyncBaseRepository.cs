@@ -5,7 +5,7 @@ namespace Basket.API.DAL.Interfaces.Redis
 {
     public interface IAsyncBaseRepository<T> where T : EntityBase
     {
-        public Task AddAsync(T shoppingCart);
+        public Task<T> AddAsync(T shoppingCart);
 
         public Task DeleteAsync(string cacheKey);
 

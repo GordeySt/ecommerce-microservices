@@ -7,9 +7,10 @@ namespace Basket.Tests.Shared.Services
 {
     public static class ShoppingCartTestData
     {
+        public const int CorrectTotalPrice = 80;
+
         public static ShoppingCart CreateShoppingCartEntity() => new()
         {
-            Id = Guid.NewGuid(),
             ShoppingCartItems = new List<ShoppingCartItem>
             {
                 CreateShoppingCartItem(),
