@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace Basket.API.Startup
 {
@@ -28,8 +29,14 @@ namespace Basket.API.Startup
             services.RegisterAuthSettings(appSettings);
             services.ValidateSettingParameters(Configuration);
             services.RegisterRedisCache(appSettings);
+            services.RegisterAutoMapper();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                });
+
             services.RegisterSwagger(appSettings);
             services.RegisterHealthChecks(appSettings);
         }
