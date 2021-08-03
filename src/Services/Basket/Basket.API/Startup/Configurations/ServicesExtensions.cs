@@ -3,6 +3,7 @@ using Basket.API.BL.Services;
 using Basket.API.DAL;
 using Basket.API.DAL.Interfaces.Mongo;
 using Basket.API.DAL.Interfaces.Redis;
+using Basket.API.DAL.Repositories.Mongo;
 using Basket.API.DAL.Repositories.Redis;
 using Basket.API.Startup.Settings;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,10 +23,12 @@ namespace Basket.API.Startup.Configurations
 
             // Repositories
             services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
             // Services
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<IOrderService, OrderService>();
             
         }
     }

@@ -1,14 +1,12 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using Basket.API.DAL.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace Basket.API.DAL.Entities
+namespace Basket.API.PL.Models.DTOs
 {
-    public class Order
+    public class OrderDto
     {
-        [BsonId]
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTimeOffset CreatedDate { get; private set; } = DateTimeOffset.UtcNow;
         public BillingAddress BillingAddress { get; set; }
