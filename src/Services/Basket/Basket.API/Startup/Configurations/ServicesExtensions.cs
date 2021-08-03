@@ -12,6 +12,8 @@ namespace Basket.API.Startup.Configurations
         public static void RegisterServices(this IServiceCollection services,
             AppSettings appSettings)
         {
+            services.AddHttpContextAccessor();
+
             // Settings
             services.AddSingleton(appSettings);
 
@@ -19,7 +21,9 @@ namespace Basket.API.Startup.Configurations
             services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
 
             // Services
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            
         }
     }
 }

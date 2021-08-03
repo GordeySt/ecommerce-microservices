@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Basket.API.Startup
 {
@@ -30,10 +31,12 @@ namespace Basket.API.Startup
             services.ValidateSettingParameters(Configuration);
             services.RegisterRedisCache(appSettings);
             services.RegisterAutoMapper();
+            services.RegisterServices(appSettings);
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
 
