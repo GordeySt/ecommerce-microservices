@@ -84,10 +84,14 @@ namespace Basket.API.Startup
             var redisCacheSettings = configuration.GetSection(nameof(AppSettings.RedisCacheSettings))
                 .Get<RedisCacheSettings>();
 
+            var mongoDbSettings = configuration.GetSection(nameof(AppSettings.MongoDbSettings))
+                .Get<MongoDbSettings>();
+
             return new AppSettings
             {
                 AppUrlsSettings = appUrlsSettings,
-                RedisCacheSettings = redisCacheSettings
+                RedisCacheSettings = redisCacheSettings,
+                MongoDbSettings = mongoDbSettings
             };
         }
     }

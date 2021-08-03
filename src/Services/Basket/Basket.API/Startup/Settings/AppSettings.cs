@@ -8,10 +8,13 @@ namespace Basket.API.Startup.Settings
 
         public RedisCacheSettings RedisCacheSettings { get; set; }
 
+        public MongoDbSettings MongoDbSettings { get; set; }
+
         public void Validate()
         {
             AppUrlsSettings.Validate();
             RedisCacheSettings.Validate();
+            MongoDbSettings.Validate();
         }
     }
 }

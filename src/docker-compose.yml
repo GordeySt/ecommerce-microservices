@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   catalogdb:
-    container_name: catalogdb
+    container_name: basketdb
     image: mongo
     restart: always
     ports:
@@ -68,7 +68,6 @@ services:
     environment:
        - ASPNETCORE_ENVIRONMENT=docker
     depends_on:
-      - catalogdb
       - catalogcache
       - identityserver
       - identitygrpc
