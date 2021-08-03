@@ -50,5 +50,8 @@ namespace Basket.API.BL.Services
 
             return new ServiceResult<ShoppingCartDto>(ServiceResultType.Success, shoppingCartDto);
         }
+
+        public async Task DeleteShoppingCartAsync() => 
+            await _shoppingCartRepository.DeleteAsync(_currentUserService.UserId);
     }
 }
