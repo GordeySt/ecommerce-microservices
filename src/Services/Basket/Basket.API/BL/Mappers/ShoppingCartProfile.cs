@@ -13,6 +13,13 @@ namespace Basket.API.BL.Mappers
                     dest => dest.ShoppingCartItems,
                     ex => ex.MapFrom(en => en.ShoppingCartItems)
                 );
+
+            CreateMap<ShoppingCart, ShoppingCartDto>()
+                .ForMember(
+                   dest => dest.ShoppingCartItems,
+                   ex => ex.MapFrom(en => en.ShoppingCartItems)
+                );
+
             CreateMap<ShoppingCartItemDto, ShoppingCartItem>().ReverseMap();
         }
     }

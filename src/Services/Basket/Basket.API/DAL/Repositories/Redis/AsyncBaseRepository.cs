@@ -27,7 +27,12 @@ namespace Basket.API.DAL.Repositories.Redis
         public async Task DeleteAsync(string cacheKey) => await _redisCacheClient.GetDbFromConfiguration()
                 .RemoveAsync(cacheKey);
 
-        public async Task<T> GetAsync(string cacheKey) => await _redisCacheClient.GetDbFromConfiguration()
-                .GetAsync<T>(cacheKey);
+        public async Task<T> GetAsync(string cacheKey)
+        {
+            var cachedItem = await _redisCacheClient.GetDbFromConfiguration()
+                .GetAsync<string>(cacheKey);
+
+            return cachedItem is null ? null : JsonConvert.DeserializeObject<T>(cachedItem);
+        }
     }
 }

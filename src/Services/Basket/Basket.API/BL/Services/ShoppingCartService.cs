@@ -3,6 +3,9 @@ using Basket.API.BL.Interfaces;
 using Basket.API.DAL.Entities;
 using Basket.API.DAL.Interfaces.Redis;
 using Basket.API.PL.Models.DTOs;
+using Services.Common.Constatns;
+using Services.Common.Enums;
+using Services.Common.ResultWrappers;
 using System;
 using System.Threading.Tasks;
 
@@ -29,6 +32,23 @@ namespace Basket.API.BL.Services
             var shoppingCart = _mapper.Map<ShoppingCart>(shoppingCartDto);
 
             return await _shoppingCartRepository.AddAsync(shoppingCart);
+        }
+
+        public async Task<ServiceResult<ShoppingCartDto>> GetShoppingCartByIdAsync()
+        {
+            var currentUserId = _currentUserService.UserId;
+
+            var shoppingCart = await _shoppingCartRepository.GetAsync(currentUserId);
+
+            if (shoppingCart is null)
+            {
+                return new ServiceResult<ShoppingCartDto>(ServiceResultType.NotFound, 
+                    ExceptionConstants.NotFoundItemMessage);
+            }
+
+            var shoppingCartDto = _mapper.Map<ShoppingCartDto>(shoppingCart);
+
+            return new ServiceResult<ShoppingCartDto>(ServiceResultType.Success, shoppingCartDto);
         }
     }
 }

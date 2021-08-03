@@ -1,6 +1,7 @@
 ﻿using Basket.API.DAL.Enums;
 using Basket.API.PL.Validation;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Basket.API.PL.Models.DTOs
 {
@@ -23,7 +24,7 @@ namespace Basket.API.PL.Models.DTOs
         [DefaultValue]
         public string MainImageUrl { get; set; }
 
-        [DefaultValue]
+        [Required]
         public AgeRating AgeRating { get; set; }
 
         [DefaultValue]

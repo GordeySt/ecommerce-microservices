@@ -1,8 +1,8 @@
 ﻿using Basket.API.BL.Interfaces;
-using Basket.API.DAL.Entities;
 using Basket.API.PL.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.Common.Enums;
 using System.Threading.Tasks;
 
 namespace Basket.API.PL.Controllers
@@ -25,6 +25,19 @@ namespace Basket.API.PL.Controllers
             var result = await _shoppingCartService.AddShoppingCartAsync(addShoppingCartDto);
 
             return CreatedAtAction(nameof(AddShoppingCart), result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ShoppingCartDto>> GetShoppingCartById()
+        {
+            var result = await _shoppingCartService.GetShoppingCartByIdAsync();
+
+            if (result.Result is not ServiceResultType.Success)
+            {
+                return StatusCode((int)result.Result, result.Message);
+            }
+
+            return result.Data;
         }
     }
 }

@@ -29,6 +29,16 @@ namespace Basket.Tests.Shared.Services
             }
         };
 
+        public static ShoppingCartDto CreateShoppingCartDto(Guid id) => new()
+        {
+            Id = id,
+            ShoppingCartItems = new List<ShoppingCartItemDto>
+            {
+                CreateShoppingCartItemDto(),
+                CreateShoppingCartItemDto()
+            }
+        };
+
         public static ShoppingCartItemDto CreateShoppingCartItemDto() => new()
         {
             Id = new Guid("edbf4592-f282-4cfe-afc8-1204a8231549"),
