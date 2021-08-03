@@ -28,12 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="PL\Controllers\" />
-    <Folder Include="BL\" />
-    <Folder Include="PL\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\CommonParts\Services.Common\Services.Common.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Logging\Common.Logging\Common.Logging.csproj" />
   </ItemGroup>
