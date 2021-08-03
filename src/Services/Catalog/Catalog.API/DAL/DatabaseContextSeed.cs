@@ -1,6 +1,5 @@
 ﻿using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Enums;
-using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
