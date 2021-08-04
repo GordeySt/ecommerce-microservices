@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Common.Enums;
 using Services.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,6 +47,19 @@ namespace Basket.API.PL.Controllers
             }
 
             return orders;
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteOrder(Guid id)
+        {
+            var result = await _orderService.DeleteOrderAsync(id);
+
+            if (result.Result is not ServiceResultType.Success)
+            {
+                return StatusCode((int)result.Result, result.Message);
+            }    
+
+            return NoContent();
         }
     }
 }

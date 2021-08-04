@@ -11,6 +11,7 @@ using Moq;
 using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.Models;
+using Services.Common.ResultWrappers;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -135,6 +136,50 @@ namespace Basket.Tests.Services
 
             // Assert
             result.Count.Should().Be(pagingParams.PageSize);
+        }
+
+        [Fact]
+        public async Task DeleteOrderAsync_WithUnexistingOrder_ReturnsNotFoundServiceResult()
+        {
+            // Arrange
+            var orderId = Guid.NewGuid();
+            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound, 
+                ExceptionConstants.NotFoundItemMessage);
+
+            var orderService = new OrderService(_orderRepositoryStub.Object,
+                _shoppingCartRepositoryStub.Object, _currentUserServiceStub.Object, _mapper);
+
+            _orderRepositoryStub
+                .Setup(t => t.DeleteOrderAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(expectedServiceResult);
+
+            // Act
+            var result = await orderService.DeleteOrderAsync(orderId);
+
+            // Assert
+            result.Result.Should().Be(ServiceResultType.NotFound);
+            result.Message.Should().Be(ExceptionConstants.NotFoundItemMessage);
+        }
+
+        [Fact]
+        public async Task DeleteOrderAsync_WithExistingOrder_ReturnsSuccessfulServiceResult()
+        {
+            // Arrange
+            var orderId = Guid.NewGuid();
+            var expectedServiceResult = new ServiceResult(ServiceResultType.Success);
+
+            var orderService = new OrderService(_orderRepositoryStub.Object,
+                _shoppingCartRepositoryStub.Object, _currentUserServiceStub.Object, _mapper);
+
+            _orderRepositoryStub
+                .Setup(t => t.DeleteOrderAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(expectedServiceResult);
+
+            // Act
+            var result = await orderService.DeleteOrderAsync(orderId);
+
+            // Assert
+            result.Result.Should().Be(ServiceResultType.Success);
         }
     }
 }

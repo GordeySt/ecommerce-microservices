@@ -2,6 +2,7 @@
 using Basket.API.PL.Models.DTOs;
 using Services.Common.Models;
 using Services.Common.ResultWrappers;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,5 +13,7 @@ namespace Basket.API.BL.Interfaces
         public Task<ServiceResult> CheckoutShoppingCartAsync(Order order);
 
         public Task<List<OrderDto>> GetOrdersByUserIdAsync(PagingParams pagingParams);
+
+        public Task<ServiceResult> DeleteOrderAsync(Guid id);
     }
 }

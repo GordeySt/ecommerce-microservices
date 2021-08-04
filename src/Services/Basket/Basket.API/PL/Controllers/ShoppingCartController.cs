@@ -3,7 +3,6 @@ using Basket.API.PL.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Common.Enums;
-using System;
 using System.Threading.Tasks;
 
 namespace Basket.API.PL.Controllers

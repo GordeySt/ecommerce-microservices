@@ -2,7 +2,10 @@
 using Basket.API.DAL.Interfaces.Mongo;
 using Basket.API.PL.Models.DTOs;
 using MongoDB.Driver;
+using Services.Common.Constatns;
+using Services.Common.Enums;
 using Services.Common.Models;
+using Services.Common.ResultWrappers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,9 +19,19 @@ namespace Basket.API.DAL.Repositories.Mongo
         {
         }
 
-        public Task DeleteItemAsync(Guid id)
+        public async Task<ServiceResult> DeleteOrderAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await databaseContext
+                .Orders
+                .DeleteOneAsync(Builders<Order>.Filter.Eq(p => p.Id, id));
+
+            if (result.DeletedCount == 0)
+            {
+                return new ServiceResult(ServiceResultType.NotFound,
+                    ExceptionConstants.NotFoundItemMessage);
+            }
+
+            return new ServiceResult(ServiceResultType.Success);
         }
 
         public Task GetOrderById(Guid orderId)

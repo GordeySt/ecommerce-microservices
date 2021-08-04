@@ -62,5 +62,8 @@ namespace Basket.API.BL.Services
 
             return _mapper.Map<List<OrderDto>>(orders);
         }
+
+        public async Task<ServiceResult> DeleteOrderAsync(Guid id) =>
+            await _orderRepository.DeleteOrderAsync(id);
     }
 }
