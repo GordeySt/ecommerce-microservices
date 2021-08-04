@@ -32,6 +32,7 @@ namespace Basket.Tests.Shared.Services
         public static ShoppingCartDto CreateShoppingCartDto(Guid id) => new()
         {
             Id = id,
+            TotalPrice = CorrectTotalPrice,
             ShoppingCartItems = new List<ShoppingCartItemDto>
             {
                 CreateShoppingCartItemDto(),

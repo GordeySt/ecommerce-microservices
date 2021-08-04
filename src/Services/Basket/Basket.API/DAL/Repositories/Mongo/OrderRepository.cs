@@ -2,6 +2,7 @@
 using Basket.API.DAL.Interfaces.Mongo;
 using Basket.API.PL.Models.DTOs;
 using MongoDB.Driver;
+using Services.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,10 +26,9 @@ namespace Basket.API.DAL.Repositories.Mongo
             throw new NotImplementedException();
         }
 
-        public async Task<List<Order>> GetOrderByUserIdAsync(Guid userId) =>
-            await databaseContext
-                .Orders
-                .Find(p => p.UserId == userId)
-                .ToListAsync();
+        public async Task<List<Order>> GetOrdersByUserIdAsync(Guid userId, PagingParams pagingParams) =>
+            await PagedList<Order>.CreateAsync(databaseContext.Orders, 
+                Builders<Order>.Filter.Eq(p => p.UserId, userId),
+                pagingParams.PageNumber, pagingParams.PageSize);
     }
 }

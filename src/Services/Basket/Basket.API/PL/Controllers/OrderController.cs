@@ -4,6 +4,7 @@ using Basket.API.PL.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Common.Enums;
+using Services.Common.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -35,9 +36,9 @@ namespace Basket.API.PL.Controllers
         }
 
         [HttpGet("get-by-userid")]
-        public async Task<ActionResult<List<OrderDto>>> GetOrdersAsync()
+        public async Task<ActionResult<List<OrderDto>>> GetOrdersAsync([FromQuery] PagingParams pagingParams)
         {
-            var orders = await _orderService.GetOrderByUserIdAsync();
+            var orders = await _orderService.GetOrdersByUserIdAsync(pagingParams);
 
             if (orders is null)
             {

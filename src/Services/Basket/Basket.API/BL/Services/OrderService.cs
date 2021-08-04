@@ -6,6 +6,7 @@ using Basket.API.DAL.Interfaces.Redis;
 using Basket.API.PL.Models.DTOs;
 using Services.Common.Constatns;
 using Services.Common.Enums;
+using Services.Common.Models;
 using Services.Common.ResultWrappers;
 using System;
 using System.Collections.Generic;
@@ -53,11 +54,11 @@ namespace Basket.API.BL.Services
             return new ServiceResult(ServiceResultType.Success);
         }
 
-        public async Task<List<OrderDto>> GetOrderByUserIdAsync()
+        public async Task<List<OrderDto>> GetOrdersByUserIdAsync(PagingParams pagingParams)
         {
             var userId = new Guid(_currentUserService.UserId);
 
-            var orders = await _orderRepository.GetOrderByUserIdAsync(userId);
+            var orders = await _orderRepository.GetOrdersByUserIdAsync(userId, pagingParams);
 
             return _mapper.Map<List<OrderDto>>(orders);
         }
