@@ -33,6 +33,7 @@ namespace Identity.API.Controllers
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

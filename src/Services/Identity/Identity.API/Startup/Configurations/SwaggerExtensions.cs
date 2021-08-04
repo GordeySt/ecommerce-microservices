@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using Identity.API.Startup.Settings;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
@@ -12,7 +12,7 @@ namespace Identity.API.Startup.Configurations
     public static class SwaggerExtensions
     {
         public static void RegisterSwagger(this IServiceCollection services,
-            IConfiguration configuration)
+            AppSettings appSettings)
         {
             services.AddSwaggerGen(c =>
             {
@@ -29,7 +29,7 @@ namespace Identity.API.Startup.Configurations
                     {
                         Password = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri(configuration["appUrls:identityUrl"] + "/connect/token"),
+                            TokenUrl = new Uri(appSettings.AppUrlsSettings.IdentityUrl + "/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
                                 { "identityapi", "Identity API" }

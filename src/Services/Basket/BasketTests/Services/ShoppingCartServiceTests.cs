@@ -19,17 +19,16 @@ namespace Basket.Tests.Services
     {
         private readonly Mock<IShoppingCartRepository> _shoppingCartRepositoryStub = new();
         private readonly Mock<ICurrentUserService> _currentUserServiceStub = new();
-        private readonly IConfigurationProvider _configuration;
         private readonly IMapper _mapper;
 
         public ShoppingCartServiceTests()
         {
-            _configuration = new MapperConfiguration(cfg =>
+            var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<ShoppingCartProfile>();
             });
 
-            _mapper = _configuration.CreateMapper();
+            _mapper = configuration.CreateMapper();
         }
 
         [Fact]

@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  catalogdb:
+  basketdb:
     container_name: basketdb
     image: mongo
     restart: always
@@ -10,8 +10,8 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  catalogcache:
-    container_name: catalogcache
+  rediscache:
+    container_name: rediscache
     image: redis:alpine
     restart: always
     ports:
@@ -68,11 +68,26 @@ services:
     environment:
        - ASPNETCORE_ENVIRONMENT=docker
     depends_on:
-      - catalogcache
+      - rediscache
       - identityserver
       - identitygrpc
     ports:
       - 8000:80
+
+      
+  basket.api:
+    container_name: basket.api
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+    depends_on:
+      - basketdb
+      - rediscache
+      - identityserver
+    ports:
+      - 8002:80
 
   pgadmin:
     container_name: pgadmin
@@ -126,3 +141,4 @@ volumes:
   elasticsearch-data:
   postgres_data:
   pgadmin_data:
+

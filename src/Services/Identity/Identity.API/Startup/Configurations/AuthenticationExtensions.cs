@@ -1,4 +1,5 @@
-﻿using IdentityServer4.AccessTokenValidation;
+﻿using Identity.API.Startup.Settings;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,8 +9,8 @@ namespace Identity.API.Startup.Configurations
 {
     public static class AuthenticationExtensions
     {
-        public static void RegisterAuthSettings(this IServiceCollection services, 
-            IConfiguration configuration)
+        public static void RegisterAuthSettings(this IServiceCollection services,
+            AppSettings appSettings)
         {
             services.AddAuthentication(options =>
             {
@@ -19,7 +20,7 @@ namespace Identity.API.Startup.Configurations
             })
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = configuration["appUrls:identityUrl"];
+                    options.Authority = appSettings.AppUrlsSettings.IdentityUrl;
                     options.ApiName = "identityapi";
                     options.RequireHttpsMetadata = false;
                     options.RoleClaimType = "role";

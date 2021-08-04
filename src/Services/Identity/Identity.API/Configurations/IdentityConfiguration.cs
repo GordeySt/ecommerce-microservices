@@ -1,4 +1,5 @@
-﻿using IdentityModel;
+﻿using Identity.API.Startup.Settings;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
@@ -50,7 +51,7 @@ namespace Identity.API.Configurations
 				new ApiScope("basketapi")
 			};
 
-		public static IEnumerable<Client> GetClients(IConfiguration configuration) =>
+		public static IEnumerable<Client> GetClients(AppSettings appSettings) =>
 			new List<Client>
 			{
 				new Client
@@ -58,7 +59,7 @@ namespace Identity.API.Configurations
 					ClientId = "client_id_catalog_swagger",
 					ClientSecrets = {  new Secret("client_secret_catalog_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedCorsOrigins = { configuration["appUrls:catalogUrl"] },
+					AllowedCorsOrigins = { appSettings.AppUrlsSettings.CatalogUrl },
 					AllowedScopes =
 					{
 						"roles",
@@ -74,7 +75,7 @@ namespace Identity.API.Configurations
 					ClientId = "client_id_identity_swagger",
 					ClientSecrets = {  new Secret("client_secret_identity_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedCorsOrigins = { configuration["appUrls:identityUrl"] },
+					AllowedCorsOrigins = { appSettings.AppUrlsSettings.IdentityUrl },
 					AllowedScopes =
 					{
 						"roles",
@@ -90,7 +91,7 @@ namespace Identity.API.Configurations
 					ClientId = "client_id_basket_swagger",
 					ClientSecrets = {  new Secret("client_secret_basket_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedCorsOrigins = { configuration["appUrls:basketUrl"] },
+					AllowedCorsOrigins = { appSettings.AppUrlsSettings.BasketUrl },
 					AllowedScopes =
 					{
 						"roles",
@@ -111,7 +112,8 @@ namespace Identity.API.Configurations
 						IdentityServerConstants.StandardScopes.Profile,
 						"roles",
 						"identityapi",
-						"catalogapi"
+						"catalogapi",
+						"basketapi"
 					},
 					RedirectUris =
 					{
