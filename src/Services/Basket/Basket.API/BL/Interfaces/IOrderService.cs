@@ -15,5 +15,7 @@ namespace Basket.API.BL.Interfaces
         public Task<List<OrderDto>> GetOrdersByUserIdAsync(PagingParams pagingParams);
 
         public Task<ServiceResult> DeleteOrderAsync(Guid id);
+
+        public Task<OrderDto> GetOrderByIdAsync(Guid orderId);
     }
 }

@@ -61,5 +61,18 @@ namespace Basket.API.PL.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("get-by-id/id/{id:guid}")]
+        public async Task<ActionResult<OrderDto>> GetOrderById(Guid id)
+        {
+            var order = await _orderService.GetOrderByIdAsync(id);
+
+            if (order is null)
+            {
+                return NotFound();
+            }
+
+            return order;
+        }
     }
 }

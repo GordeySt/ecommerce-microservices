@@ -65,5 +65,12 @@ namespace Basket.API.BL.Services
 
         public async Task<ServiceResult> DeleteOrderAsync(Guid id) =>
             await _orderRepository.DeleteOrderAsync(id);
+
+        public async Task<OrderDto> GetOrderByIdAsync(Guid orderId)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+
+            return order is not null ? _mapper.Map<OrderDto>(order) : default;
+        }
     }
 }

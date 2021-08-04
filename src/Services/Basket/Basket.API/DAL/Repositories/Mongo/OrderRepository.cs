@@ -34,10 +34,11 @@ namespace Basket.API.DAL.Repositories.Mongo
             return new ServiceResult(ServiceResultType.Success);
         }
 
-        public Task GetOrderById(Guid orderId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Order> GetOrderByIdAsync(Guid orderId) =>
+            await databaseContext
+                .Orders
+                .Find(p => p.Id == orderId)
+                .FirstOrDefaultAsync();
 
         public async Task<List<Order>> GetOrdersByUserIdAsync(Guid userId, PagingParams pagingParams) =>
             await PagedList<Order>.CreateAsync(databaseContext.Orders, 
