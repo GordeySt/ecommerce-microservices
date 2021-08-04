@@ -5,7 +5,7 @@ using Identity.Grpc.Protos;
 using System;
 using System.Collections.Generic;
 
-namespace Catalog.Tests.Shared.Services
+namespace Catalog.UnitTests.Shared.Services
 {
     public static class UsersServiceTestData
     {
@@ -19,9 +19,9 @@ namespace Catalog.Tests.Shared.Services
         {
             Id = new Guid("f7434651-5d37-4657-989e-13cf3498c485"),
             UserName = "TestUsername",
-            Ratings = new List<ProductRating>()
+            Ratings = new List<ProductRating>
             {
-                new ProductRating
+                new()
                 {
                     Rating = 4,
                     Product = CatalogServiceTestData.CreateProductEntity()
@@ -33,9 +33,9 @@ namespace Catalog.Tests.Shared.Services
         {
             Id = new Guid("f7434651-5d37-4657-989e-13cf3498c485"),
             UserName = "TestUsername",
-            Ratings = new List<ProductRatingDto>()
+            Ratings = new List<ProductRatingDto>
             {
-                new ProductRatingDto 
+                new()
                 {
                     Rating = 4,
                     Product = CatalogServiceTestData.CreateProductDto()

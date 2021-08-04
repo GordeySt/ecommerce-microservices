@@ -1,22 +1,19 @@
 ﻿using FluentAssertions;
-using Identity.Application.ApplicationUsers.Queries.ResendEmailVerifications;
+using Identity.Application.ApplicationUsers.Queries.SendResetPasswordEmail;
 using Identity.Application.Common;
 using Identity.Application.Common.Interfaces;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
 using Services.Common.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
+namespace Identity.UnitTests.ApplicationUsers.Queries
 {
-    public class ResendEmailVerificationQueryTests
+    public class SendResetPasswordEmailQueryTests
     {
         private readonly Mock<IUserStore<ApplicationUser>> _userStoreStub = new();
         private readonly Mock<IEmailService> _emailServiceStub = new();
@@ -27,9 +24,9 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
             // Arrange 
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
 
-            var query = new ResendEmailVerificationQuery();
+            var query = new SendResetPasswordEmailQuery();
 
-            var resendEmailVerificationHandler = new ResendEmailVerificationQueryHandler(userManagerStub.Object,
+            var resendEmailVerificationHandler = new SendResetPasswordEmailQueryHandler(userManagerStub.Object,
                 _emailServiceStub.Object);
 
             userManagerStub
@@ -53,9 +50,9 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedUser = TestData.CreateAppUser();
 
-            var query = new ResendEmailVerificationQuery();
+            var query = new SendResetPasswordEmailQuery();
 
-            var resendEmailVerificationHandler = new ResendEmailVerificationQueryHandler(userManagerStub.Object,
+            var resendEmailVerificationHandler = new SendResetPasswordEmailQueryHandler(userManagerStub.Object,
                 _emailServiceStub.Object);
 
             userManagerStub
@@ -63,7 +60,7 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
                 .ReturnsAsync(expectedUser);
 
             userManagerStub
-                .Setup(t => t.GenerateEmailConfirmationTokenAsync(It.IsAny<ApplicationUser>()))
+                .Setup(t => t.GeneratePasswordResetTokenAsync(It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(Guid.NewGuid().ToString());
 
             // Act
@@ -73,7 +70,7 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
             result.Result.Should().Be(ServiceResultType.Success);
 
             userManagerStub.Verify(t => t.FindByEmailAsync(It.IsAny<string>()));
-            userManagerStub.Verify(t => t.GenerateEmailConfirmationTokenAsync(It.IsAny<ApplicationUser>()));
+            userManagerStub.Verify(t => t.GeneratePasswordResetTokenAsync(It.IsAny<ApplicationUser>()));
         }
     }
 }

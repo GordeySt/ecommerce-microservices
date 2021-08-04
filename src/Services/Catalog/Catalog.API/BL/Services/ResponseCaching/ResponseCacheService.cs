@@ -17,7 +17,7 @@ namespace Catalog.API.BL.Services.ResponseCaching
 
         public async Task CacheResponseAsync(string cacheKey, object response, TimeSpan timeToLive)
         {
-            if (response == null)
+            if (response is null)
             {
                 return;
             }

@@ -33,7 +33,7 @@ namespace Catalog.API.PL.Filters.ResponseCaching
                 {
                     Content = cachedResponse,
                     ContentType ="application/json",
-                    StatusCode = 200
+                    StatusCode = StatusCodes.Status200OK
                 };
                 context.Result = contentResult;
 
