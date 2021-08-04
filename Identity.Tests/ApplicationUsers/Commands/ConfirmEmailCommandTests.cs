@@ -21,7 +21,8 @@ namespace Identity.UnitTests.ApplicationUsers.Commands
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var command = new ConfirmEmailCommand(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            var command = new ConfirmEmailCommand(Guid.NewGuid().ToString(), 
+                Guid.NewGuid().ToString());
 
             var confirmEmailHandler = new ConfirmEmailCommandHandler(userManagerStub.Object);
 
@@ -77,7 +78,7 @@ namespace Identity.UnitTests.ApplicationUsers.Commands
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedUser = TestData.CreateAppUser();
             var command = new ConfirmEmailCommand(Guid.NewGuid().ToString(),
-               Guid.NewGuid().ToString());
+                Guid.NewGuid().ToString());
 
             var confirmEmailHandler = new ConfirmEmailCommandHandler(userManagerStub.Object);
 
