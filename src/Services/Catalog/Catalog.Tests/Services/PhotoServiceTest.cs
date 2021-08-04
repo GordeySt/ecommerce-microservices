@@ -2,7 +2,7 @@
 using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.Tests.Shared.Services;
+using Catalog.UnitTests.Shared.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -13,7 +13,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Catalog.Tests.Services
+namespace Catalog.UnitTests.Services
 {
     public class PhotoServiceTest
     {

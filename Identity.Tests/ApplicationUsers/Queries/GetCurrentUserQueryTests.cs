@@ -5,7 +5,7 @@ using Identity.Application.Common;
 using Identity.Application.Common.Interfaces;
 using Identity.Application.Common.Mappings;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using MockQueryable.Moq;
 using Moq;
@@ -16,23 +16,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
+namespace Identity.UnitTests.ApplicationUsers.Queries
 {
     public class GetCurrentUserQueryTests
     {
         private readonly Mock<IUserStore<ApplicationUser>> _userStoreStub = new();
         private readonly Mock<ICurrentUserService> _currentUserServiceStub = new();
-        private readonly IConfigurationProvider _configuration;
         private readonly IMapper _mapper;
 
         public GetCurrentUserQueryTests()
         {
-            _configuration = new MapperConfiguration(cfg =>
+            var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
             });
 
-            _mapper = _configuration.CreateMapper();
+            _mapper = configuration.CreateMapper();
         }
 
         [Test]

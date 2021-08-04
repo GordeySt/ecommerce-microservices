@@ -2,7 +2,7 @@
 using Identity.Application.ApplicationUsers.Queries.GetUserById;
 using Identity.Application.Common;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using MockQueryable.Moq;
 using Moq;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
+namespace Identity.UnitTests.ApplicationUsers.Queries
 {
     public class GetUserByIdQueryTests
     {
@@ -24,7 +24,7 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var users = new List<ApplicationUser>()
+            var users = new List<ApplicationUser>
             {
                 TestData.CreateAppUser(),
                 TestData.CreateAppUser(),
@@ -56,7 +56,7 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Queries
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var users = new List<ApplicationUser>()
+            var users = new List<ApplicationUser>
             {
                 TestData.CreateCurrentAppUser(),
                 TestData.CreateAppUser(),

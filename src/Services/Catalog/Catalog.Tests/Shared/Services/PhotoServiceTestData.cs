@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 
-namespace Catalog.Tests.Shared.Services
+namespace Catalog.UnitTests.Shared.Services
 {
     public static class PhotoServiceTestData
     {

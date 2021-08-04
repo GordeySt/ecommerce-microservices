@@ -41,9 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Grpc", "Services\Identity\Identity.Grpc\Identity.Grpc.csproj", "{7404906C-AA30-4482-AEEF-EB3D267D619A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Tests", "Services\Catalog\Catalog.Tests\Catalog.Tests.csproj", "{DCADF110-0AED-46FE-AC16-BA7BDDBB5DD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.UnitTests", "Services\Catalog\Catalog.Tests\Catalog.UnitTests.csproj", "{DCADF110-0AED-46FE-AC16-BA7BDDBB5DD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Tests", "..\Identity.Tests\Identity.Tests.csproj", "{863C19F0-88F1-410C-9AE1-175EBEC5AE1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.UnitTests", "..\Identity.Tests\Identity.UnitTests.csproj", "{863C19F0-88F1-410C-9AE1-175EBEC5AE1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

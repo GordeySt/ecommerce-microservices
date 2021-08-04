@@ -2,7 +2,7 @@
 using Identity.Application.ApplicationUsers.Commands.ResetPasswords;
 using Identity.Application.Common;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
+namespace Identity.UnitTests.ApplicationUsers.Commands
 {
     public class ResetPasswordCommandTests
     {
@@ -42,7 +42,7 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
         }
 
         [Test]
-        public async Task ShouldNotResetPasswordIfUnhandledProblems()
+        public async Task ShouldNotResetPasswordForUnhandledProblems()
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
