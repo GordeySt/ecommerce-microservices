@@ -36,7 +36,7 @@ namespace Basket.API.PL.Controllers
             return NoContent();
         }
 
-        [HttpGet("get-by-userid")]
+        [HttpGet("get-by-user-id")]
         public async Task<ActionResult<List<OrderDto>>> GetOrdersAsync([FromQuery] PagingParams pagingParams)
         {
             var orders = await _orderService.GetOrdersByUserIdAsync(pagingParams);
@@ -49,7 +49,7 @@ namespace Basket.API.PL.Controllers
             return orders;
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("id/{id:guid}")]
         public async Task<IActionResult> DeleteOrder(Guid id)
         {
             var result = await _orderService.DeleteOrderAsync(id);
