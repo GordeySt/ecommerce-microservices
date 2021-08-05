@@ -182,7 +182,7 @@ namespace Catalog.UnitTests.Services
             var updateProductDto = CatalogServiceTestData.CreateUpdateProductDto();
 
             _repositoryStub
-                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), false))
                 .ReturnsAsync((Product)null);
 
             var catalogService = new CatalogService(_repositoryStub.Object, _mapper);
@@ -194,7 +194,7 @@ namespace Catalog.UnitTests.Services
             updateResult.Result.Should().Be(ServiceResultType.NotFound);
             updateResult.Message.Should().Be(ExceptionConstants.NotFoundItemMessage);
 
-            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), false));
         }
 
         [Fact]
@@ -206,7 +206,7 @@ namespace Catalog.UnitTests.Services
             var expectedServiceResult = new ServiceResult(ServiceResultType.Success);
 
             _repositoryStub
-                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
+                .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), false))
                 .ReturnsAsync(productToUpdate);
 
             _repositoryStub
@@ -222,7 +222,7 @@ namespace Catalog.UnitTests.Services
             updateResult.Result.Should().Be(ServiceResultType.Success);
 
             _repositoryStub.Verify(x => x.UpdateAsync(It.IsAny<Product>()));
-            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true));
+            _repositoryStub.Verify(x => x.GetProductByIdAsync(It.IsAny<Guid>(), false));
         }
     }
 }
