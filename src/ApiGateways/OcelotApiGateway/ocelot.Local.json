@@ -98,7 +98,7 @@
         "AllowedScopes": []
       }
     },
-    // Users API -- http://localhost:5000/api/Users
+    // Catalog Users API -- http://localhost:5000/api/Users
     {
       "DownstreamPathTemplate": "/api/Users/create-user/id/{id:guid}",
       "DownstreamScheme": "http",
@@ -109,7 +109,11 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/create-user/id/{id:guid}",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/Users/id/{id:guid}",
@@ -121,9 +125,13 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/id/{id:guid}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
-    // Auth API -- http://localhost:5000/api/Auth
+    // Auth API -- http://localhost:5011/api/Auth
     {
       "DownstreamPathTemplate": "/api/Auth/signup",
       "DownstreamScheme": "https",
@@ -184,7 +192,7 @@
       "UpstreamPathTemplate": "/Auth/reset-password",
       "UpstreamHttpMethod": [ "POST" ]
     },
-    // Roles API -- http://localhost:5000/api/Roles
+    // Roles API -- http://localhost:5011/api/Roles
     {
       "DownstreamPathTemplate": "/api/Roles",
       "DownstreamScheme": "https",
@@ -260,6 +268,39 @@
       ],
       "UpstreamPathTemplate": "/Roles/id/{id:guid}",
       "UpstreamHttpMethod": [ "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
+    },
+    // Identity Users API -- http://localhost:5011/api/Users
+    {
+      "DownstreamPathTemplate": "/api/Users/{id:guid}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5011"
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/{id:guid}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Users/current-user",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5011"
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/current-user",
+      "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
         "AllowedScopes": []
