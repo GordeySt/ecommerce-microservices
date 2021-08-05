@@ -20,7 +20,7 @@ namespace Basket.API.DAL.Repositories.Mongo
 
         public async Task<ServiceResult> DeleteOrderAsync(Guid id)
         {
-            var result = await databaseContext
+            var result = await DatabaseContext
                 .Orders
                 .DeleteOneAsync(Builders<Order>.Filter.Eq(p => p.Id, id));
 
@@ -34,13 +34,13 @@ namespace Basket.API.DAL.Repositories.Mongo
         }
 
         public async Task<Order> GetOrderByIdAsync(Guid orderId) =>
-            await databaseContext
+            await DatabaseContext
                 .Orders
                 .Find(p => p.Id == orderId)
                 .FirstOrDefaultAsync();
 
         public async Task<List<Order>> GetOrdersByUserIdAsync(Guid userId, PagingParams pagingParams) =>
-            await PagedList<Order>.CreateAsync(databaseContext.Orders, 
+            await PagedList<Order>.CreateAsync(DatabaseContext.Orders, 
                 Builders<Order>.Filter.Eq(p => p.UserId, userId),
                 pagingParams.PageNumber, pagingParams.PageSize);
     }
