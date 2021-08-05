@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Basket.API.PL.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/shopping-cart")]
     [Authorize]
     public class ShoppingCartController : ControllerBase
     {
