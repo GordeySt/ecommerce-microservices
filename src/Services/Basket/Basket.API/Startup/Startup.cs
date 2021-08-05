@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Text.Json.Serialization;
 
 namespace Basket.API.Startup
@@ -59,6 +58,13 @@ namespace Basket.API.Startup
             }
 
             app.UseSwaggerApplication();
+
+            app.UseCors(x => x
+                .SetIsOriginAllowed(_ => true)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
 
             app.UseRouting();
 
