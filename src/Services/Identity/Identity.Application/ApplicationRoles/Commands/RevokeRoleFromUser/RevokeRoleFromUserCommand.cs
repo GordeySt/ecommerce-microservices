@@ -38,7 +38,7 @@ namespace Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser
                     NotFoundExceptionMessageConstants.NotFoundRoleMessage);
             }
 
-            var appUser = await _userManager.FindByIdAsync(request.RoleId.ToString());
+            var appUser = await _userManager.FindByIdAsync(request.UserId.ToString());
 
             if (appUser is null)
             {
