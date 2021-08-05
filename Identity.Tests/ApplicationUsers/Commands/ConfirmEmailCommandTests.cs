@@ -2,7 +2,7 @@
 using Identity.Application.ApplicationUsers.Commands.ConfirmEmails;
 using Identity.Application.Common;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
+namespace Identity.UnitTests.ApplicationUsers.Commands
 {
     public class ConfirmEmailCommandTests
     {
@@ -21,8 +21,8 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var command = new ConfirmEmailCommand(Token: Guid.NewGuid().ToString(), 
-                Email: Guid.NewGuid().ToString());
+            var command = new ConfirmEmailCommand(Guid.NewGuid().ToString(), 
+                Guid.NewGuid().ToString());
 
             var confirmEmailHandler = new ConfirmEmailCommandHandler(userManagerStub.Object);
 
@@ -41,14 +41,14 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
         }
 
         [Test]
-        public async Task ShouldNotConfirmEmailIfUnhandledProblems()
+        public async Task ShouldNotConfirmEmailForUnhandledProblems()
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedUser = TestData.CreateAppUser();
             var expectedErrorMessage = TestData.ErrorMessage;
-            var command = new ConfirmEmailCommand(Token: Guid.NewGuid().ToString(),
-                Email: Guid.NewGuid().ToString());
+            var command = new ConfirmEmailCommand(Guid.NewGuid().ToString(),
+                Guid.NewGuid().ToString());
 
             var confirmEmailHandler = new ConfirmEmailCommandHandler(userManagerStub.Object);
 
@@ -77,8 +77,8 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedUser = TestData.CreateAppUser();
-            var command = new ConfirmEmailCommand(Token: Guid.NewGuid().ToString(),
-                Email: Guid.NewGuid().ToString());
+            var command = new ConfirmEmailCommand(Guid.NewGuid().ToString(),
+                Guid.NewGuid().ToString());
 
             var confirmEmailHandler = new ConfirmEmailCommandHandler(userManagerStub.Object);
 

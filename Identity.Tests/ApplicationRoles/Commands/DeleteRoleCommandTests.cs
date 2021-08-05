@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Identity.Application.ApplicationRoles.Commands.DeleteRoles;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
+namespace Identity.UnitTests.ApplicationRoles.Commands
 {
     public class DeleteRoleCommandTests
     {
@@ -21,7 +21,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
-            var command = new DeleteRoleCommand(Id: Guid.NewGuid());
+            var command = new DeleteRoleCommand(Guid.NewGuid());
 
             var deleteRoleHandler = new DeleteRoleCommandHandler(roleManagerStub.Object);
 
@@ -40,11 +40,11 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         }
 
         [Test]
-        public async Task ShouldNotDeleteRoleIfUnhandledProblems()
+        public async Task ShouldNotDeleteRoleForUnhandledProblems()
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
-            var command = new DeleteRoleCommand(Id: Guid.NewGuid());
+            var command = new DeleteRoleCommand(Guid.NewGuid());
             var expectedErrorMessage = TestData.ErrorMessage;
             var expectedRole = TestData.CreateAppRole();
 
@@ -74,7 +74,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
-            var command = new DeleteRoleCommand(Id: Guid.NewGuid());
+            var command = new DeleteRoleCommand(Guid.NewGuid());
             var expectedRole = TestData.CreateAppRole();
 
             var deleteRoleHandler = new DeleteRoleCommandHandler(roleManagerStub.Object);

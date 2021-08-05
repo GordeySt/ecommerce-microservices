@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
-using Identity.Application.ApplicationRoles.Commands.GrantRoleToUser;
 using Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser;
 using Identity.Application.Common;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -11,7 +10,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
+namespace Identity.UnitTests.ApplicationRoles.Commands
 {
     public class RevokeRoleFromUserCommandTests
     {
@@ -24,7 +23,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var command = new RevokeRoleFromUserCommand(RoleId: Guid.NewGuid(),
+            var command = new RevokeRoleFromUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var revokeRoleHandler = new RevokeRoleFromUserCommandHandler(userManagerStub.Object, 
@@ -51,7 +50,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedRole = TestData.CreateAppRole();
-            var command = new RevokeRoleFromUserCommand(RoleId: Guid.NewGuid(),
+            var command = new RevokeRoleFromUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var revokeRoleHandler = new RevokeRoleFromUserCommandHandler(userManagerStub.Object, 
@@ -84,7 +83,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedRole = TestData.CreateAppRole();
             var expectedUser = TestData.CreateAppUser();
-            var command = new RevokeRoleFromUserCommand(RoleId: Guid.NewGuid(),
+            var command = new RevokeRoleFromUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var revokeRoleHandler = new RevokeRoleFromUserCommandHandler(userManagerStub.Object, 
@@ -115,7 +114,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         }
 
         [Test]
-        public async Task ShouldNotRevokeRoleIfUnhandledProblems()
+        public async Task ShouldNotRevokeRoleForUnhandledProblems()
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
@@ -123,7 +122,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var expectedRole = TestData.CreateAppRole();
             var expectedUser = TestData.CreateAppUser();
             var expectedError = TestData.ErrorMessage;
-            var command = new RevokeRoleFromUserCommand(RoleId: Guid.NewGuid(),
+            var command = new RevokeRoleFromUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var revokeRoleHandler = new RevokeRoleFromUserCommandHandler(userManagerStub.Object, 
@@ -166,7 +165,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedRole = TestData.CreateAppRole();
             var expectedUser = TestData.CreateAppUser();
-            var command = new RevokeRoleFromUserCommand(RoleId: Guid.NewGuid(),
+            var command = new RevokeRoleFromUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var revokeRoleHandler = new RevokeRoleFromUserCommandHandler(userManagerStub.Object, 

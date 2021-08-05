@@ -3,7 +3,7 @@ using Catalog.API.BL.Mappings;
 using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.Tests.Shared.Services;
+using Catalog.UnitTests.Shared.Services;
 using FluentAssertions;
 using Moq;
 using Services.Common.Enums;
@@ -12,22 +12,21 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Catalog.Tests.Services
+namespace Catalog.UnitTests.Services
 {
     public class UsersServiceTest
     {
         private readonly Mock<IUsersRepository> _repositoryStub = new();
-        private readonly IConfigurationProvider _configuration;
         private readonly IMapper _mapper;
 
         public UsersServiceTest()
         {
-            _configuration = new MapperConfiguration(cfg =>
+            var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
             });
 
-            _mapper = _configuration.CreateMapper();
+            _mapper = configuration.CreateMapper();
         }
 
         [Fact]
@@ -36,7 +35,6 @@ namespace Catalog.Tests.Services
             // Arrange
             var userModel = UsersServiceTestData.CreateAppUserModel();
             var userEntity = UsersServiceTestData.CreateUserEntity();
-            var expectedServiceResult = new ServiceResult<User>(ServiceResultType.BadRequest);
 
             _repositoryStub
                 .Setup(t => t.GetUserByIdAsync(new Guid(userModel.Id), true))
@@ -45,10 +43,10 @@ namespace Catalog.Tests.Services
             var usersService = new UsersService(_repositoryStub.Object, _mapper);
 
             // Act
-            var creationgResult = await usersService.AddUserAsync(userModel);
+            var creationResult = await usersService.AddUserAsync(userModel);
 
             // Assert
-            creationgResult.Result.Should().Be(ServiceResultType.BadRequest);
+            creationResult.Result.Should().Be(ServiceResultType.BadRequest);
         }
 
         [Fact]

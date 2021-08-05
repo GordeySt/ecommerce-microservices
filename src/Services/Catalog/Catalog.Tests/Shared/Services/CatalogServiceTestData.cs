@@ -4,7 +4,7 @@ using Catalog.API.PL.Models.DTOs.Products;
 using System;
 using System.Collections.Generic;
 
-namespace Catalog.Tests.Shared.Services
+namespace Catalog.UnitTests.Shared.Services
 {
     public static class CatalogServiceTestData
     {
@@ -44,9 +44,9 @@ namespace Catalog.Tests.Shared.Services
             AverageRating = 0,
             TotalRating = 0,
             MainImageUrl = "TestUrl",
-            Ratings = new List<ProductRating>()
+            Ratings = new List<ProductRating>
             {
-                new ProductRating
+                new()
                 {
                     Rating = 4
                 }

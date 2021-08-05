@@ -3,7 +3,7 @@ using Catalog.API.BL.Interfaces;
 using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.Tests.Shared.Services;
+using Catalog.UnitTests.Shared.Services;
 using FluentAssertions;
 using Moq;
 using Services.Common.Enums;
@@ -12,7 +12,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Catalog.Tests.Services
+namespace Catalog.UnitTests.Services
 {
     public class ProductRatingsServiceTest
     {
@@ -29,8 +29,6 @@ namespace Catalog.Tests.Services
             var productId = Guid.NewGuid();
             var userId = Guid.NewGuid().ToString();
             var ratingCount = _rand.Next(5);
-            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound,
-                ExceptionMessageConstants.NotFoundItemMessage);
 
             _usersRepositoryStub
                 .Setup(t => t.GetUserByIdAsync(It.IsAny<Guid>(), true))
@@ -63,8 +61,6 @@ namespace Catalog.Tests.Services
             var userId = Guid.NewGuid().ToString();
             var ratingCount = _rand.Next(5);
             var userEntity = UsersServiceTestData.CreateUserEntity();
-            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound,
-                ExceptionMessageConstants.NotFoundItemMessage);
 
             _productRepositoryStub
                 .Setup(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true))
@@ -102,8 +98,6 @@ namespace Catalog.Tests.Services
             var userEntity = UsersServiceTestData.CreateUserEntity();
             var productEntity = CatalogServiceTestData.CreateProductEntity();
             var productRating = ProductRatingsTestData.CreateProductRating();
-            var expectedServiceResult = new ServiceResult<ProductRating>(ServiceResultType.BadRequest,
-                ExceptionMessageConstants.AlreadyExistedRatinsMessage);
 
             _productRatingsRepositoryStub
                 .Setup(t => t.GetProductRatingByIdsAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
@@ -199,6 +193,7 @@ namespace Catalog.Tests.Services
             var userId = Guid.NewGuid().ToString();
             var ratingCount1 = 5;
             var ratingCount2 = 2;
+            var expectedTotalRating = 7;
             var userEntity = UsersServiceTestData.CreateUserEntity();
             var productEntity = CatalogServiceTestData.CreateProductEntity();
             var productRating = ProductRatingsTestData.CreateProductRating();
@@ -230,11 +225,11 @@ namespace Catalog.Tests.Services
                 _currentUserServiceStub.Object);
 
             // Act
-            var result1 = await productRatingsService.AddRatingToProductAsync(productId, ratingCount1);
-            var result2 = await productRatingsService.AddRatingToProductAsync(productId, ratingCount2);
+            await productRatingsService.AddRatingToProductAsync(productId, ratingCount1);
+            await productRatingsService.AddRatingToProductAsync(productId, ratingCount2);
 
             // Assert
-            productEntity.TotalRating.Should().Be(7);
+            productEntity.TotalRating.Should().Be(expectedTotalRating);
 
             _currentUserServiceStub.Verify(x => x.UserId);
             _productRatingsRepositoryStub.Verify(x => x.GetProductRatingByIdsAsync(It.IsAny<Guid>(),
@@ -252,6 +247,7 @@ namespace Catalog.Tests.Services
             var userId = Guid.NewGuid().ToString();
             var ratingCount1 = 5;
             var ratingCount2 = 2;
+            var expectedAverageRating = 3.5;
             var userEntity = UsersServiceTestData.CreateUserEntity();
             var productEntity = CatalogServiceTestData.CreateProductEntity();
             var productRating = ProductRatingsTestData.CreateProductRating();
@@ -283,11 +279,11 @@ namespace Catalog.Tests.Services
                 _currentUserServiceStub.Object);
 
             // Act
-            var result1 = await productRatingsService.AddRatingToProductAsync(productId, ratingCount1);
-            var result2 = await productRatingsService.AddRatingToProductAsync(productId, ratingCount2);
+            await productRatingsService.AddRatingToProductAsync(productId, ratingCount1);
+            await productRatingsService.AddRatingToProductAsync(productId, ratingCount2);
 
             // Assert
-            productEntity.AverageRating.Should().Be(3.5);
+            productEntity.AverageRating.Should().Be(expectedAverageRating);
 
             _currentUserServiceStub.Verify(x => x.UserId);
             _productRatingsRepositoryStub.Verify(x => x.GetProductRatingByIdsAsync(It.IsAny<Guid>(),
@@ -304,8 +300,6 @@ namespace Catalog.Tests.Services
             var productId = Guid.NewGuid();
             var userId = Guid.NewGuid().ToString();
             var ratingCount = _rand.Next(5);
-            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound,
-                ExceptionMessageConstants.NotFoundItemMessage);
 
             _usersRepositoryStub
                 .Setup(t => t.GetUserByIdAsync(It.IsAny<Guid>(), true))
@@ -338,8 +332,6 @@ namespace Catalog.Tests.Services
             var userId = Guid.NewGuid().ToString();
             var ratingCount = _rand.Next(5);
             var userEntity = UsersServiceTestData.CreateUserEntity();
-            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound,
-                ExceptionMessageConstants.NotFoundItemMessage);
 
             _productRepositoryStub
                 .Setup(x => x.GetProductByIdAsync(It.IsAny<Guid>(), true))
@@ -376,8 +368,6 @@ namespace Catalog.Tests.Services
             var ratingCount = _rand.Next(5);
             var userEntity = UsersServiceTestData.CreateUserEntity();
             var productEntity = CatalogServiceTestData.CreateProductEntity();
-            var expectedServiceResult = new ServiceResult<ProductRating>(ServiceResultType.NotFound,
-                ExceptionMessageConstants.NotFoundItemMessage);
 
             _productRatingsRepositoryStub
                 .Setup(t => t.GetProductRatingByIdsAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
@@ -421,11 +411,10 @@ namespace Catalog.Tests.Services
             var userId = Guid.NewGuid().ToString();
             var ratingCount1 = 1;
             var ratingCount2 = 2;
+            var expectedTotalRating = -3;
             var userEntity = UsersServiceTestData.CreateUserEntity();
             var productEntity = CatalogServiceTestData.CreateProductEntity();
             var productRating = ProductRatingsTestData.CreateProductRating();
-            var expectedServiceResult = new ServiceResult<ProductRating>(ServiceResultType.Success,
-                productRating);
 
             _productRatingsRepositoryStub
                 .Setup(t => t.GetProductRatingByIdsAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
@@ -452,11 +441,11 @@ namespace Catalog.Tests.Services
                 _currentUserServiceStub.Object);
 
             // Act
-            var result1 = await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount1);
-            var result2 = await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount2);
+            await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount1);
+            await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount2);
 
             // Assert
-            productEntity.TotalRating.Should().Be(-3);
+            productEntity.TotalRating.Should().Be(expectedTotalRating);
 
             _currentUserServiceStub.Verify(x => x.UserId);
             _productRatingsRepositoryStub.Verify(x => x.GetProductRatingByIdsAsync(It.IsAny<Guid>(),
@@ -473,11 +462,10 @@ namespace Catalog.Tests.Services
             var userId = Guid.NewGuid().ToString();
             var ratingCount1 = 1;
             var ratingCount2 = 4;
+            var expectedAverageRating = -1;
             var userEntity = UsersServiceTestData.CreateUserEntity();
             var productEntity = CatalogServiceTestData.CreateProductEntity();
             var productRating = ProductRatingsTestData.CreateProductRating();
-            var expectedServiceResult = new ServiceResult<ProductRating>(ServiceResultType.Success,
-                productRating);
 
             _productRatingsRepositoryStub
                 .Setup(t => t.GetProductRatingByIdsAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
@@ -504,11 +492,11 @@ namespace Catalog.Tests.Services
                 _currentUserServiceStub.Object);
 
             // Act
-            var result1 = await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount1);
-            var result2 = await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount2);
+            await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount1);
+            await productRatingsService.UpdateRatingAtProductAsync(productId, ratingCount2);
 
             // Assert
-            productEntity.AverageRating.Should().Be(-1);
+            productEntity.AverageRating.Should().Be(expectedAverageRating);
 
             _currentUserServiceStub.Verify(x => x.UserId);
             _productRatingsRepositoryStub.Verify(x => x.GetProductRatingByIdsAsync(It.IsAny<Guid>(),

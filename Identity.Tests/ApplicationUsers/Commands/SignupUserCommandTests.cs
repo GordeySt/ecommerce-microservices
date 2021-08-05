@@ -3,7 +3,7 @@ using Identity.Application.ApplicationUsers.Commands.SignupUsers;
 using Identity.Application.Common;
 using Identity.Application.Common.Interfaces;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -11,7 +11,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
+namespace Identity.UnitTests.ApplicationUsers.Commands
 {
     public class SignupUserCommandTests
     {
@@ -49,11 +49,10 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
         }
 
         [Test]
-        public async Task ShouldNotSignUpUserIfUnhandledProblems()
+        public async Task ShouldNotSignUpUserForUnhandledProblems()
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var expectedUser = TestData.CreateAppUser();
             var expectedErrorMessage = TestData.ErrorMessage;
             var command = new SignupUserCommand
             {
@@ -89,7 +88,6 @@ namespace Identity.Tests.UnitTests.ApplicationUsers.Commands
         {
             // Arrange
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var expectedUser = TestData.CreateAppUser();
             var expectedConfirmationToken = "TestToken";
             var command = new SignupUserCommand
             {

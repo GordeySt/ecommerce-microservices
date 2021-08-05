@@ -3,7 +3,7 @@ using Catalog.API.BL.Mappings;
 using Catalog.API.BL.Services;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;
-using Catalog.Tests.Shared.Services;
+using Catalog.UnitTests.Shared.Services;
 using FluentAssertions;
 using Moq;
 using Services.Common.Constatns;
@@ -13,23 +13,22 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Catalog.Tests.Services
+namespace Catalog.UnitTests.Services
 {
     public class CatalogServiceTests
     {
         private readonly Mock<IProductRepository> _repositoryStub = new();
         private readonly Random _rand = new();
-        private readonly IConfigurationProvider _configuration;
         private readonly IMapper _mapper;
 
         public CatalogServiceTests()
         {
-            _configuration = new MapperConfiguration(cfg =>
+            var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
             });
 
-            _mapper = _configuration.CreateMapper();
+            _mapper = configuration.CreateMapper();
         }
 
         [Fact]
@@ -65,8 +64,6 @@ namespace Catalog.Tests.Services
         {
             // Arrange
             var productId = Guid.NewGuid();
-            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound, 
-                ExceptionConstants.NotFoundItemMessage);
 
             _repositoryStub
                 .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))
@@ -183,8 +180,6 @@ namespace Catalog.Tests.Services
         {
             // Arrange
             var updateProductDto = CatalogServiceTestData.CreateUpdateProductDto();
-            var expectedServiceResult = new ServiceResult(ServiceResultType.NotFound,
-                ExceptionConstants.NotFoundItemMessage);
 
             _repositoryStub
                 .Setup(t => t.GetProductByIdAsync(It.IsAny<Guid>(), true))

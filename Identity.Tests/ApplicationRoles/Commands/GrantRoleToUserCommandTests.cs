@@ -2,7 +2,7 @@
 using Identity.Application.ApplicationRoles.Commands.GrantRoleToUser;
 using Identity.Application.Common;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
+namespace Identity.UnitTests.ApplicationRoles.Commands
 {
     public class GrantRoleToUserCommandTests
     {
@@ -23,7 +23,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
-            var command = new GrantRoleToUserCommand(RoleId: Guid.NewGuid(),
+            var command = new GrantRoleToUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var grantRoleHandler = new GrantRoleToUserCommandHandler(roleManagerStub.Object,
@@ -50,7 +50,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedRole = TestData.CreateAppRole();
-            var command = new GrantRoleToUserCommand(RoleId: Guid.NewGuid(),
+            var command = new GrantRoleToUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var grantRoleHandler = new GrantRoleToUserCommandHandler(roleManagerStub.Object,
@@ -83,7 +83,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedRole = TestData.CreateAppRole();
             var expectedUser = TestData.CreateAppUser();
-            var command = new GrantRoleToUserCommand(RoleId: Guid.NewGuid(),
+            var command = new GrantRoleToUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var grantRoleHandler = new GrantRoleToUserCommandHandler(roleManagerStub.Object,
@@ -114,7 +114,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         }
 
         [Test]
-        public async Task ShouldNotGrantRoleIfUnhandledProblems()
+        public async Task ShouldNotGrantRoleForUnhandledProblems()
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
@@ -122,7 +122,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var expectedRole = TestData.CreateAppRole();
             var expectedUser = TestData.CreateAppUser();
             var expectedError = TestData.ErrorMessage;
-            var command = new GrantRoleToUserCommand(RoleId: Guid.NewGuid(),
+            var command = new GrantRoleToUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var grantRoleHandler = new GrantRoleToUserCommandHandler(roleManagerStub.Object,
@@ -165,7 +165,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             var userManagerStub = TestData.CreateUserManagerMoqStub(_userStoreStub);
             var expectedRole = TestData.CreateAppRole();
             var expectedUser = TestData.CreateAppUser();
-            var command = new GrantRoleToUserCommand(RoleId: Guid.NewGuid(),
+            var command = new GrantRoleToUserCommand(Guid.NewGuid(),
                 UserId: Guid.NewGuid());
 
             var grantRoleHandler = new GrantRoleToUserCommandHandler(roleManagerStub.Object,

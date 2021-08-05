@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
-using FluentValidation;
 using Identity.Application.ApplicationRoles.Commands.UpdateRoles;
 using Identity.Application.Common;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -11,7 +10,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
+namespace Identity.UnitTests.ApplicationRoles.Commands
 {
     public class UpdateRoleCommandTests
     {
@@ -22,7 +21,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
-            var command = new UpdateRoleCommand(RoleId: Guid.NewGuid(), 
+            var command = new UpdateRoleCommand(Guid.NewGuid(), 
                 RoleName: Guid.NewGuid().ToString());
 
             var updateRoleHandler = new UpdateRoleCommandHandler(roleManagerStub.Object);
@@ -42,13 +41,13 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         }
 
         [Test]
-        public async Task ShouldNotUpdateRoleIfUnhandledProblems()
+        public async Task ShouldNotUpdateRoleForUnhandledProblems()
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
             var expectedRole = TestData.CreateAppRole();
             var expectedErrorMessage = TestData.ErrorMessage;
-            var command = new UpdateRoleCommand(RoleId: Guid.NewGuid(),
+            var command = new UpdateRoleCommand(Guid.NewGuid(),
                 RoleName: Guid.NewGuid().ToString());
 
             var updateRoleHandler = new UpdateRoleCommandHandler(roleManagerStub.Object);
@@ -78,7 +77,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
             var expectedRole = TestData.CreateAppRole();
-            var command = new UpdateRoleCommand(RoleId: Guid.NewGuid(),
+            var command = new UpdateRoleCommand(Guid.NewGuid(),
                 RoleName: Guid.NewGuid().ToString());
 
             var updateRoleHandler = new UpdateRoleCommandHandler(roleManagerStub.Object);

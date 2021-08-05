@@ -1,6 +1,6 @@
 ﻿using Catalog.API.DAL.Entities;
 
-namespace Catalog.Tests.Shared.Services
+namespace Catalog.UnitTests.Shared.Services
 {
     public static class ProductRatingsTestData
     {

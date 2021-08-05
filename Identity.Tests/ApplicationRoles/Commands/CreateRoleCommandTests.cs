@@ -2,7 +2,7 @@
 using Identity.Application.ApplicationRoles.Commands.CreateRoles;
 using Identity.Application.Common;
 using Identity.Domain.Entities;
-using Identity.Tests.UnitTests.Shared;
+using Identity.UnitTests.Shared;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ using Services.Common.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
+namespace Identity.UnitTests.ApplicationRoles.Commands
 {
     public class CreateRoleCommandTests
     {
@@ -21,7 +21,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
-            var command = new CreateRoleCommand(RoleName: Guid.NewGuid().ToString());
+            var command = new CreateRoleCommand(Guid.NewGuid().ToString());
 
             var createRoleHandler = new CreateRoleCommandHandler(roleManagerStub.Object);
 
@@ -47,7 +47,7 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
-            var command = new CreateRoleCommand(RoleName: Guid.NewGuid().ToString());
+            var command = new CreateRoleCommand(Guid.NewGuid().ToString());
 
             var createRoleHandler = new CreateRoleCommandHandler(roleManagerStub.Object);
 
@@ -64,11 +64,11 @@ namespace Identity.Tests.UnitTests.ApplicationRoles.Commands
         }
 
         [Test]
-        public async Task ShouldNotCreateRoleIfUnhandledProblem()
+        public async Task ShouldNotCreateRoleForUnhandledProblem()
         {
             // Arrange
             var roleManagerStub = TestData.CreateRoleManagerMoqStub(_roleStoreStub);
-            var command = new CreateRoleCommand(RoleName: Guid.NewGuid().ToString());
+            var command = new CreateRoleCommand(Guid.NewGuid().ToString());
             var expectedErrorMessage = TestData.ErrorMessage;
 
             var createRoleHandler = new CreateRoleCommandHandler(roleManagerStub.Object);
