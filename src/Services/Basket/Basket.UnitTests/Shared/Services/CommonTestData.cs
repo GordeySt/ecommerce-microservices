@@ -1,6 +1,6 @@
 ﻿using Services.Common.Models;
 
-namespace Basket.Tests.Shared.Services
+namespace Basket.UnitTests.Shared.Services
 {
     public static class CommonTestData
     {

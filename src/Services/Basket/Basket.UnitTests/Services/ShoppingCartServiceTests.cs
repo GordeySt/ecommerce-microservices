@@ -4,7 +4,7 @@ using Basket.API.BL.Mappers;
 using Basket.API.BL.Services;
 using Basket.API.DAL.Entities;
 using Basket.API.DAL.Interfaces.Redis;
-using Basket.Tests.Shared.Services;
+using Basket.UnitTests.Shared.Services;
 using FluentAssertions;
 using Moq;
 using Services.Common.Constatns;
@@ -13,7 +13,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Basket.Tests.Services
+namespace Basket.UnitTests.Services
 {
     public class ShoppingCartServiceTests
     {

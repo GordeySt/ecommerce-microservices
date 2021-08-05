@@ -3,7 +3,7 @@ using Services.Common.Models;
 using System;
 using System.Collections.Generic;
 
-namespace Basket.Tests.Shared.Services
+namespace Basket.UnitTests.Shared.Services
 {
     public static class OrderTestData
     {
