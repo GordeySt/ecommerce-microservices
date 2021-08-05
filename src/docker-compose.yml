@@ -146,7 +146,7 @@ services:
     depends_on:
       - catalog.api
       - basket.api
-      - identity.api
+      - identityserver
     ports:
       - 8015:80
 

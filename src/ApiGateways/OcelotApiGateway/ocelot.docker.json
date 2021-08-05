@@ -109,11 +109,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/create-user/id/{id:guid}",
-      "UpstreamHttpMethod": [ "POST" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
-        "AllowedScopes": []
-      }
+      "UpstreamHttpMethod": [ "POST" ]
     },
     {
       "DownstreamPathTemplate": "/api/Users/id/{id:guid}",
@@ -125,11 +121,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/id/{id:guid}",
-      "UpstreamHttpMethod": [ "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
-        "AllowedScopes": []
-      }
+      "UpstreamHttpMethod": [ "GET" ]
     },
     // Auth API -- http://localhost:5011/api/Auth
     {
@@ -137,7 +129,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -149,7 +141,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -161,7 +153,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -173,7 +165,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -185,7 +177,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -198,7 +190,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -214,7 +206,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -230,7 +222,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -246,7 +238,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -262,7 +254,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -279,7 +271,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
@@ -295,7 +287,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api",
+          "Host": "identityserver",
           "Port": 80
         }
       ],
