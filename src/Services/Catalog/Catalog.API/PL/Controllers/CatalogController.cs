@@ -49,7 +49,6 @@ namespace Catalog.API.PL.Controllers
         [HttpGet("get-popular")]
         [PopularCategoriesParamFilter]
         [CachedFilter(600)]
-        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<string>>> GetPopularCategories
             ([FromQuery] int popularCategoriesCount) => 
@@ -70,7 +69,6 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns PagedList of ProductDto</returns>
         /// <response code="200">Success</response>
         [HttpGet]
-        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
             ([FromQuery] ProductsParams productsParams)
@@ -222,6 +220,7 @@ namespace Catalog.API.PL.Controllers
         /// <response code="204">Success</response>
         /// <response code="404">If the product with id (guid) not found</response>
         [HttpPost("add-photo/id/{id:guid}")]
+        [FlushCacheFilter]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddPhotoToProduct([FromForm(Name = "File")] IFormFile mainImage,

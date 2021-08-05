@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Catalog.API.BL.Constants;
 using Catalog.API.BL.Interfaces;
 using Catalog.API.DAL.Entities;
 using Catalog.API.DAL.Interfaces;

@@ -14,6 +14,8 @@ namespace Catalog.API.PL.Filters.ResponseCaching
             var cacheService = context.HttpContext.RequestServices.GetRequiredService<IResponseCacheService>();
 
             await cacheService.FlushCachedResponsesAsync();
+
+            await next();
         }
     }
 }

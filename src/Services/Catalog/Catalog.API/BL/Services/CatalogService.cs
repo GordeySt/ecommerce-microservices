@@ -82,7 +82,7 @@ namespace Catalog.API.BL.Services
 
         public async Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto)
         {
-            var product = await _productRepository.GetProductByIdAsync(updateProductDto.Id);
+            var product = await _productRepository.GetProductByIdAsync(updateProductDto.Id, disableTracking: false);
 
             if (product is null)
             {
