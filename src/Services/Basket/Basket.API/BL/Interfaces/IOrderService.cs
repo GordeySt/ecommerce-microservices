@@ -16,6 +16,6 @@ namespace Basket.API.BL.Interfaces
 
         Task<ServiceResult> DeleteOrderAsync(Guid id);
 
-        Task<OrderDto> GetOrderByIdAsync(Guid orderId);
+        Task<ServiceResult<OrderDto>> GetOrderByIdAsync(Guid orderId);
     }
 }
