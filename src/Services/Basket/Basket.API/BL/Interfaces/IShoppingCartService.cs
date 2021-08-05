@@ -8,10 +8,10 @@ namespace Basket.API.BL.Interfaces
 {
     public interface IShoppingCartService
     {
-        public Task<ShoppingCart> AddShoppingCartAsync(AddShoppingCartDto addShoppingCartDto);
+        Task<ShoppingCart> AddShoppingCartAsync(AddShoppingCartDto addShoppingCartDto);
 
-        public Task<ServiceResult<ShoppingCartDto>> GetShoppingCartByIdAsync();
+        Task<ServiceResult<ShoppingCartDto>> GetShoppingCartByIdAsync();
 
-        public Task DeleteShoppingCartAsync();
+        Task DeleteShoppingCartAsync();
     }
 }

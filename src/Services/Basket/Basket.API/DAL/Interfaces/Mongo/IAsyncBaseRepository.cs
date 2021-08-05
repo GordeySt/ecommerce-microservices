@@ -5,6 +5,6 @@ namespace Basket.API.DAL.Interfaces.Mongo
 {
     public interface IAsyncBaseRepository<T> where T : class
     {
-        public Task AddItemAsync(T entity);
+        Task AddItemAsync(T entity);
     }
 }

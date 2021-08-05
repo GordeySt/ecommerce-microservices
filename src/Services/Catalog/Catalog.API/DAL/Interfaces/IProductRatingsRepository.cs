@@ -6,6 +6,6 @@ namespace Catalog.API.DAL.Interfaces
 {
     public interface IProductRatingsRepository : IAsyncBaseRepository<ProductRating>
     {
-        public Task<ProductRating> GetProductRatingByIdsAsync(Guid productId, Guid userId);
+        Task<ProductRating> GetProductRatingByIdsAsync(Guid productId, Guid userId);
     }
 }
