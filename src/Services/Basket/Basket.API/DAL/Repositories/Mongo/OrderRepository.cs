@@ -1,6 +1,5 @@
 ﻿using Basket.API.DAL.Entities;
 using Basket.API.DAL.Interfaces.Mongo;
-using Basket.API.PL.Models.DTOs;
 using MongoDB.Driver;
 using Services.Common.Constatns;
 using Services.Common.Enums;
