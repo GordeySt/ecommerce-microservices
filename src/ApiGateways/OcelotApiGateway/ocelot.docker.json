@@ -6,8 +6,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog",
@@ -22,8 +22,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/{id:guid}",
@@ -38,8 +38,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/get-popular",
@@ -54,8 +54,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/add-photo/id/{id:guid}",
@@ -71,8 +71,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/ProductRatings/add-ratings/id/{id:guid}",
@@ -87,8 +87,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/ProductRatings/change-ratings/id/{id:guid}",
@@ -104,8 +104,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Users/create-user/id/{id:guid}",
@@ -120,8 +120,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5000"
+          "Host": "catalog.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Users/id/{id:guid}",
@@ -137,8 +137,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Auth/signup",
@@ -149,8 +149,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Auth/verify-email",
@@ -161,8 +161,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Auth/resend-email-verification",
@@ -173,8 +173,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Auth/send-resetpassword-email",
@@ -185,8 +185,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Auth/reset-password",
@@ -198,8 +198,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Roles",
@@ -214,8 +214,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Roles/grant",
@@ -230,8 +230,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Roles/revoke",
@@ -246,8 +246,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Roles/create",
@@ -262,8 +262,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Roles/id/{id:guid}",
@@ -279,8 +279,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Users/{id:guid}",
@@ -295,8 +295,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5011"
+          "Host": "identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Users/current-user",
@@ -312,8 +312,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5002"
+          "Host": "basket.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Order/checkout",
@@ -328,8 +328,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5002"
+          "Host": "basket.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Order/get-by-user-id",
@@ -344,8 +344,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5002"
+          "Host": "basket.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Order/id/{id:guid}",
@@ -360,8 +360,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5002"
+          "Host": "basket.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Order/get-by-id/id/{id:guid}",
@@ -377,8 +377,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5002"
+          "Host": "basket.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/ShoppingCart",
@@ -390,6 +390,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5015"
+    "BaseUrl": "http://localhost:8015"
   }
 }

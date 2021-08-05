@@ -136,9 +136,24 @@ services:
     ports:
       - 8007:80
 
+  ocelotapigateway:
+    container_name: ocelotapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+    depends_on:
+      - catalog.api
+      - basket.api
+      - identity.api
+    ports:
+      - 8015:80
+
 volumes:
   mongo_data:
   elasticsearch-data:
   postgres_data:
   pgadmin_data:
+
 
