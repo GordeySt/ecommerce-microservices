@@ -89,7 +89,7 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Returns ProductDto</returns>
         /// <response code="200">Success</response>
         /// <response code="404">If the product not found</response>
-        [HttpGet("{id:guid}", Name = "GetProduct")]
+        [HttpGet("id/{id:guid}", Name = "GetProduct")]
         [CachedFilter(600)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -191,7 +191,7 @@ namespace Catalog.API.PL.Controllers
         /// <returns>Return NoContent Result</returns>
         /// <response code="204">Success</response>
         /// <response code="404">If the product not found</response>
-        [HttpDelete("{id:guid}", Name = "DeleteProduct")]
+        [HttpDelete("id/{id:guid}", Name = "DeleteProduct")]
         [FlushCacheFilter]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

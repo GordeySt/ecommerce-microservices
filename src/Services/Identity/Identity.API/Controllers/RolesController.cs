@@ -168,7 +168,7 @@ namespace Identity.API.Controllers
         /// <response code="404">If role not found</response>
         /// <response code="401">If the user not authorized</response>
         /// <response code="403">If action is forbidden (ex: not for user role)</response>
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("id/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

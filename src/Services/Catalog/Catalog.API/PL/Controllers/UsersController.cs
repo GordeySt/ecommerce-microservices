@@ -37,7 +37,7 @@ namespace Catalog.API.PL.Controllers
             return CreatedAtAction(nameof(CreateUser), userCreationResult.Data);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("id/{id:guid}")]
         public async Task<ActionResult<UserDto>> GetUserById(Guid id)
         {
             var user = await _usersService.GetUserByIdAsync(id);
