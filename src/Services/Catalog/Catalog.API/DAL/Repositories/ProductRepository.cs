@@ -53,10 +53,10 @@ namespace Catalog.API.DAL.Repositories
         {
             var products = GetAllQueryable();
 
-            return await products.GroupBy(x => x.Category)
-                .Select(x => new { Category = x.Key, Count = x.Count() })
-                .OrderByDescending(x => x.Count)
-                .Select(x => x.Category)
+            return await products
+                .GroupBy(x => x.Category)
+                .OrderByDescending(x => x.Count())
+                .Select(x => x.Key)
                 .Take(popularCategoriesCount)
                 .ToListAsync();
         }

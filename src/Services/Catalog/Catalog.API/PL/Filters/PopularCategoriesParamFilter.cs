@@ -33,12 +33,12 @@ namespace Catalog.API.PL.Filters
                 return;
             }
 
-            OnActionExecuting(context);
+            base.OnActionExecuting(context);
         }
 
-        private void SetBadRequestResultToContextResult(ActionExecutingContext context, object error = null)
+        private void SetBadRequestResultToContextResult(ActionExecutingContext context, object errors = null)
         {
-            context.Result = new BadRequestObjectResult(error);
+            context.Result = new BadRequestObjectResult(errors);
         }
     }
 }

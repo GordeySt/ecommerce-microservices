@@ -75,14 +75,14 @@ namespace Catalog.API.BL.Services
 
         public async Task<ProductDto> GetProductByIdAsync(Guid id)
         {
-            var product = await _productRepository.GetProductByIdAsync(id);
+            var product = await _productRepository.GetProductByIdAsync(id, disableTracking: false);
 
             return product is not null ? _mapper.Map<ProductDto>(product) : default;
         }
 
         public async Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto)
         {
-            var product = await _productRepository.GetProductByIdAsync(updateProductDto.Id, false);
+            var product = await _productRepository.GetProductByIdAsync(updateProductDto.Id);
 
             if (product is null)
             {

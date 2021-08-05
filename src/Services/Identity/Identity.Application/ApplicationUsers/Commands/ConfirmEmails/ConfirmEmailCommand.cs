@@ -24,6 +24,12 @@ namespace Identity.Application.ApplicationUsers.Commands.ConfirmEmails
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
 
+            if (user is null)
+            {
+                return new ServiceResult(ServiceResultType.NotFound,
+                    NotFoundExceptionMessageConstants.NotFoundUserMessage);
+            }
+
             var confirmationResult = await _userManager.ConfirmEmailAsync(user, request.Token);
 
             if (!confirmationResult.Succeeded)

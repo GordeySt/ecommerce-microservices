@@ -1,9 +1,7 @@
-﻿using Identity.Application.Common;
-using Identity.Application.Common.Utilities;
+﻿using Identity.Application.Common.Utilities;
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
@@ -27,8 +25,7 @@ namespace Identity.Application.ApplicationRoles.Commands.DeleteRoles
         public async Task<ServiceResult> Handle(DeleteRoleCommand request,
             CancellationToken cancellationToken)
         {
-            var role = await _roleManager.Roles
-                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            var role = await _roleManager.FindByIdAsync(request.Id.ToString());
 
             if (role is null)
             {

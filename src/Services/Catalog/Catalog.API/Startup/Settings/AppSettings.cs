@@ -9,6 +9,7 @@ namespace Catalog.API.Startup.Settings
         public AppUrlsSettings AppUrlsSettings { get; set; }
         public CircuitBreakerSettings CircuitBreakerSettings { get; set; }
         public RetryPolicySettings RetryPolicySettings { get; set; }
+        public RedisCacheSettings RedisCacheSettings { get; set; }
 
         public void Validate()
         {
@@ -16,6 +17,7 @@ namespace Catalog.API.Startup.Settings
             CloudinarySettings.Validate();
             AppUrlsSettings.Validate();
             CircuitBreakerSettings.Validate();
+            RedisCacheSettings.Validate();
         }
     }
 }

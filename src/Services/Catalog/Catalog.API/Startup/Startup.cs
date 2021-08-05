@@ -37,6 +37,7 @@ namespace Catalog.API.Startup
             services.ValidateSettingParameters(Configuration);
             services.RegisterAutoMapper();
             services.RegisterGrpcServices(appSettings);
+            services.RegisterRedisCache(appSettings);
 
             services.AddControllers()
                 .AddJsonOptions(options =>
@@ -108,6 +109,9 @@ namespace Catalog.API.Startup
             var circuitBreakerSettings = configuration.GetSection(nameof(AppSettings.CircuitBreakerSettings))
                 .Get<CircuitBreakerSettings>();
 
+            var redisCacheSettings = configuration.GetSection(nameof(AppSettings.RedisCacheSettings))
+                .Get<RedisCacheSettings>();
+
             if (env.IsDevelopment())
             {
                 cloudinarySettings.ApiSecret = configuration["Cloudinary:ApiSecret"];
@@ -119,7 +123,8 @@ namespace Catalog.API.Startup
                 CloudinarySettings = cloudinarySettings,
                 AppUrlsSettings = appUrlsSettings,
                 RetryPolicySettings = retryPolicySettings,
-                CircuitBreakerSettings = circuitBreakerSettings
+                CircuitBreakerSettings = circuitBreakerSettings,
+                RedisCacheSettings = redisCacheSettings
             };
         }
     }

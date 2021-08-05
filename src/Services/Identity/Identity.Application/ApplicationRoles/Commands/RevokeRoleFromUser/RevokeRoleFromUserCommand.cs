@@ -30,8 +30,7 @@ namespace Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser
         public async Task<ServiceResult> Handle(RevokeRoleFromUserCommand request, 
             CancellationToken cancellationToken)
         {
-            var appRole = await _roleManager.Roles
-                .FirstOrDefaultAsync(x => x.Id == request.RoleId, cancellationToken);
+            var appRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
 
             if (appRole is null)
             {
@@ -39,8 +38,7 @@ namespace Identity.Application.ApplicationRoles.Commands.RevokeRoleFromUser
                     NotFoundExceptionMessageConstants.NotFoundRoleMessage);
             }
 
-            var appUser = await _userManager.Users
-                .FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
+            var appUser = await _userManager.FindByIdAsync(request.RoleId.ToString());
 
             if (appUser is null)
             {

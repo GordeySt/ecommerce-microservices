@@ -10,6 +10,13 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  catalogcache:
+    container_name: catalogcache
+    image: redis:alpine
+    restart: always
+    ports:
+      - 6379:6379
+
   identitydb:
     container_name: identitydb
     image: postgres
@@ -62,6 +69,7 @@ services:
        - ASPNETCORE_ENVIRONMENT=docker
     depends_on:
       - catalogdb
+      - catalogcache
       - identityserver
       - identitygrpc
     ports:

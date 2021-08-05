@@ -16,14 +16,14 @@ namespace Identity.Application.ApplicationUsers.Queries.GetUsersByTokenInfo
 {
     public record GetCurrentUserQuery : IRequest<ServiceResult<ApplicationUserDto>>;
 
-    public class GetUserByTokenInfoQueryHandler : IRequestHandler<GetCurrentUserQuery,
+    public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery,
         ServiceResult<ApplicationUserDto>>
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public GetUserByTokenInfoQueryHandler(ICurrentUserService currentUserService,
+        public GetCurrentUserQueryHandler(ICurrentUserService currentUserService,
             UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _currentUserService = currentUserService;
@@ -38,8 +38,7 @@ namespace Identity.Application.ApplicationUsers.Queries.GetUsersByTokenInfo
                 .Include(x => x.AppUserRoles)
                 .ThenInclude(x => x.AppRole)
                 .AsNoTracking()
-                .ProjectTo<ApplicationUserDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(x => x.Id.ToString() == _currentUserService.UserId, 
+                .FirstOrDefaultAsync(x => x.Id.ToString() == _currentUserService.UserId,
                      cancellationToken);
 
             if (user is null)
@@ -48,7 +47,9 @@ namespace Identity.Application.ApplicationUsers.Queries.GetUsersByTokenInfo
                     ExceptionMessageConstants.InvalidTokenMessage);
             }
 
-            return new ServiceResult<ApplicationUserDto>(ServiceResultType.Success, user);
+            var userDto = _mapper.Map<ApplicationUserDto>(user);
+
+            return new ServiceResult<ApplicationUserDto>(ServiceResultType.Success, userDto);
         }
     }
 }
