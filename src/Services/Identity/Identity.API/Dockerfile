@@ -13,7 +13,7 @@ COPY ["Services/Identity/Identity.Domain/Identity.Domain.csproj", "Services/Iden
 COPY ["BuildingBlocks/CommonParts/Services.Common/Services.Common.csproj", "BuildingBlocks/CommonParts/Services.Common/"]
 COPY ["BuildingBlocks/Logging/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Logging/Common.Logging/"]
 COPY ["Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj", "Services/Identity/Identity.Infrastructure/"]
-RUN dotnet restore "Services/Identity/Identity.API/Identity.API.csproj"
+RUN dotnet restore "Services/Identity/Identity.API/Identity.API.csproj" --disable-parallel
 COPY . .
 WORKDIR "/src/Services/Identity/Identity.API"
 RUN dotnet build "Identity.API.csproj" -c Release -o /app/build

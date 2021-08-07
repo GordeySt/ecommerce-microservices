@@ -17,6 +17,8 @@ namespace Catalog.API.Startup.Settings
         [Required]
         public bool AllowAdmin { get; set; }
 
+        public string ConnectionString => $"{Host}:{Port}";
+
         public void Validate()
         {
             Validator.ValidateObject(this, new ValidationContext(this), true);

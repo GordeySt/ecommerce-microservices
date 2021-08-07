@@ -1,6 +1,5 @@
 ﻿using Basket.API.Startup.Settings;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Basket.API.Startup.Configurations
 {
@@ -10,11 +9,8 @@ namespace Basket.API.Startup.Configurations
             AppSettings appSettings)
         {
             services.AddHealthChecks()
-                .AddRedis(
-                appSettings.RedisCacheSettings.ConnectionString,
-                "Redis Health",
-                HealthStatus.Degraded);
-               
+                .AddRedis(appSettings.RedisCacheSettings.ConnectionString)
+                .AddMongoDb(appSettings.MongoDbSettings.ConnectionString);
         }
     }
 }

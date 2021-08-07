@@ -1,10 +1,12 @@
 using FluentValidation.AspNetCore;
+using HealthChecks.UI.Client;
 using Identity.API.Startup.Configurations;
 using Identity.API.Startup.Middlewares;
 using Identity.API.Startup.Settings;
 using Identity.Application.ApplicationUsers.Commands.SignupUsers;
 using Identity.Infrastructure.Services.Email;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +47,7 @@ namespace Identity.API.Startup
             services.Configure<SmtpClientSettings>(Configuration.GetSection(nameof(SmtpClientSettings)));
 
             services.RegisterSwagger(appSettings);
+            services.RegisterHealthChecks(appSettings);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -75,6 +78,11 @@ namespace Identity.API.Startup
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
 

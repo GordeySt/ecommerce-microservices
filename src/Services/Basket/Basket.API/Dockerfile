@@ -9,7 +9,7 @@ WORKDIR /src
 COPY ["Services/Basket/Basket.API/Basket.API.csproj", "Services/Basket/Basket.API/"]
 COPY ["BuildingBlocks/Logging/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Logging/Common.Logging/"]
 COPY ["BuildingBlocks/CommonParts/Services.Common/Services.Common.csproj", "BuildingBlocks/CommonParts/Services.Common/"]
-RUN dotnet restore "Services/Basket/Basket.API/Basket.API.csproj"
+RUN dotnet restore "Services/Basket/Basket.API/Basket.API.csproj" --disable-parallel
 COPY . .
 WORKDIR "/src/Services/Basket/Basket.API"
 RUN dotnet build "Basket.API.csproj" -c Release -o /app/build

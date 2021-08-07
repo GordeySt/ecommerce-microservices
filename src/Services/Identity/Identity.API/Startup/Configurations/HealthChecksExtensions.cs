@@ -1,7 +1,7 @@
-﻿using Catalog.API.Startup.Settings;
+﻿using Identity.API.Startup.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Catalog.API.Startup.Configuration
+namespace Identity.API.Startup.Configurations
 {
     public static class HealthChecksExtensions
     {
@@ -9,8 +9,7 @@ namespace Catalog.API.Startup.Configuration
             AppSettings appSettings)
         {
             services.AddHealthChecks()
-                .AddNpgSql(appSettings.DbSettings.ConnectionString)
-                .AddRedis(appSettings.RedisCacheSettings.ConnectionString);
+                .AddNpgSql(appSettings.DbSettings.ConnectionString);
         }
     }
 }
