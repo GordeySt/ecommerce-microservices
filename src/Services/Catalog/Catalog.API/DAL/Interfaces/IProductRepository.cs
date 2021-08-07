@@ -11,10 +11,10 @@ namespace Catalog.API.DAL.Interfaces
 {
     public interface IProductRepository : IAsyncBaseRepository<Product>
     {
-        public Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl);
-        public Task<List<string>> GetPopularCategoriesAsync(int popularCategoriesCount);
-        public void SortProductsByDefinition<T>(ref IQueryable<Product> products, OrderType? orderType,
+        Task<ServiceResult> UpdateMainImageAsync(Product product, string photoUrl);
+        Task<List<string>> GetPopularCategoriesAsync(int popularCategoriesCount);
+        void SortProductsByDefinition<T>(ref IQueryable<Product> products, OrderType? orderType,
             Expression<Func<Product, T>> sortDefinition);
-        public Task<Product> GetProductByIdAsync(Guid id, bool disableTracking = true);
+        Task<Product> GetProductByIdAsync(Guid id, bool disableTracking = true);
     }
 }

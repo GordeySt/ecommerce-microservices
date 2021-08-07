@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,26 @@ namespace Services.Common.Models
                 .ToListAsync();
 
             return new PagedList<T>(items, count, pageNumber, pageSize);
+        }
+
+        public static async Task<PagedList<T>> CreateAsync(IMongoCollection<T> source,
+             FilterDefinition<T> filter, int pageNumber, int pageSize)
+        {
+            var count = await source.CountDocumentsAsync(new BsonDocument());
+
+            var query = source.Find(filter);
+
+            if (await query.CountDocumentsAsync() > (pageNumber - 1) * pageSize)
+            {
+                var items = await query
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Limit(pageSize)
+                    .ToListAsync();
+
+                return new PagedList<T>(items, (int)count, pageNumber, pageSize);
+            }
+
+            return new PagedList<T>(await query.ToListAsync(), (int)count, pageNumber, pageSize);
         }
     }
 }

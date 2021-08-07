@@ -13,7 +13,7 @@ namespace Identity.Infrastructure.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string UserId => _httpContextAccessor.HttpContext?.User?
+        public string UserId => _httpContextAccessor.HttpContext?.User
             .FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

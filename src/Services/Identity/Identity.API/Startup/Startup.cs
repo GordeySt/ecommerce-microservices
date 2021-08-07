@@ -32,9 +32,9 @@ namespace Identity.API.Startup
                  });
 
             services.RegisterDatabase(appSettings);
-            services.RegisterAuthSettings(Configuration);
+            services.RegisterAuthSettings(appSettings);
             services.RegisterIdentity(appSettings);
-            services.RegisterIdentityServer(Configuration);
+            services.RegisterIdentityServer(appSettings);
             services.ValidateSettingParameters(Configuration);
 
             services.RegisterServices(appSettings);
@@ -44,7 +44,7 @@ namespace Identity.API.Startup
 
             services.Configure<SmtpClientSettings>(Configuration.GetSection(nameof(SmtpClientSettings)));
 
-            services.RegisterSwagger(Configuration);
+            services.RegisterSwagger(appSettings);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -86,10 +86,14 @@ namespace Identity.API.Startup
             var identitySettings = configuration.GetSection(nameof(AppSettings.IdentitySettings))
                 .Get<IdentitySettings>();
 
+            var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
+                .Get<AppUrlsSettings>();
+
             return new AppSettings
             {
                 DbSettings = dbSettings,
-                IdentitySettings = identitySettings
+                IdentitySettings = identitySettings,
+                AppUrlsSettings = appUrlsSettings
             };
         }
     }

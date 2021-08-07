@@ -1,6 +1,5 @@
 ﻿using Catalog.API.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
 using Services.Common.Constatns;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;

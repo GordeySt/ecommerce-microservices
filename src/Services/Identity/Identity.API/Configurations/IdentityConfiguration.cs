@@ -1,4 +1,5 @@
-﻿using IdentityModel;
+﻿using Identity.API.Startup.Settings;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
@@ -32,17 +33,25 @@ namespace Identity.API.Configurations
 					Enabled = true,
 					Scopes = new List<string> { "identityapi" },
 					UserClaims = new List<string> { "role" }
-				}
+				},
+				new ApiResource()
+                {
+					Name = "basketapi",
+					Enabled = true,
+					Scopes = new List<string> { "basketapi" },
+					UserClaims = new List<string> { "role" }
+                }
 			};
 
 		public static IEnumerable<ApiScope> Scopes =>
 			new ApiScope[]
 			{
 				new ApiScope("catalogapi"),
-				new ApiScope("identityapi")
+				new ApiScope("identityapi"),
+				new ApiScope("basketapi")
 			};
 
-		public static IEnumerable<Client> GetClients(IConfiguration configuration) =>
+		public static IEnumerable<Client> GetClients(AppSettings appSettings) =>
 			new List<Client>
 			{
 				new Client
@@ -50,7 +59,7 @@ namespace Identity.API.Configurations
 					ClientId = "client_id_catalog_swagger",
 					ClientSecrets = {  new Secret("client_secret_catalog_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedCorsOrigins = { configuration["appUrls:catalogUrl"] },
+					AllowedCorsOrigins = { appSettings.AppUrlsSettings.CatalogUrl },
 					AllowedScopes =
 					{
 						"roles",
@@ -66,11 +75,27 @@ namespace Identity.API.Configurations
 					ClientId = "client_id_identity_swagger",
 					ClientSecrets = {  new Secret("client_secret_identity_swagger".ToSha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedCorsOrigins = { configuration["appUrls:identityUrl"] },
+					AllowedCorsOrigins = { appSettings.AppUrlsSettings.IdentityUrl },
 					AllowedScopes =
 					{
 						"roles",
 						"identityapi",
+						IdentityServerConstants.StandardScopes.OpenId,
+						IdentityServerConstants.StandardScopes.Profile,
+						IdentityServerConstants.StandardScopes.OfflineAccess
+					},
+					AllowOfflineAccess = true
+				},
+				new Client
+				{
+					ClientId = "client_id_basket_swagger",
+					ClientSecrets = {  new Secret("client_secret_basket_swagger".ToSha256()) },
+					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+					AllowedCorsOrigins = { appSettings.AppUrlsSettings.BasketUrl },
+					AllowedScopes =
+					{
+						"roles",
+						"basketapi",
 						IdentityServerConstants.StandardScopes.OpenId,
 						IdentityServerConstants.StandardScopes.Profile,
 						IdentityServerConstants.StandardScopes.OfflineAccess
@@ -87,7 +112,8 @@ namespace Identity.API.Configurations
 						IdentityServerConstants.StandardScopes.Profile,
 						"roles",
 						"identityapi",
-						"catalogapi"
+						"catalogapi",
+						"basketapi"
 					},
 					RedirectUris =
 					{
