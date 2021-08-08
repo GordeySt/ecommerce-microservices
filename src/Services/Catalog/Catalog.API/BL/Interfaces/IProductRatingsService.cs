@@ -7,7 +7,7 @@ namespace Catalog.API.BL.Interfaces
 {
     public interface IProductRatingsService
     {
-        public Task<ServiceResult<ProductRating>> AddRatingToProductAsync(Guid productId, int ratingCount);
-        public Task<ServiceResult> UpdateRatingAtProductAsync(Guid productId, int ratingCount);
+        Task<ServiceResult<ProductRating>> AddRatingToProductAsync(Guid productId, int ratingCount);
+        Task<ServiceResult> UpdateRatingAtProductAsync(Guid productId, int ratingCount);
     }
 }

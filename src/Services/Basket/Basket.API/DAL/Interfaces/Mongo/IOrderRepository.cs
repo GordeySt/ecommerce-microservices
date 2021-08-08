@@ -9,10 +9,10 @@ namespace Basket.API.DAL.Interfaces.Mongo
 {
     public interface IOrderRepository : IAsyncBaseRepository<Order>
     {
-        public Task<Order> GetOrderByIdAsync(Guid orderId);
+        Task<Order> GetOrderByIdAsync(Guid orderId);
 
-        public Task<List<Order>> GetOrdersByUserIdAsync(Guid userId, PagingParams pagingParams);
+        Task<List<Order>> GetOrdersByUserIdAsync(Guid userId, PagingParams pagingParams);
 
-        public Task<ServiceResult> DeleteOrderAsync(Guid id);
+        Task<ServiceResult> DeleteOrderAsync(Guid id);
     }
 }

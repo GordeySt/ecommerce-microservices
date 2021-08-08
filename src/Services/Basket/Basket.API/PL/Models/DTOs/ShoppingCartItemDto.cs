@@ -7,6 +7,7 @@ namespace Basket.API.PL.Models.DTOs
 {
     public class ShoppingCartItemDto
     {
+        [DefaultValue]
         public Guid Id { get; set; }
         
         [DefaultValue]

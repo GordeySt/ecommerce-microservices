@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration;
-using Basket.API.DAL.Entities;
+﻿using Basket.API.DAL.Entities;
 using Basket.API.DAL.Interfaces.Mongo;
 using Basket.API.Startup.Settings;
 using MongoDB.Driver;

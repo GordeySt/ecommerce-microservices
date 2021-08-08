@@ -9,8 +9,8 @@ namespace Catalog.API.BL.Interfaces
 {
     public interface IUsersService
     {
-        public Task<ServiceResult<User>> AddUserAsync(ApplicationUserModel userModel);
+        Task<ServiceResult<User>> AddUserAsync(ApplicationUserModel userModel);
 
-        public Task<UserDto> GetUserByIdAsync(Guid id);
+        Task<UserDto> GetUserByIdAsync(Guid id);
     }
 }

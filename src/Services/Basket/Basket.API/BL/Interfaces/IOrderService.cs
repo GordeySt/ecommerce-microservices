@@ -10,12 +10,12 @@ namespace Basket.API.BL.Interfaces
 {
     public interface IOrderService
     {
-        public Task<ServiceResult> CheckoutShoppingCartAsync(Order order);
+        Task<ServiceResult> CheckoutShoppingCartAsync(Order order);
 
-        public Task<List<OrderDto>> GetOrdersByUserIdAsync(PagingParams pagingParams);
+        Task<List<OrderDto>> GetOrdersByUserIdAsync(PagingParams pagingParams);
 
-        public Task<ServiceResult> DeleteOrderAsync(Guid id);
+        Task<ServiceResult> DeleteOrderAsync(Guid id);
 
-        public Task<OrderDto> GetOrderByIdAsync(Guid orderId);
+        Task<ServiceResult<OrderDto>> GetOrderByIdAsync(Guid orderId);
     }
 }

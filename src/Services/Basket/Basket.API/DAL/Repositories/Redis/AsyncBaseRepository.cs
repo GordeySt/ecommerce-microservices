@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Basket.API.DAL.Repositories.Redis
 {
-    public class AsyncBaseRepository<T> : IAsyncBaseRepository<T> where T
+    public abstract class AsyncBaseRepository<T> : IAsyncBaseRepository<T> where T
         : EntityBase
     {
         private readonly IRedisCacheClient _redisCacheClient;
 
-        public AsyncBaseRepository(IRedisCacheClient redisCacheClient)
+        protected AsyncBaseRepository(IRedisCacheClient redisCacheClient)
         {
             _redisCacheClient = redisCacheClient;
         }

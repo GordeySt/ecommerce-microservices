@@ -11,16 +11,16 @@ namespace Catalog.API.BL.Interfaces
 {
     public interface ICatalogService
     {
-        public Task<ServiceResult<Product>> AddProductAsync(CreateProductDto createProductDto);
+        Task<ServiceResult<Product>> AddProductAsync(CreateProductDto createProductDto);
 
-        public Task<ServiceResult> DeleteProductAsync(Guid id);
+        Task<ServiceResult> DeleteProductAsync(Guid id);
 
-        public Task<PagedList<ProductDto>> GetAllProductsAsync(ProductsParams productsParams);
+        Task<PagedList<ProductDto>> GetAllProductsAsync(ProductsParams productsParams);
 
-        public Task<List<string>> GetPopularCategoriesAsync(int populerCategoriesCount);
+        Task<List<string>> GetPopularCategoriesAsync(int populerCategoriesCount);
 
-        public Task<ProductDto> GetProductByIdAsync(Guid id);
+        Task<ProductDto> GetProductByIdAsync(Guid id);
 
-        public Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto);
+        Task<ServiceResult> UpdateProductAsync(UpdateProductDto updateProductDto);
     }
 }

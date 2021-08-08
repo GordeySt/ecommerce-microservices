@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Basket.API.BL.Constants;
 using Basket.API.BL.Interfaces;
 using Basket.API.BL.Mappers;
 using Basket.API.BL.Services;
@@ -136,6 +137,61 @@ namespace Basket.UnitTests.Services
 
             // Assert
             result.Count.Should().Be(pagingParams.PageSize);
+        }
+
+        [Fact]
+        public async Task GetOrderByIdAsync_WithInvalidUserId_ReturnsBadRequestServiceResult()
+        {
+            // Arrange
+            var currentUserId = Guid.NewGuid();
+            var order = OrderTestData.CreateOrderEntity();
+            var orderId = Guid.NewGuid();
+
+            var orderService = new OrderService(_orderRepositoryStub.Object,
+                _shoppingCartRepositoryStub.Object, _currentUserServiceStub.Object, _mapper);
+
+            _currentUserServiceStub
+                .Setup(t => t.UserId)
+                .Returns(currentUserId.ToString());
+
+            _orderRepositoryStub
+                .Setup(t => t.GetOrderByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(order);
+
+            // Act
+            var result = await orderService.GetOrderByIdAsync(orderId);
+
+            // Assert
+            result.Result.Should().Be(ServiceResultType.BadRequest);
+            result.Message.Should().Be(ExceptionMessageConstants.ForbiddenAction);
+        }
+
+        [Fact]
+        public async Task GetOrderByIdAsync_WithUnexistingOrder_ReturnsBadRequestServiceResult()
+        {
+            // Arrange
+            var currentUserId = Guid.NewGuid();
+            var order = OrderTestData.CreateOrderEntity();
+            order.UserId = currentUserId;
+            var orderId = Guid.NewGuid();
+
+            var orderService = new OrderService(_orderRepositoryStub.Object,
+                _shoppingCartRepositoryStub.Object, _currentUserServiceStub.Object, _mapper);
+
+            _currentUserServiceStub
+                .Setup(t => t.UserId)
+                .Returns(currentUserId.ToString());
+
+            _orderRepositoryStub
+                .Setup(t => t.GetOrderByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync((Order)null);
+
+            // Act
+            var result = await orderService.GetOrderByIdAsync(orderId);
+
+            // Assert
+            result.Result.Should().Be(ServiceResultType.NotFound);
+            result.Message.Should().Be(ExceptionConstants.NotFoundItemMessage);
         }
 
         [Fact]

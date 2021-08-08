@@ -40,7 +40,7 @@ namespace Basket.UnitTests.Shared.Services
             }
         };
 
-        public static ShoppingCartItemDto CreateShoppingCartItemDto() => new()
+        private static ShoppingCartItemDto CreateShoppingCartItemDto() => new()
         {
             Id = new Guid("edbf4592-f282-4cfe-afc8-1204a8231549"),
             Category = "TestCategory",

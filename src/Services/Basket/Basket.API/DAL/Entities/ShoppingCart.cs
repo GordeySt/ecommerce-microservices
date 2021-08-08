@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Basket.API.DAL.Entities
 {
@@ -7,19 +7,6 @@ namespace Basket.API.DAL.Entities
     { 
         public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = new List<ShoppingCartItem>();
 
-        public decimal TotalPrice
-        {
-            get
-            {
-                decimal totalPrice = 0;
-
-                foreach (var item in ShoppingCartItems)
-                {
-                    totalPrice += item.Price * item.Quantity;
-                }
-
-                return totalPrice;
-            }
-        }
+        public decimal TotalPrice => ShoppingCartItems.Sum(item => item.Price * item.Quantity);
     }
 }

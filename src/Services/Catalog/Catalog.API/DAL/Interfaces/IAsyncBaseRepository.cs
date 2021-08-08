@@ -10,19 +10,19 @@ namespace Catalog.API.DAL.Interfaces
 {
     public interface IAsyncBaseRepository<T> where T : class
     {
-        public Task<List<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync();
 
-        public IQueryable<T> GetAllQueryable();
+        IQueryable<T> GetAllQueryable();
 
-        public Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate);
+        Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate);
 
-        public IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression);
+        IQueryable<T> GetQueryable(ref IQueryable<T> entity, Expression<Func<T, bool>> expression);
 
-        public Task<ServiceResult<T>> AddAsync(T entity);
+        Task<ServiceResult<T>> AddAsync(T entity);
 
-        public Task<ServiceResult> UpdateAsync(T entity);
+        Task<ServiceResult> UpdateAsync(T entity);
 
-        public Task<ServiceResult> DeleteAsync(T entity);
+        Task<ServiceResult> DeleteAsync(T entity);
     }
 }
 

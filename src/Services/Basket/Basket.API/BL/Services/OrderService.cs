@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Basket.API.BL.Constants;
 using Basket.API.BL.Interfaces;
 using Basket.API.DAL.Entities;
 using Basket.API.DAL.Interfaces.Mongo;
@@ -66,11 +67,28 @@ namespace Basket.API.BL.Services
         public async Task<ServiceResult> DeleteOrderAsync(Guid id) =>
             await _orderRepository.DeleteOrderAsync(id);
 
-        public async Task<OrderDto> GetOrderByIdAsync(Guid orderId)
+        public async Task<ServiceResult<OrderDto>> GetOrderByIdAsync(Guid orderId)
         {
+            var currentUserId = new Guid(_currentUserService.UserId);
+
             var order = await _orderRepository.GetOrderByIdAsync(orderId);
 
-            return order is not null ? _mapper.Map<OrderDto>(order) : default;
+            if (order is null)
+            {
+                return new ServiceResult<OrderDto>(ServiceResultType.NotFound,
+                    ExceptionConstants.NotFoundItemMessage);
+            }
+
+            if (currentUserId != order.UserId)
+            {
+                return new ServiceResult<OrderDto>(ServiceResultType.BadRequest,
+                    ExceptionMessageConstants.ForbiddenAction);
+            }
+
+            var orderDto = _mapper.Map<OrderDto>(order);
+
+            return new ServiceResult<OrderDto>(ServiceResultType.Success,
+                orderDto);
         }
     }
 }

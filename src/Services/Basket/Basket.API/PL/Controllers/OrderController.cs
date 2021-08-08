@@ -62,18 +62,17 @@ namespace Basket.API.PL.Controllers
             return NoContent();
         }
 
-        [HttpGet("get-by-id/id/{id:guid}")]
-        [AllowAnonymous]
+        [HttpGet("id/{id:guid}")]
         public async Task<ActionResult<OrderDto>> GetOrderById(Guid id)
         {
-            var order = await _orderService.GetOrderByIdAsync(id);
+            var result = await _orderService.GetOrderByIdAsync(id);
 
-            if (order is null)
+            if (result.Result is not ServiceResultType.Success)
             {
-                return NotFound();
+                return StatusCode((int)result.Result, result.Message);
             }
 
-            return order;
+            return result.Data;
         }
     }
 }
