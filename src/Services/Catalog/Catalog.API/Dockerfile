@@ -9,7 +9,7 @@ WORKDIR /src
 COPY ["Services/Catalog/Catalog.API/Catalog.API.csproj", "Services/Catalog/Catalog.API/"]
 COPY ["BuildingBlocks/Logging/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Logging/Common.Logging/"]
 COPY ["BuildingBlocks/CommonParts/Services.Common/Services.Common.csproj", "BuildingBlocks/CommonParts/Services.Common/"]
-RUN dotnet restore "Services/Catalog/Catalog.API/Catalog.API.csproj"
+RUN dotnet restore "Services/Catalog/Catalog.API/Catalog.API.csproj" --disable-parallel
 COPY . .
 WORKDIR "/src/Services/Catalog/Catalog.API"
 RUN dotnet build "Catalog.API.csproj" -c Release -o /app/build
