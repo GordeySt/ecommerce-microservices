@@ -2,19 +2,27 @@ using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using OcelotApiGateway.Settings;
 
 namespace OcelotApiGateway
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettings = ReadAppSettings(Configuration);
             var authenticationProviderKey = "IdentityApiKey";
 
             services.AddAuthentication(options =>
@@ -25,14 +33,13 @@ namespace OcelotApiGateway
             })
                 .AddIdentityServerAuthentication(authenticationProviderKey, options =>
                 {
-                    options.Authority = "https://localhost:5011";
+                    options.Authority = appSettings.AppUrlsSettings.IdentityUrl;
                     options.RoleClaimType = "role";
                 });
 
             services.AddOcelot();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -51,6 +58,17 @@ namespace OcelotApiGateway
             });
 
             await app.UseOcelot();
+        }
+
+        private static AppSettings ReadAppSettings(IConfiguration configuration)
+        {
+            var appUrlsSettings = configuration.GetSection(nameof(AppSettings.AppUrlsSettings))
+                .Get<AppUrlsSettings>();
+
+            return new AppSettings
+            {
+                AppUrlsSettings = appUrlsSettings
+            };
         }
     }
 }
