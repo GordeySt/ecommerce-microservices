@@ -10,13 +10,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|js)x?$/,
+        test: /\.(js|ts)x?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-          },
-        ],
       },
       {
         test: /\.css$/,
@@ -41,7 +37,7 @@ module.exports = {
       template: path.resolve(__dirname, '..', './src/index.html'),
     }),
     new CopyPlugin({
-      patterns: [{ from: 'source', to: 'dest' }],
+      patterns: [{ from: 'src', to: 'build' }],
     }),
   ],
 }
