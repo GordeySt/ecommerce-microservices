@@ -1,1 +1,7 @@
-﻿export const App = () => <h1>React Template</h1>;
+﻿export const App = () => {
+  return (
+    <>
+      <h1>React Template</h1>;
+    </>
+  );
+};
