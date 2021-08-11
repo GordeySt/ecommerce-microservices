@@ -14,6 +14,6 @@
         // "allowJs": true /* Allow javascript files to be compiled. Useful when migrating JS to TS */,
         // "checkJs": true /* Report errors in .js files. Works in tandem with allowJs. */,
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "build"]
+    "include": ["src/**/*", "../mock/*", "*.mock.ts"],
+    "exclude": ["node_modules", "build", "*test.mock.ts"]
 }
