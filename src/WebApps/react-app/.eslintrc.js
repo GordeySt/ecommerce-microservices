@@ -20,7 +20,7 @@
         'prettier',
     ],
     rules: {
-        'no-unused-vars': 'on',
+        'no-unused-vars': 'error',
         '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/no-var-requires': 'off',
         'react/prop-types': 'off',

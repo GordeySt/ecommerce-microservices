@@ -11,8 +11,7 @@ module.exports = {
         historyApiFallback: true,
         before: (app) =>
             webpackMockServer.use(app, {
-                entry: [],
-                tsConfigFileName: 'mock/tsconfig.json',
+                tsConfigFileName: 'tsconfig.json',
             }),
     },
     devtool: 'cheap-module-source-map',
