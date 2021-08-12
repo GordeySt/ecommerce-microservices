@@ -352,3 +352,4 @@ MigrationBackup/
 
 # React
 build
+.vs
