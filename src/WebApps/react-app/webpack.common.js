@@ -3,9 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-    entry: path.resolve(__dirname, './src/index.tsx'),
+    entry: [path.resolve(__dirname, 'src/index.tsx')],
     output: {
-        path: path.resolve(__dirname, './build'),
+        path: path.resolve(__dirname, 'build'),
         filename: 'bundle.[contenthash].js',
     },
     resolve: {
@@ -34,12 +34,12 @@ module.exports = {
             {
                 test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
                 type: 'asset/inline',
-            },
+            }
         ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './src/index.html'),
+            template: path.resolve(__dirname, 'src/index.html'),
         }),
         new CopyPlugin({
             patterns: [{ from: 'src', to: 'build' }],
