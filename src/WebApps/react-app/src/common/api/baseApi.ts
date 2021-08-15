@@ -25,8 +25,7 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data
 
 export const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(sleep(1000)).then(responseBody),
-    post: <T>(url: string, body: Record<string, never>) =>
-        axios.post<T>(url, body).then(sleep(1000)).then(responseBody),
-    put: <T>(url: string, body: Record<string, never>) => axios.put<T>(url, body).then(sleep(1000)).then(responseBody),
+    post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(sleep(1000)).then(responseBody),
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(sleep(1000)).then(responseBody),
     del: <T>(url: string) => axios.delete<T>(url).then(sleep(1000)).then(responseBody),
 }
