@@ -25,6 +25,18 @@ namespace OcelotApiGateway
             var appSettings = ReadAppSettings(Configuration);
             var authenticationProviderKey = "IdentityApiKey";
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:8080")
+                        .AllowCredentials();
+                });
+            });
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
@@ -48,6 +60,8 @@ namespace OcelotApiGateway
             }
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
