@@ -1,4 +1,4 @@
-﻿import { IUserFormValues } from '../../common/models/user'
+﻿import { IUserFormValues } from '../../../common/models/user'
 
 export const AuthActions = {
     SIGNUP_REQUEST: 'SIGNUP_REQUEST',
@@ -19,7 +19,7 @@ export function signUpUserSuccess(): any {
     }
 }
 
-export function registrationFailure(error: Error): any {
+export function signUpUserFailure(error: Error): any {
     return {
         type: AuthActions.SIGNUP_FAILURE,
         payload: error,

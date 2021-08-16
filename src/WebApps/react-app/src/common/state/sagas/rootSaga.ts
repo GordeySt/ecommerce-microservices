@@ -1,7 +1,8 @@
 ﻿import { all, call, spawn } from 'redux-saga/effects'
+import authRootSaga from '../../../auth/state/sagas/authSagas'
 
 export default function* rootSaga() {
-    const sagas: any[] = []
+    const sagas = [authRootSaga]
 
     yield all(
         sagas.map((saga) =>
