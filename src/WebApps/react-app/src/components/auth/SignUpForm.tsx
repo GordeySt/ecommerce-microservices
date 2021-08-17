@@ -8,6 +8,8 @@ import { Loader } from '../../common/layout/Loader'
 import { isRequired } from 'revalidate'
 import { RootState } from '../../common/state/store/commonStore'
 import { SubmitErrorMessage } from '../../common/form/SubmitErrorMessage'
+import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
+import { getErrors } from '../../common/state/selectors/errorsSelectors'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -28,8 +30,8 @@ const useStyles = makeStyles(() =>
 export const SignUpForm = () => {
     const dispatch = useDispatch()
     const classes = useStyles()
-    const loading = useSelector((state: RootState) => state.loader.loading)
-    const errors = useSelector((state: RootState) => state.errors.error)
+    const loading = useSelector((state: RootState) => getLoadingStatus(state))
+    const errors = useSelector((state: RootState) => getErrors(state))
 
     if (loading) {
         return <Loader />

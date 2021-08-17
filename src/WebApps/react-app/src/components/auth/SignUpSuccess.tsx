@@ -2,6 +2,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader } from '../../common/layout/Loader'
+import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
 import { RootState } from '../../common/state/store/commonStore'
 import { useQuery } from '../../common/utils/hooks'
 import { resendEmailVerificationRequest } from './state/actions/actions'
@@ -19,7 +20,7 @@ export const SignUpSuccess: React.FC = () => {
     const classes = useStyles()
 
     const dispatch = useDispatch()
-    const loading = useSelector((state: RootState) => state.loader.loading)
+    const loading = useSelector((state: RootState) => getLoadingStatus(state))
 
     if (loading) return <Loader />
 

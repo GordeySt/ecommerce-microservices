@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CommonRoutes } from '../../common/constants/routeConstants'
 import { Loader } from '../../common/layout/Loader'
 import { RootState } from '../../common/state/store/commonStore'
+import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -30,7 +31,7 @@ export const VerifyEmail = () => {
     const classes = useStyles()
     const token = useQuery().get('token') as string
     const email = useQuery().get('email') as string
-    const loading = useSelector((state: RootState) => state.loader.loading)
+    const loading = useSelector((state: RootState) => getLoadingStatus(state))
 
     useEffect(() => {
         dispatch(verifyEmailRequest(email, token))
