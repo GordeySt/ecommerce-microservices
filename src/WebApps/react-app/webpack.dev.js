@@ -8,6 +8,7 @@ module.exports = {
         hot: true,
         open: true,
         compress: true,
+        publicPath: '/',
         historyApiFallback: true,
         before: (app) =>
             webpackMockServer.use(app, {

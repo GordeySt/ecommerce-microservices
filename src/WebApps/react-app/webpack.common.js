@@ -7,6 +7,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.[contenthash].js',
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
@@ -34,7 +35,7 @@ module.exports = {
             {
                 test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
                 type: 'asset/inline',
-            }
+            },
         ],
     },
     plugins: [

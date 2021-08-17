@@ -5,8 +5,11 @@ export const AuthActions = {
     SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
     SIGNUP_FAILURE: 'SIGNUP_FAILURE',
     RESEND_EMAIL_VERIFICATION_REQUEST: 'RESEND_EMAIL_VERIFICATION_REQUEST',
-    RESEND_EMAIL_VERIFICATION_SUCCESS: 'RESEND_EMAIL_VERIFICATION_REQUEST_SUCCESS',
-    RESEND_EMAIL_VERIFICATION_FAILURE: 'RESEND_EMAIL_VERIFICATION_REQUEST_FAILURE',
+    RESEND_EMAIL_VERIFICATION_SUCCESS: 'RESEND_EMAIL_VERIFICATION_SUCCESS',
+    RESEND_EMAIL_VERIFICATION_FAILURE: 'RESEND_EMAIL_VERIFICATION_FAILURE',
+    VERIFY_EMAIL_REQUEST: 'VERIFY_EMAIL_REQUEST',
+    VERIFY_EMAIL_SUCCESS: 'VERIFY_EMAIL_SUCCESS',
+    VERIFY_EMAIL_FAILURE: 'VERIFY_EMAIL_FAILURE',
 } as const
 
 export const signUpUserRequest = (signUpValues: IUserFormValues) => ({
@@ -34,5 +37,22 @@ export const resendEmailVerificationSuccess = () => ({
 
 export const resendEmailVerificationFailure = (error: Error) => ({
     type: AuthActions.RESEND_EMAIL_VERIFICATION_FAILURE,
+    payload: error,
+})
+
+export const verifyEmailRequest = (email: string, token: string) => ({
+    type: AuthActions.VERIFY_EMAIL_REQUEST,
+    payload: {
+        email,
+        token,
+    },
+})
+
+export const verifyEmailSuccess = () => ({
+    type: AuthActions.VERIFY_EMAIL_SUCCESS,
+})
+
+export const verifyEmailFailure = (error: Error) => ({
+    type: AuthActions.VERIFY_EMAIL_FAILURE,
     payload: error,
 })

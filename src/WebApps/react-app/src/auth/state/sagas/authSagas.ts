@@ -2,6 +2,7 @@
 import { toast } from 'react-toastify'
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { authApi } from '../../../common/api/authApi'
+import { AuthRoutes } from '../../../common/constants/routeConstants'
 import { hideLoader, showLoader } from '../../../common/state/actions/loaderActions'
 import {
     AuthActions,
@@ -9,8 +10,9 @@ import {
     resendEmailVerificationSuccess,
     signUpUserFailure,
     signUpUserSuccess,
+    verifyEmailFailure,
 } from '../actions/actions'
-import { resendEmailVerificationRequestType, SignUpUserRequestType } from '../actions/types'
+import { resendEmailVerificationRequestType, SignUpUserRequestType, verifyEmailRequestType } from '../actions/types'
 
 function* signUpUser(action: SignUpUserRequestType) {
     try {
@@ -19,7 +21,7 @@ function* signUpUser(action: SignUpUserRequestType) {
         yield all([
             put(signUpUserSuccess()),
             put(hideLoader()),
-            put(push(`/auth/signUpSuccess?email=${action.payload.email}`)),
+            put(push(AuthRoutes.signUpSuccessRoute + `?email=${action.payload.email}`)),
         ])
     } catch (error) {
         toast.error('Problem signing up')
@@ -39,7 +41,20 @@ function* resendEmailVerification(action: resendEmailVerificationRequestType) {
     }
 }
 
+function* verifyEmail(action: verifyEmailRequestType) {
+    try {
+        yield put(showLoader())
+        yield call(authApi.verifyEmail, action.payload)
+        yield all([put(hideLoader()), resendEmailVerificationSuccess()])
+        toast.success('Verifiend successfully')
+    } catch (error) {
+        toast.error('Problem verifying email')
+        yield all([put(hideLoader()), put(verifyEmailFailure(error))])
+    }
+}
+
 export default function* authRootSaga() {
     yield takeEvery(AuthActions.SIGNUP_REQUEST, signUpUser)
     yield takeEvery(AuthActions.RESEND_EMAIL_VERIFICATION_REQUEST, resendEmailVerification)
+    yield takeEvery(AuthActions.VERIFY_EMAIL_REQUEST, verifyEmail)
 }
