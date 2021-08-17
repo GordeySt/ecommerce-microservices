@@ -7,6 +7,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Loader } from '../common/layout/Loader'
 import { isRequired } from 'revalidate'
 import { RootState } from '../common/state/store/commonStore'
+import { SubmitErrorMessage } from '../common/form/SubmitErrorMessage'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -20,8 +21,11 @@ export const SignUpForm = () => {
     const dispatch = useDispatch()
     const classes = useStyles()
     const loading = useSelector((state: RootState) => state.loader.loading)
+    const errors = useSelector((state: RootState) => state.errors.error)
 
-    if (loading) return <Loader />
+    if (loading) {
+        return <Loader />
+    }
 
     return (
         <div>
@@ -48,6 +52,7 @@ export const SignUpForm = () => {
                                 </div>
                             )}
                         </Field>
+                        {errors && <SubmitErrorMessage errors={errors} />}
                         <div>
                             <Button
                                 size="small"
