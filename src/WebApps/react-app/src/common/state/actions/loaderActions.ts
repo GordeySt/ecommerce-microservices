@@ -1,16 +1,12 @@
 ﻿export const LoaderActions = {
     SHOW_LOADER: 'SHOW_LOADER',
     HIDE_LOADER: 'HIDE_LOADER',
-}
+} as const
 
-export function showLoader(): any {
-    return {
-        type: LoaderActions.SHOW_LOADER,
-    }
-}
+export const showLoader = () => ({
+    type: LoaderActions.SHOW_LOADER,
+})
 
-export function hideLoader(): any {
-    return {
-        type: LoaderActions.HIDE_LOADER,
-    }
-}
+export const hideLoader = () => ({
+    type: LoaderActions.HIDE_LOADER,
+})

@@ -18,6 +18,8 @@ const rootReducer = combineReducers({
     ...reducers,
 })
 
+export type RootState = ReturnType<typeof rootReducer>
+
 let store = null
 
 export const getStore = () => {

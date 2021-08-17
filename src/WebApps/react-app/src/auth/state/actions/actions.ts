@@ -4,24 +4,18 @@ export const AuthActions = {
     SIGNUP_REQUEST: 'SIGNUP_REQUEST',
     SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
     SIGNUP_FAILURE: 'SIGNUP_FAILURE',
-}
+} as const
 
-export function signUpUserRequest(signUpValues: IUserFormValues): any {
-    return {
-        type: AuthActions.SIGNUP_REQUEST,
-        payload: signUpValues,
-    }
-}
+export const signUpUserRequest = (signUpValues: IUserFormValues) => ({
+    type: AuthActions.SIGNUP_REQUEST,
+    payload: signUpValues,
+})
 
-export function signUpUserSuccess(): any {
-    return {
-        type: AuthActions.SIGNUP_SUCCESS,
-    }
-}
+export const signUpUserSuccess = () => ({
+    type: AuthActions.SIGNUP_SUCCESS,
+})
 
-export function signUpUserFailure(error: Error): any {
-    return {
-        type: AuthActions.SIGNUP_FAILURE,
-        payload: error,
-    }
-}
+export const signUpUserFailure = (error: Error) => ({
+    type: AuthActions.SIGNUP_FAILURE,
+    payload: error,
+})

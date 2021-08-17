@@ -3,8 +3,9 @@ import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { authApi } from '../../../common/api/authApi'
 import { hideLoader, showLoader } from '../../../common/state/actions/loaderActions'
 import { AuthActions, signUpUserFailure, signUpUserSuccess } from '../actions/actions'
+import { SignUpUserRequestType } from '../actions/types'
 
-function* signUpUser(action: any) {
+function* signUpUser(action: SignUpUserRequestType) {
     try {
         yield put(showLoader())
         yield call(authApi.signUp, action.payload)

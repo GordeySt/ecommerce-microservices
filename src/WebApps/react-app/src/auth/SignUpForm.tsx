@@ -6,6 +6,7 @@ import { signUpUserRequest } from './state/actions/actions'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Loader } from '../common/layout/Loader'
 import { isRequired } from 'revalidate'
+import { RootState } from '../common/state/store/commonStore'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -18,7 +19,7 @@ const useStyles = makeStyles(() =>
 export const SignUpForm = () => {
     const dispatch = useDispatch()
     const classes = useStyles()
-    const loading = useSelector((state: any) => state.loader.loading)
+    const loading = useSelector((state: RootState) => state.loader.loading)
 
     if (loading) return <Loader />
 
