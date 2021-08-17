@@ -1,13 +1,13 @@
 ﻿import { Button } from '@material-ui/core'
 import { Field, Form } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { IUserFormValues } from '../common/models/user'
+import { IUserFormValues } from '../../common/models/user'
 import { signUpUserRequest } from './state/actions/actions'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
-import { Loader } from '../common/layout/Loader'
+import { Loader } from '../../common/layout/Loader'
 import { isRequired } from 'revalidate'
-import { RootState } from '../common/state/store/commonStore'
-import { SubmitErrorMessage } from '../common/form/SubmitErrorMessage'
+import { RootState } from '../../common/state/store/commonStore'
+import { SubmitErrorMessage } from '../../common/form/SubmitErrorMessage'
 
 const useStyles = makeStyles(() =>
     createStyles({

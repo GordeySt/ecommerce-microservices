@@ -1,10 +1,10 @@
 ﻿import { push } from 'connected-react-router'
 import { toast } from 'react-toastify'
 import { all, call, put, takeEvery } from 'redux-saga/effects'
-import { authApi } from '../../../common/api/authApi'
-import { AuthRoutes } from '../../../common/constants/routeConstants'
-import { setErrors } from '../../../common/state/actions/errorActions'
-import { hideLoader, showLoader } from '../../../common/state/actions/loaderActions'
+import { authApi } from '../../../../common/api/authApi'
+import { AuthRoutes } from '../../../../common/constants/routeConstants'
+import { setErrors } from '../../../../common/state/actions/errorActions'
+import { hideLoader, showLoader } from '../../../../common/state/actions/loaderActions'
 import {
     AuthActions,
     resendEmailVerificationFailure,

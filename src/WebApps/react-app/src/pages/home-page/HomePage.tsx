@@ -1,5 +1,5 @@
 ﻿import { Container, createStyles, makeStyles } from '@material-ui/core'
-import { SignUpForm } from '../../auth/SignUpForm'
+import { SignUpForm } from '../../components/auth/SignUpForm'
 
 const useStyles = makeStyles(() =>
     createStyles({

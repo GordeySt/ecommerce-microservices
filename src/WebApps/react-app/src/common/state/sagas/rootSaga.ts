@@ -1,5 +1,5 @@
 ﻿import { all, call, spawn } from 'redux-saga/effects'
-import authRootSaga from '../../../auth/state/sagas/authSagas'
+import authRootSaga from '../../../components/auth/state/sagas/authSagas'
 
 export default function* rootSaga() {
     const sagas = [authRootSaga]

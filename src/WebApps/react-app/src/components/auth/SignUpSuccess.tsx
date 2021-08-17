@@ -1,9 +1,9 @@
 ﻿import { Button, createStyles, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Loader } from '../common/layout/Loader'
-import { RootState } from '../common/state/store/commonStore'
-import { useQuery } from '../common/utils/hooks'
+import { Loader } from '../../common/layout/Loader'
+import { RootState } from '../../common/state/store/commonStore'
+import { useQuery } from '../../common/utils/hooks'
 import { resendEmailVerificationRequest } from './state/actions/actions'
 
 const useStyles = makeStyles(() =>

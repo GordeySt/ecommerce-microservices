@@ -1,4 +1,4 @@
-﻿import { IUserFormValues } from '../../../common/models/user'
+﻿import { IUserFormValues } from '../../../../common/models/user'
 
 export const AuthActions = {
     SIGNUP_REQUEST: 'SIGNUP_REQUEST',
