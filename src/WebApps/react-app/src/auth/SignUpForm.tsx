@@ -5,6 +5,7 @@ import { IUserFormValues } from '../common/models/user'
 import { signUpUserRequest } from './state/actions/actions'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Loader } from '../common/layout/Loader'
+import { isRequired } from 'revalidate'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -19,28 +20,33 @@ export const SignUpForm = () => {
     const classes = useStyles()
     const loading = useSelector((state: any) => state.loader.loading)
 
-    const onSubmit = (values: IUserFormValues) => {
-        dispatch(signUpUserRequest(values))
-    }
-
-    console.log(loading)
-
     if (loading) return <Loader />
 
     return (
         <div>
             <div style={{ fontWeight: 600, fontSize: 22, marginBottom: 10 }}>Sign Up</div>
             <Form
-                onSubmit={onSubmit}
+                onSubmit={(values: IUserFormValues) => {
+                    dispatch(signUpUserRequest(values))
+                }}
                 render={({ handleSubmit, submitting, pristine }) => (
                     <form onSubmit={handleSubmit}>
-                        <div className={classes.inputs}>
-                            <Field name="email" component="input" type="text" placeholder="Email" />
-                        </div>
-                        <div className={classes.inputs}>
-                            <Field name="password" component="input" type="password" placeholder="Password" />
-                        </div>
-
+                        <Field name="email" validate={isRequired('email')}>
+                            {({ input, meta }) => (
+                                <div className={classes.inputs}>
+                                    <input {...input} type="text" placeholder="Email" />
+                                    {meta.error && meta.touched && <div style={{ color: 'red' }}>{meta.error}</div>}
+                                </div>
+                            )}
+                        </Field>
+                        <Field name="password" validate={isRequired('password')}>
+                            {({ input, meta }) => (
+                                <div className={classes.inputs}>
+                                    <input {...input} type="password" placeholder="Password" />
+                                    {meta.error && meta.touched && <div style={{ color: 'red' }}>{meta.error}</div>}
+                                </div>
+                            )}
+                        </Field>
                         <div>
                             <Button
                                 size="small"
