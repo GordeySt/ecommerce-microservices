@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import { SignUpSuccess } from './auth/SignUpSuccess'
 import { VerifyEmail } from './auth/VerifyEmail'
 import { AuthRoutes, CommonRoutes } from './common/constants/routeConstants'
-import { HomePage } from './home-page/HomePage'
+import { HomePage } from './pages/home-page/HomePage'
 
 const App = () => {
     return (

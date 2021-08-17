@@ -1,5 +1,5 @@
 ﻿import { Container } from '@material-ui/core'
-import { SignUpForm } from '../auth/SignUpForm'
+import { SignUpForm } from '../../auth/SignUpForm'
 
 export const HomePage = () => {
     return (
