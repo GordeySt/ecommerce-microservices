@@ -4,7 +4,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import logger from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
-import { loaderReducer } from '../reducers/LoaderReducer'
+import { loaderReducer } from '../reducers/loaderReducer'
 import rootSaga from '../sagas/rootSaga'
 
 export const history = createBrowserHistory()
