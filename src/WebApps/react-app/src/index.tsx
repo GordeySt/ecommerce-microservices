@@ -1,17 +1,15 @@
 ﻿import ReactDOM from 'react-dom'
 import { Router } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
-import { App } from './App'
+import App from './App'
 import { Provider } from 'react-redux'
-import { getStore } from './common/state/store/commonStore'
-
-export const history = createBrowserHistory()
+import { getStore, history } from './common/state/store/commonStore'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 ReactDOM.render(
-    <Router history={history}>
-        <Provider store={getStore()}>
+    <Provider store={getStore()}>
+        <Router history={history}>
             <App />
-        </Provider>
-    </Router>,
+        </Router>
+    </Provider>,
     document.getElementById('root')
 )

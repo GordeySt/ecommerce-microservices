@@ -1,6 +1,6 @@
 ﻿import { AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
-import { history } from '../..'
+import { history } from '../state/store/commonStore'
 
 export const ErrorsHandler = {
     handleNetworkError: (error: AxiosError) =>
