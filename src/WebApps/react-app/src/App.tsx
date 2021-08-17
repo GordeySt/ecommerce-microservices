@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import { SignUpSuccess } from './auth/SignUpSuccess'
 import { VerifyEmail } from './auth/VerifyEmail'
 import { AuthRoutes, CommonRoutes } from './common/constants/routeConstants'
+import { NotFound } from './common/layout/NotFound'
 import { HomePage } from './pages/home-page/HomePage'
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
                             <Switch>
                                 <Route path={AuthRoutes.signUpSuccessRoute} component={SignUpSuccess} />
                                 <Route path={AuthRoutes.verifyEmailRoute} component={VerifyEmail} />
+                                <Route component={NotFound} />
                             </Switch>
                         </Container>
                     </React.Fragment>

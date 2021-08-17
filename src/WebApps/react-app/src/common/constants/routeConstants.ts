@@ -1,5 +1,6 @@
 ﻿export const CommonRoutes = {
     defaultRoute: '/',
+    notFoundRoute: '/notfound',
 }
 
 export const AuthRoutes = {
