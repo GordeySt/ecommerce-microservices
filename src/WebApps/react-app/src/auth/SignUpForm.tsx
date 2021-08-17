@@ -12,7 +12,15 @@ import { SubmitErrorMessage } from '../common/form/SubmitErrorMessage'
 const useStyles = makeStyles(() =>
     createStyles({
         inputs: {
-            marginBottom: '10px',
+            marginBottom: 10,
+        },
+        signUpText: {
+            fontWeight: 600,
+            fontSize: 22,
+            marginBottom: 10,
+        },
+        errorText: {
+            color: 'red',
         },
     })
 )
@@ -29,7 +37,7 @@ export const SignUpForm = () => {
 
     return (
         <div>
-            <div style={{ fontWeight: 600, fontSize: 22, marginBottom: 10 }}>Sign Up</div>
+            <div className={classes.signUpText}>Sign Up</div>
             <Form
                 onSubmit={(values: IUserFormValues) => {
                     dispatch(signUpUserRequest(values))
@@ -40,7 +48,9 @@ export const SignUpForm = () => {
                             {({ input, meta }) => (
                                 <div className={classes.inputs}>
                                     <input {...input} type="text" placeholder="Email" />
-                                    {meta.error && meta.touched && <div style={{ color: 'red' }}>{meta.error}</div>}
+                                    {meta.error && meta.touched && (
+                                        <div className={classes.errorText}>{meta.error}</div>
+                                    )}
                                 </div>
                             )}
                         </Field>
@@ -48,7 +58,9 @@ export const SignUpForm = () => {
                             {({ input, meta }) => (
                                 <div className={classes.inputs}>
                                     <input {...input} type="password" placeholder="Password" />
-                                    {meta.error && meta.touched && <div style={{ color: 'red' }}>{meta.error}</div>}
+                                    {meta.error && meta.touched && (
+                                        <div className={classes.errorText}>{meta.error}</div>
+                                    )}
                                 </div>
                             )}
                         </Field>
