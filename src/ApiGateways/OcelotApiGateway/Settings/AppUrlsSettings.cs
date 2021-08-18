@@ -8,6 +8,9 @@ namespace OcelotApiGateway.Settings
         [Required]
         public string IdentityUrl { get; set; }
 
+        [Required]
+        public string ClientUrl { get; set; }
+
         public void Validate()
         {
             Validator.ValidateObject(this, new ValidationContext(this), true);
