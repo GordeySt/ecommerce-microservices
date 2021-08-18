@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const SignUpSuccess: React.FC = () => {
+export const SignUpSuccess = () => {
     const email = useQuery().get('email') as string
     const classes = useStyles()
 

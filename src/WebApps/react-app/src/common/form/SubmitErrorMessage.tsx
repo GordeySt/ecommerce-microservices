@@ -13,7 +13,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const SubmitErrorMessage: React.FC<IProps> = ({ errors }) => {
+export const SubmitErrorMessage = ({ errors }: IProps) => {
     const classes = useStyles()
     return (
         <ul className={classes.errorsList}>
