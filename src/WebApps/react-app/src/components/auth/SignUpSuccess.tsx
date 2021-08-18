@@ -1,10 +1,10 @@
 ﻿import { Button, createStyles, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Loader } from '../../common/layout/Loader'
 import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
 import { RootState } from '../../common/state/store/commonStore'
-import { useQuery } from '../../common/utils/hooks'
+import { useQuery, useTypedSelector } from '../../common/utils/hooks'
 import { resendEmailVerificationRequest } from './state/actions/actions'
 
 const useStyles = makeStyles(() =>
@@ -20,9 +20,11 @@ export const SignUpSuccess: React.FC = () => {
     const classes = useStyles()
 
     const dispatch = useDispatch()
-    const loading = useSelector((state: RootState) => getLoadingStatus(state))
+    const loading = useTypedSelector((state: RootState) => getLoadingStatus(state))
 
-    if (loading) return <Loader />
+    if (loading) {
+        return <Loader />
+    }
 
     const handleResendEmailVerification = () => {
         dispatch(resendEmailVerificationRequest(email))

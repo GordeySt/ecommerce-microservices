@@ -1,9 +1,9 @@
 ﻿import { useEffect } from 'react'
 import { useHistory } from 'react-router'
-import { useQuery } from '../../common/utils/hooks'
+import { useQuery, useTypedSelector } from '../../common/utils/hooks'
 import { resendEmailVerificationRequest, verifyEmailRequest } from './state/actions/actions'
 import { Button, createStyles, makeStyles } from '@material-ui/core'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { CommonRoutes } from '../../common/constants/routeConstants'
 import { Loader } from '../../common/layout/Loader'
 import { RootState } from '../../common/state/store/commonStore'
@@ -31,7 +31,7 @@ export const VerifyEmail = () => {
     const classes = useStyles()
     const token = useQuery().get('token') as string
     const email = useQuery().get('email') as string
-    const loading = useSelector((state: RootState) => getLoadingStatus(state))
+    const loading = useTypedSelector((state: RootState) => getLoadingStatus(state))
 
     useEffect(() => {
         dispatch(verifyEmailRequest(email, token))

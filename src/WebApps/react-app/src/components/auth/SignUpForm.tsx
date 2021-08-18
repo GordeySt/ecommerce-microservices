@@ -1,6 +1,6 @@
 ﻿import { Button } from '@material-ui/core'
 import { Field, Form } from 'react-final-form'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { IUserFormValues } from '../../common/models/user'
 import { signUpUserRequest } from './state/actions/actions'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
@@ -10,6 +10,7 @@ import { RootState } from '../../common/state/store/commonStore'
 import { SubmitErrorMessage } from '../../common/form/SubmitErrorMessage'
 import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
 import { getErrors } from '../../common/state/selectors/errorsSelectors'
+import { useTypedSelector } from '../../common/utils/hooks'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -30,8 +31,8 @@ const useStyles = makeStyles(() =>
 export const SignUpForm = () => {
     const dispatch = useDispatch()
     const classes = useStyles()
-    const loading = useSelector((state: RootState) => getLoadingStatus(state))
-    const errors = useSelector((state: RootState) => getErrors(state))
+    const loading = useTypedSelector((state: RootState) => getLoadingStatus(state))
+    const errors = useTypedSelector((state: RootState) => getErrors(state))
 
     if (loading) {
         return <Loader />
