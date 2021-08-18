@@ -15,24 +15,24 @@ import {
 } from '../actions/actions'
 import { ResendEmailVerificationRequestType, SignUpUserRequestType, VerifyEmailRequestType } from '../actions/types'
 
-function* signUpUser(action: SignUpUserRequestType) {
+function* signUpUser({ payload }: SignUpUserRequestType) {
     try {
         yield put(showLoader())
-        yield call(authApi.signUp, action.payload)
+        yield call(authApi.signUp, payload)
         yield all([
             put(signUpUserSuccess()),
             put(hideLoader()),
-            put(push(AuthRoutes.signUpSuccessRoute + `?email=${action.payload.email}`)),
+            put(push(AuthRoutes.signUpSuccessRoute + `?email=${payload.email}`)),
         ])
     } catch (error) {
         yield all([put(hideLoader()), put(setErrors(error)), put(signUpUserFailure(error))])
     }
 }
 
-function* resendEmailVerification(action: ResendEmailVerificationRequestType) {
+function* resendEmailVerification({ payload }: ResendEmailVerificationRequestType) {
     try {
         yield put(showLoader())
-        yield call(authApi.resendEmailVerification, action.payload)
+        yield call(authApi.resendEmailVerification, payload)
         yield all([put(hideLoader()), resendEmailVerificationSuccess()])
         toast.success('Resend successfully')
     } catch (error) {
@@ -41,10 +41,10 @@ function* resendEmailVerification(action: ResendEmailVerificationRequestType) {
     }
 }
 
-function* verifyEmail(action: VerifyEmailRequestType) {
+function* verifyEmail({ payload }: VerifyEmailRequestType) {
     try {
         yield put(showLoader())
-        yield call(authApi.verifyEmail, action.payload)
+        yield call(authApi.verifyEmail, payload)
         yield all([put(hideLoader()), resendEmailVerificationSuccess()])
         toast.success('Verifiend successfully')
     } catch (error) {
