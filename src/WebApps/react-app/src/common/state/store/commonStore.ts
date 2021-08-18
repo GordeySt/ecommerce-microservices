@@ -1,5 +1,5 @@
 ﻿import { connectRouter, routerMiddleware } from 'connected-react-router'
-import { createBrowserHistory } from 'history'
+import { createBrowserHistory, createMemoryHistory, MemoryHistory, History } from 'history'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import logger from 'redux-logger'
@@ -8,7 +8,13 @@ import { errorReducer } from '../reducers/errorReducer'
 import { loaderReducer } from '../reducers/loaderReducer'
 import rootSaga from '../sagas/rootSaga'
 
-export const history = createBrowserHistory()
+export let history: MemoryHistory<unknown> | History<unknown>
+
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
+    history = createBrowserHistory()
+} else {
+    history = createMemoryHistory()
+}
 
 const reducers = {
     loader: loaderReducer,
