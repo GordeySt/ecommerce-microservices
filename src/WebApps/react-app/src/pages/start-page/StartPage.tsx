@@ -12,7 +12,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const HomePage = () => {
+export const StartPage = () => {
     const classes = useStyles()
     return (
         <Container className={classes.homeContainer}>

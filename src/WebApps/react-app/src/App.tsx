@@ -6,13 +6,13 @@ import { SignUpSuccess } from './components/auth/SignUpSuccess'
 import { VerifyEmail } from './components/auth/VerifyEmail'
 import { AuthRoutes, CommonRoutes } from './common/constants/routeConstants'
 import { NotFound } from './common/layout/NotFound'
-import { HomePage } from './pages/home-page/HomePage'
+import { StartPage } from './pages/start-page/StartPage'
 
 const App = () => {
     return (
         <React.Fragment>
             <ToastContainer position="bottom-right" />
-            <Route exact path={CommonRoutes.defaultRoute} component={HomePage} />
+            <Route exact path={CommonRoutes.defaultRoute} component={StartPage} />
             <Route
                 path={'/(.+)'}
                 render={() => (
