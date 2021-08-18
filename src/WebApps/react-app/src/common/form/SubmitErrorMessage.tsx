@@ -1,7 +1,8 @@
 ﻿import { createStyles, makeStyles } from '@material-ui/core'
+import { ERROR_ANY } from '../models/anyAliases'
 
 interface IProps {
-    errors: any
+    errors: ERROR_ANY
 }
 
 const useStyles = makeStyles(() =>
@@ -20,7 +21,7 @@ export const SubmitErrorMessage: React.FC<IProps> = ({ errors }) => {
                 <>
                     {Object.values(errors.data.errors)
                         .flat()
-                        .map((err: any, i) => (
+                        .map((err: ERROR_ANY, i) => (
                             <li key={i}>{err}</li>
                         ))}
                 </>
