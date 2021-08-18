@@ -9,6 +9,7 @@ export const AuthRoutes = {
 }
 
 export const AuthApiUrls = {
+    signUpUrl: '/auth/signup',
     resendEmailVerificationUrl: '/auth/resend-email-verification?email=',
     verifyEmailUrl: '/auth/verify-email',
 }

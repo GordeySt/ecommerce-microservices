@@ -8,7 +8,7 @@ type VerifyDataType = {
 }
 
 export const authApi = {
-    signUp: (user: IUserFormValues): Promise<void> => requests.post<void>('/auth/signup', user),
+    signUp: (user: IUserFormValues): Promise<void> => requests.post<void>(AuthApiUrls.signUpUrl, user),
     resendEmailVerification: (email: string): Promise<void> =>
         requests.get<void>(AuthApiUrls.resendEmailVerificationUrl + email),
     verifyEmail: (verifyData: VerifyDataType) => requests.post<void>(AuthApiUrls.verifyEmailUrl, verifyData),
