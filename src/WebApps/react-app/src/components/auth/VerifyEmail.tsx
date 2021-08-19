@@ -5,7 +5,7 @@ import { resendEmailVerificationRequest, verifyEmailRequest } from './state/acti
 import { Button, createStyles, makeStyles } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import { CommonRoutes } from '../../common/constants/routeConstants'
-import { Loader } from '../../common/layout/Loader'
+import Loader from '../../common/layout/Loader'
 import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
 
 const useStyles = makeStyles(() =>
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const VerifyEmail = () => {
+const VerifyEmail = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const classes = useStyles()
@@ -67,3 +67,5 @@ export const VerifyEmail = () => {
         </div>
     )
 }
+
+export default VerifyEmail

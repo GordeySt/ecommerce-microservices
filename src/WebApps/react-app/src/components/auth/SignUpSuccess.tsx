@@ -1,6 +1,6 @@
 ﻿import { Button, createStyles, makeStyles, Typography } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
-import { Loader } from '../../common/layout/Loader'
+import Loader from '../../common/layout/Loader'
 import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
 import { useQuery, useTypedSelector } from '../../common/utils/hooks'
 import { resendEmailVerificationRequest } from './state/actions/actions'
@@ -13,7 +13,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const SignUpSuccess = () => {
+const SignUpSuccess = () => {
     const email = useQuery().get('email') as string
     const classes = useStyles()
 
@@ -43,3 +43,5 @@ export const SignUpSuccess = () => {
         </div>
     )
 }
+
+export default SignUpSuccess

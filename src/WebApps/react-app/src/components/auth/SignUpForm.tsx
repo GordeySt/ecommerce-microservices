@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { IUserFormValues } from '../../common/models/user'
 import { signUpUserRequest } from './state/actions/actions'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
-import { Loader } from '../../common/layout/Loader'
+import Loader from '../../common/layout/Loader'
 import { isRequired } from 'revalidate'
 import { SubmitErrorMessage } from '../../common/form/SubmitErrorMessage'
 import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const SignUpForm = () => {
+const SignUpForm = () => {
     const dispatch = useDispatch()
     const classes = useStyles()
     const loading = useTypedSelector(getLoadingStatus)
@@ -84,3 +84,5 @@ export const SignUpForm = () => {
         </div>
     )
 }
+
+export default SignUpForm

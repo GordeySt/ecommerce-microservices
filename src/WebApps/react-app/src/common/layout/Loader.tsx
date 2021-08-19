@@ -12,7 +12,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const Loader = () => {
+const Loader = () => {
     const classes = useStyles()
 
     return (
@@ -21,3 +21,5 @@ export const Loader = () => {
         </div>
     )
 }
+
+export default Loader
