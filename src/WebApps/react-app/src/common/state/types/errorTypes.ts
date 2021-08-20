@@ -1,3 +1,3 @@
-﻿import * as errorActions from '../actions/errorActions'
+﻿import * as errorActions from '../actions/errorActions';
 
-export type ErrorActionTypes = ReturnType<typeof errorActions.setErrors>
+export type ErrorActionTypes = ReturnType<typeof errorActions.setErrors>;

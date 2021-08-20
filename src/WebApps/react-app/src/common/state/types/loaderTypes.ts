@@ -1,5 +1,5 @@
-﻿import * as loaderActions from '../actions/loaderActions'
+﻿import * as loaderActions from '../actions/loaderActions';
 
 export type LoaderActionTypes =
     | ReturnType<typeof loaderActions.showLoader>
-    | ReturnType<typeof loaderActions.hideLoader>
+    | ReturnType<typeof loaderActions.hideLoader>;

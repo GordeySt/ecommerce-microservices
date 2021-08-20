@@ -1,3 +1,3 @@
-﻿import { RootState } from '../store/commonStore'
+﻿import { RootState } from '../store/commonStore';
 
-export const getErrors = (state: RootState) => state.errors.error
+export const getErrors = (state: RootState) => state.errors.error;

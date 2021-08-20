@@ -1,1 +1,1 @@
-﻿export type ERROR_ANY = any
+﻿export type ERROR_ANY = any;
