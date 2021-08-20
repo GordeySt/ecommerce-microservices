@@ -129,6 +129,27 @@ namespace Identity.API.Configurations
 						new Secret("postman_secret".ToSha256())
 					},
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword
+				},
+				new Client
+				{
+					ClientId = "spa",
+					ClientName = "React SPA",
+					AllowedGrantTypes = GrantTypes.Code,
+					AllowOfflineAccess = true,
+					RequireClientSecret = false,
+					RequirePkce = true,
+					RequireConsent = false,
+					RedirectUris = { "http://localhost:8080/welcome-page" },
+					PostLogoutRedirectUris = { "http://localhost:8080" },
+					AllowedScopes = new List<string>
+					{
+						IdentityServerConstants.StandardScopes.OpenId,
+						IdentityServerConstants.StandardScopes.Profile,
+						"roles",
+						"identityapi",
+						"catalogapi",
+						"basketapi"
+					}
 				}
 			};
 	}
