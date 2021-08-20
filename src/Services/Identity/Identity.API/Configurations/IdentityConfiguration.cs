@@ -57,7 +57,8 @@ namespace Identity.API.Configurations
 				new Client
 				{
 					ClientId = "client_id_catalog_swagger",
-					ClientSecrets = {  new Secret("client_secret_catalog_swagger".ToSha256()) },
+					ClientSecrets = { new Secret("client_secret_catalog_swagger".ToSha256()) },
+					RequirePkce = true,
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 					AllowedCorsOrigins = { appSettings.AppUrlsSettings.CatalogUrl },
 					AllowedScopes =
@@ -73,7 +74,8 @@ namespace Identity.API.Configurations
 				new Client
 				{
 					ClientId = "client_id_identity_swagger",
-					ClientSecrets = {  new Secret("client_secret_identity_swagger".ToSha256()) },
+					ClientSecrets = { new Secret("client_secret_identity_swagger".ToSha256()) },
+					RequirePkce = true,
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 					AllowedCorsOrigins = { appSettings.AppUrlsSettings.IdentityUrl },
 					AllowedScopes =
@@ -89,7 +91,8 @@ namespace Identity.API.Configurations
 				new Client
 				{
 					ClientId = "client_id_basket_swagger",
-					ClientSecrets = {  new Secret("client_secret_basket_swagger".ToSha256()) },
+					ClientSecrets = { new Secret("client_secret_basket_swagger".ToSha256()) },
+					RequirePkce = true,
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 					AllowedCorsOrigins = { appSettings.AppUrlsSettings.BasketUrl },
 					AllowedScopes =
