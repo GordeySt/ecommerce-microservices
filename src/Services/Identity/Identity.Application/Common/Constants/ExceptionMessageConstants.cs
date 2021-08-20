@@ -1,5 +1,12 @@
 ﻿namespace Identity.Application.Common
 {
+    public static class UnauthorizedExceptionMessageConstants
+    {
+        public const string InvalidEmailMessage = "Invalid email";
+        public const string EmailNotConfirmedMessage = "Email not confirmed";
+        public const string InvalidPasswordMessage = "Invalid password";
+    }
+
     public static class NotFoundExceptionMessageConstants
     {
         public const string NotFoundRoleMessage = "Role not found";

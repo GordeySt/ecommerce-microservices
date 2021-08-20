@@ -3,6 +3,8 @@ using Identity.Application.ApplicationUsers.Commands.ResetPasswords;
 using Identity.Application.ApplicationUsers.Commands.SignupUsers;
 using Identity.Application.ApplicationUsers.Queries.ResendEmailVerifications;
 using Identity.Application.ApplicationUsers.Queries.SendResetPasswordEmail;
+using Identity.Application.ApplicationUsers.Queries.SignInUsers;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Common.Enums;
@@ -12,6 +14,13 @@ namespace Identity.API.Controllers
 {
     public class AuthController : ApiControllerBase
     {
+        private readonly IIdentityServerInteractionService _interaction;
+
+        public AuthController(IIdentityServerInteractionService interaction)
+        {
+            _interaction = interaction;
+        }
+
         /// <summary>
         /// SignUp Users
         /// </summary>
@@ -45,6 +54,26 @@ namespace Identity.API.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignInUser(SignInUsersQuery query)
+        {
+            var context = await _interaction.GetAuthorizationContextAsync(query.ReturnUrl);
+
+            if (context is null)
+            {
+                return Unauthorized();
+            }
+
+            var signInResult = await Mediator.Send(query);
+
+            if (signInResult.Result is not ServiceResultType.Success)
+            {
+                return StatusCode((int)signInResult.Result, signInResult.Message);
+            }
+
+            return new JsonResult(new { RedirectUrl = query.ReturnUrl, IsOk = true });
         }
 
         /// <summary>
