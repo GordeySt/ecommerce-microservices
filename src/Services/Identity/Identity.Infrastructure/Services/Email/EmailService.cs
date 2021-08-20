@@ -1,4 +1,6 @@
 ﻿using Identity.Application.Common.Interfaces;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.Services.Email
@@ -14,7 +16,9 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendEmailVerificationAsync(string token, string origin, string email)
         {
-            var prefixRoute = "user/verify-email";
+            var prefixRoute = "auth/verify-email";
+
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var verifyUrl = GetUrl(origin, prefixRoute, token, email);
 
@@ -29,7 +33,7 @@ namespace Identity.Infrastructure.Services.Email
 
         public async Task SendResetPasswordEmail(string token, string origin, string email)
         {
-            var prefixRoute = "user/reset-password";
+            var prefixRoute = "auth/reset-password";
 
             var resetPasswordUrl = GetUrl(origin, prefixRoute, token, email);
 

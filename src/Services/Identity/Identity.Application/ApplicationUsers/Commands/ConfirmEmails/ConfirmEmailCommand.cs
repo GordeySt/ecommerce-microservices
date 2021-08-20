@@ -2,8 +2,10 @@
 using Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Services.Common.Enums;
 using Services.Common.ResultWrappers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,7 +32,10 @@ namespace Identity.Application.ApplicationUsers.Commands.ConfirmEmails
                     NotFoundExceptionMessageConstants.NotFoundUserMessage);
             }
 
-            var confirmationResult = await _userManager.ConfirmEmailAsync(user, request.Token);
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
+            var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+            var confirmationResult = await _userManager.ConfirmEmailAsync(user, decodedToken);
 
             if (!confirmationResult.Succeeded)
             {
