@@ -5,8 +5,7 @@ import { resendEmailVerificationRequest, verifyEmailRequest } from './state/acti
 import { Button, createStyles, makeStyles } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import { CommonRoutes } from '../../common/constants/routeConstants'
-import { Loader } from '../../common/layout/Loader'
-import { RootState } from '../../common/state/store/commonStore'
+import Loader from '../../common/layout/Loader'
 import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
 
 const useStyles = makeStyles(() =>
@@ -25,13 +24,13 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const VerifyEmail = () => {
+const VerifyEmail = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const classes = useStyles()
     const token = useQuery().get('token') as string
     const email = useQuery().get('email') as string
-    const loading = useTypedSelector((state: RootState) => getLoadingStatus(state))
+    const loading = useTypedSelector(getLoadingStatus)
 
     useEffect(() => {
         dispatch(verifyEmailRequest(email, token))
@@ -41,7 +40,9 @@ export const VerifyEmail = () => {
         dispatch(resendEmailVerificationRequest(email))
     }
 
-    if (loading) return <Loader />
+    if (loading) {
+        return <Loader />
+    }
 
     return (
         <div className={classes.infoBlock}>
@@ -66,3 +67,5 @@ export const VerifyEmail = () => {
         </div>
     )
 }
+
+export default VerifyEmail

@@ -13,11 +13,11 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const SubmitErrorMessage: React.FC<IProps> = ({ errors }) => {
+export const SubmitErrorMessage = ({ errors }: IProps) => {
     const classes = useStyles()
     return (
         <ul className={classes.errorsList}>
-            {errors.data && Object.keys(errors.data.errors).length > 0 && (
+            {errors.data.error && Object.keys(errors.data.errors).length ? (
                 <>
                     {Object.values(errors.data.errors)
                         .flat()
@@ -25,6 +25,8 @@ export const SubmitErrorMessage: React.FC<IProps> = ({ errors }) => {
                             <li key={i}>{err}</li>
                         ))}
                 </>
+            ) : (
+                <div className={classes.errorsList}>{errors.data}</div>
             )}
         </ul>
     )

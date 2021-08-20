@@ -32,7 +32,7 @@ namespace OcelotApiGateway
                     policy
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins("http://localhost:8080")
+                        .WithOrigins(appSettings.AppUrlsSettings.ClientUrl)
                         .AllowCredentials();
                 });
             });

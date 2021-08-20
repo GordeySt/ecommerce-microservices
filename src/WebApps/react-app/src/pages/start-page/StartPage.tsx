@@ -1,5 +1,5 @@
 ﻿import { Container, createStyles, makeStyles } from '@material-ui/core'
-import { SignUpForm } from '../../components/auth/SignUpForm'
+import SignUpForm from '../../components/auth/SignUpForm'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -12,7 +12,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const StartPage = () => {
+const StartPage = () => {
     const classes = useStyles()
     return (
         <Container className={classes.homeContainer}>
@@ -20,3 +20,5 @@ export const StartPage = () => {
         </Container>
     )
 }
+
+export default StartPage

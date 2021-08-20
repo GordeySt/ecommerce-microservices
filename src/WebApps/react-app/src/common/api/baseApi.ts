@@ -1,6 +1,8 @@
 ﻿import axios, { AxiosResponse } from 'axios'
 import { ErrorsHandler } from './errors'
 
+const delayValue = 1000
+
 axios.defaults.baseURL = 'http://localhost:5015/'
 
 axios.interceptors.response.use(
@@ -24,8 +26,8 @@ const sleep = (ms: number) => (response: AxiosResponse) =>
 const responseBody = <T>(response: AxiosResponse<T>) => response.data
 
 export const requests = {
-    get: <T>(url: string) => axios.get<T>(url).then(sleep(1000)).then(responseBody),
-    post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(sleep(1000)).then(responseBody),
-    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(sleep(1000)).then(responseBody),
-    del: <T>(url: string) => axios.delete<T>(url).then(sleep(1000)).then(responseBody),
+    get: <T>(url: string) => axios.get<T>(url).then(sleep(delayValue)).then(responseBody),
+    post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(sleep(delayValue)).then(responseBody),
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(sleep(delayValue)).then(responseBody),
+    del: <T>(url: string) => axios.delete<T>(url).then(sleep(delayValue)).then(responseBody),
 }

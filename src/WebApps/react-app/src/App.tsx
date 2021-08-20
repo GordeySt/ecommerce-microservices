@@ -2,11 +2,11 @@
 import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { SignUpSuccess } from './components/auth/SignUpSuccess'
-import { VerifyEmail } from './components/auth/VerifyEmail'
+import SignUpSuccess from './components/auth/SignUpSuccess'
+import VerifyEmail from './components/auth/VerifyEmail'
 import { AuthRoutes, CommonRoutes } from './common/constants/routeConstants'
-import { NotFound } from './common/layout/NotFound'
-import { StartPage } from './pages/start-page/StartPage'
+import NotFound from './common/layout/NotFound'
+import StartPage from './pages/start-page/StartPage'
 
 const App = () => {
     return (
