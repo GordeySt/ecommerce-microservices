@@ -1,6 +1,5 @@
-﻿import { Container, createStyles, makeStyles } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { AuthRoutes } from '../../common/constants/routeConstants';
+﻿import { Button, Container, createStyles, makeStyles } from '@material-ui/core';
+import { signinRedirect } from '../../common/auth/userService';
 import SignUpForm from '../../components/auth/SignUpForm';
 
 const useStyles = makeStyles(() =>
@@ -24,7 +23,7 @@ const StartPage = () => {
             <div>
                 <SignUpForm />
                 <div className={classes.loginLink}>
-                    <Link to={AuthRoutes.signInRoute}>Have an account?</Link>
+                    <Button onClick={() => signinRedirect()}>Have an account?</Button>
                 </div>
             </div>
         </Container>
