@@ -14,6 +14,9 @@ namespace Identity.API.Startup.Settings
         [Required]
         public string BasketUrl { get; set; }
 
+        [Required]
+        public string ClientUrl { get; set; }
+
         public void Validate()
         {
             Validator.ValidateObject(this, new ValidationContext(this), true);
