@@ -9,12 +9,24 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.ApplicationUsers.Queries.SignInUsers
 {
-    public record SignInUsersQuery(string Password, string Email, string ReturnUrl) : IRequest<ServiceResult>;
+    public record SignInUsersQuery : IRequest<ServiceResult>
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ReturnUrl { get; set; }
+    }
 
     public class SignInUserQueryHandler : IRequestHandler<SignInUsersQuery, ServiceResult>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public SignInUserQueryHandler(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
 
         public async Task<ServiceResult> Handle(SignInUsersQuery query, CancellationToken cancellationToken)
         {
@@ -32,7 +44,7 @@ namespace Identity.Application.ApplicationUsers.Queries.SignInUsers
                     UnauthorizedExceptionMessageConstants.EmailNotConfirmedMessage);
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
+            var result = await _signInManager.PasswordSignInAsync(user, query.Password, false, false);
 
             if (!result.Succeeded)
             {
