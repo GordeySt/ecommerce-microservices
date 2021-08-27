@@ -1,9 +1,23 @@
 ﻿import axios, { AxiosResponse } from 'axios';
+import { LocalStorageConstants } from '../constants/localStorageConstants';
 import { ErrorsHandler } from './errors';
 
 const delayValue = 1000;
 
 axios.defaults.baseURL = 'http://localhost:5015/';
+
+axios.interceptors.request.use(
+    (config) => {
+        const token = window.localStorage.getItem(LocalStorageConstants.accessToken);
+
+        if (token) config.headers.Authorization = `Bearer ${token}`;
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 axios.interceptors.response.use(
     async (response) => {
