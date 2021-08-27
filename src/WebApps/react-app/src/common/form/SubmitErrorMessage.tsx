@@ -17,7 +17,7 @@ export const SubmitErrorMessage = ({ errors }: IProps) => {
     const classes = useStyles();
     return (
         <ul className={classes.errorsList}>
-            {errors.data.error && Object.keys(errors.data.errors).length ? (
+            {errors.data.errors && Object.keys(errors.data.errors).length ? (
                 <>
                     {Object.values(errors.data.errors)
                         .flat()
