@@ -1,5 +1,5 @@
 ﻿import { ERROR_ANY } from '../../common/models/anyAliases';
-import { setErrors } from '../../common/state/actions/errorActions';
+import { ErrorActions, setErrors } from '../../common/state/actions/errorActions';
 import { errorReducer } from '../../common/state/reducers/errorReducer';
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 describe('ErrorReducer action type responses for', () => {
-    describe('SET_ERRORS', () => {
+    describe(`${ErrorActions.SET_ERRORS}`, () => {
         // Arrange
         const error = new Error('test error');
         const action = setErrors(error);
