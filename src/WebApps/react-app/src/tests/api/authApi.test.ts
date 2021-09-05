@@ -8,7 +8,7 @@ describe('Auth Api Tests', () => {
         requests.post = jest.fn();
     });
 
-    describe('signUpUser', () => {
+    describe('SignUpUser API Test', () => {
         const signUpValues = {
             email: 'email@test.com',
             password: 'password1',
@@ -20,7 +20,7 @@ describe('Auth Api Tests', () => {
         });
     });
 
-    describe('resendEmailVerification', () => {
+    describe('ResendEmailVerification API Test', () => {
         const email = 'email@test.com';
 
         it('httpClient is called as expected', () => {
@@ -29,7 +29,7 @@ describe('Auth Api Tests', () => {
         });
     });
 
-    describe('verifyEmail', () => {
+    describe('VerifyEmail API Test', () => {
         const verifyData = {
             email: 'email@test.com',
             token: 'test-token',
