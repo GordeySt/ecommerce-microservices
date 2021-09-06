@@ -19,11 +19,6 @@ import {
     verifyEmailRequest,
     verifyEmailSuccess,
 } from '../../components/auth/state/actions/actions';
-import {
-    ResendEmailVerificationRequestType,
-    SignUpUserRequestType,
-    VerifyEmailRequestType,
-} from '../../components/auth/state/actions/types';
 import { resendEmailVerification, signUpUser, verifyEmail } from '../../components/auth/state/sagas/authSagas';
 
 describe('Auth Sagas Tests', () => {
@@ -34,7 +29,7 @@ describe('Auth Sagas Tests', () => {
             password: 'password1',
         };
 
-        const action: SignUpUserRequestType = signUpUserRequest(signUpValues);
+        const action = signUpUserRequest(signUpValues);
 
         // Act and Assert
         return expectSaga(signUpUser, action)
@@ -54,7 +49,7 @@ describe('Auth Sagas Tests', () => {
         };
         const error = new Error('test error');
 
-        const action: SignUpUserRequestType = signUpUserRequest(signUpValues);
+        const action = signUpUserRequest(signUpValues);
 
         // Act and Assert
         return expectSaga(signUpUser, action)
@@ -73,7 +68,7 @@ describe('Auth Sagas Tests', () => {
     it(`Should resend email verification successfuly on ${AuthActions.RESEND_EMAIL_VERIFICATION_REQUEST}`, () => {
         // Arrange
         const email = 'email@test.com';
-        const action: ResendEmailVerificationRequestType = resendEmailVerificationRequest(email);
+        const action = resendEmailVerificationRequest(email);
 
         // Act and Assert
         return expectSaga(resendEmailVerification, action)
@@ -88,7 +83,7 @@ describe('Auth Sagas Tests', () => {
         // Arrange
         const email = 'email@test.com';
         const error = new Error('test error');
-        const action: ResendEmailVerificationRequestType = resendEmailVerificationRequest(email);
+        const action = resendEmailVerificationRequest(email);
 
         // Act and Assert
         return expectSaga(resendEmailVerification, action)
@@ -104,7 +99,7 @@ describe('Auth Sagas Tests', () => {
         const email = 'email@test.com';
         const token = 'test-token';
         const error = new Error('test error');
-        const action: VerifyEmailRequestType = verifyEmailRequest(email, token);
+        const action = verifyEmailRequest(email, token);
 
         // Act and Assert
         return expectSaga(verifyEmail, action)
@@ -119,7 +114,7 @@ describe('Auth Sagas Tests', () => {
         // Arrange
         const email = 'email@test.com';
         const token = 'test-token';
-        const action: VerifyEmailRequestType = verifyEmailRequest(email, token);
+        const action = verifyEmailRequest(email, token);
 
         // Act and Assert
         return expectSaga(verifyEmail, action)

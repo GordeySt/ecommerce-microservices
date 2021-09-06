@@ -8,7 +8,7 @@
 } from '../../components/auth/state/actions/actions';
 
 describe('Auth Action Creators Tests', () => {
-    it('Should create SignUpUserRequest action', () => {
+    it(`Should create ${AuthActions.SIGNUP_REQUEST} action`, () => {
         // Arrange
         const signUpValues = {
             email: 'email@test.com',
@@ -25,7 +25,7 @@ describe('Auth Action Creators Tests', () => {
         });
     });
 
-    it('Should create SignUpUserSuccess action', () => {
+    it(`Should create ${AuthActions.SIGNUP_SUCCESS} action`, () => {
         // Act
         const action = signUpUserSuccess();
 
@@ -35,7 +35,7 @@ describe('Auth Action Creators Tests', () => {
         });
     });
 
-    it('Should create SignUpUserFailure action', () => {
+    it(`Should create ${AuthActions.SIGNUP_FAILURE} action`, () => {
         // Arrange
         const error = new Error('test error');
 
@@ -49,7 +49,7 @@ describe('Auth Action Creators Tests', () => {
         });
     });
 
-    it('Should create ResendEmailVerificationRequest action', () => {
+    it(`Should create ${AuthActions.RESEND_EMAIL_VERIFICATION_REQUEST} action`, () => {
         // Arrange
         const email = 'email@test.com';
 
@@ -63,7 +63,7 @@ describe('Auth Action Creators Tests', () => {
         });
     });
 
-    it('Should create VerifyEmailRequest action', () => {
+    it(`Should create ${AuthActions.VERIFY_EMAIL_REQUEST} action`, () => {
         // Arrange
         const email = 'email@test.com';
         const token = 'test-token';

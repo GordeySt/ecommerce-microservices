@@ -6,4 +6,4 @@
     },
     testRegex: '(/tests/.*)\\.(ts|tsx)$',
     testPathIgnorePatterns: ['/node_modules/', '/build/'],
-}
+};

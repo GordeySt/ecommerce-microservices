@@ -1,4 +1,4 @@
-﻿import { hideLoader, showLoader } from '../../common/state/actions/loaderActions';
+﻿import { hideLoader, LoaderActions, showLoader } from '../../common/state/actions/loaderActions';
 import { loaderReducer } from '../../common/state/reducers/loaderReducer';
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
 };
 
 describe('LoaderReducer action type responses for', () => {
-    describe('SHOW_LOADER', () => {
+    describe(`${LoaderActions.SHOW_LOADER}`, () => {
         // Arrange
         const action = showLoader();
         const newState = loaderReducer(initialState, action);
@@ -17,7 +17,7 @@ describe('LoaderReducer action type responses for', () => {
         });
     });
 
-    describe('HIDE_LOADER', () => {
+    describe(`${LoaderActions.HIDE_LOADER}`, () => {
         // Arrange
         const action = hideLoader();
         const newState = loaderReducer(initialState, action);
