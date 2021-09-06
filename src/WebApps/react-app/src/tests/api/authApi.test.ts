@@ -8,36 +8,30 @@ describe('Auth Api Tests', () => {
         requests.post = jest.fn();
     });
 
-    describe('SignUpUser API Test', () => {
+    it('SignUpUser API Test', () => {
         const signUpValues = {
             email: 'email@test.com',
             password: 'password1',
         };
 
-        it('httpClient is called as expected', () => {
-            authApi.signUp(signUpValues);
-            expect(requests.post).toHaveBeenCalledWith(AuthApiUrls.signUpUrl, signUpValues);
-        });
+        authApi.signUp(signUpValues);
+        expect(requests.post).toHaveBeenCalledWith(AuthApiUrls.signUpUrl, signUpValues);
     });
 
-    describe('ResendEmailVerification API Test', () => {
+    it('ResendEmailVerification API Test', () => {
         const email = 'email@test.com';
 
-        it('httpClient is called as expected', () => {
-            authApi.resendEmailVerification(email);
-            expect(requests.get).toHaveBeenCalledWith(AuthApiUrls.resendEmailVerificationUrl + email);
-        });
+        authApi.resendEmailVerification(email);
+        expect(requests.get).toHaveBeenCalledWith(AuthApiUrls.resendEmailVerificationUrl + email);
     });
 
-    describe('VerifyEmail API Test', () => {
+    it('VerifyEmail API Test', () => {
         const verifyData = {
             email: 'email@test.com',
             token: 'test-token',
         };
 
-        it('httpClient is called as expected', () => {
-            authApi.verifyEmail(verifyData);
-            expect(requests.post).toHaveBeenCalledWith(AuthApiUrls.verifyEmailUrl, verifyData);
-        });
+        authApi.verifyEmail(verifyData);
+        expect(requests.post).toHaveBeenCalledWith(AuthApiUrls.verifyEmailUrl, verifyData);
     });
 });
