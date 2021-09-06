@@ -1,7 +1,7 @@
-﻿import { AxiosError, AxiosResponse } from 'axios'
-import { toast } from 'react-toastify'
-import { CommonRoutes } from '../constants/routeConstants'
-import { history } from '../state/store/commonStore'
+﻿import { AxiosError, AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
+import { CommonRoutes } from '../constants/routeConstants';
+import { history } from '../state/store/commonStore';
 
 export const ErrorsHandler = {
     handleNetworkError: (error: AxiosError) =>
@@ -19,9 +19,9 @@ export const ErrorsHandler = {
             response.status === 401 &&
             response.headers['www-authenticate'].startsWith('Bearer error="invalid_token"')
         ) {
-            window.localStorage.removeItem('jwt')
-            history.push('/')
-            toast.info('Your session has expired, please login again')
+            window.localStorage.removeItem('jwt');
+            history.push('/');
+            toast.info('Your session has expired, please login again');
         }
     },
-}
+};

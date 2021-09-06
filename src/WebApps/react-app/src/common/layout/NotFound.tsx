@@ -1,5 +1,5 @@
-﻿import { Typography } from '@material-ui/core'
+﻿import { Typography } from '@material-ui/core';
 
-const NotFound = () => <Typography>Not found page</Typography>
+const NotFound = () => <Typography>Not found page</Typography>;
 
-export default NotFound
+export default NotFound;

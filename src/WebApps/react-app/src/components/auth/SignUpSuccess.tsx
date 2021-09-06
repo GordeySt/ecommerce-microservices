@@ -1,9 +1,9 @@
-﻿import { Button, createStyles, makeStyles, Typography } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
-import Loader from '../../common/layout/Loader'
-import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors'
-import { useQuery, useTypedSelector } from '../../common/utils/hooks'
-import { resendEmailVerificationRequest } from './state/actions/actions'
+﻿import { Button, createStyles, makeStyles, Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import Loader from '../../common/layout/Loader';
+import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors';
+import { useQuery, useTypedSelector } from '../../common/utils/hooks';
+import { resendEmailVerificationRequest } from './state/actions/actions';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -11,22 +11,22 @@ const useStyles = makeStyles(() =>
             textAlign: 'center',
         },
     })
-)
+);
 
 const SignUpSuccess = () => {
-    const email = useQuery().get('email') as string
-    const classes = useStyles()
+    const email = useQuery().get('email') as string;
+    const classes = useStyles();
 
-    const dispatch = useDispatch()
-    const loading = useTypedSelector(getLoadingStatus)
+    const dispatch = useDispatch();
+    const loading = useTypedSelector(getLoadingStatus);
 
     if (loading) {
-        return <Loader />
+        return <Loader />;
     }
 
     const handleResendEmailVerification = () => {
-        dispatch(resendEmailVerificationRequest(email))
-    }
+        dispatch(resendEmailVerificationRequest(email));
+    };
 
     return (
         <div className={classes.infoBlock}>
@@ -41,7 +41,7 @@ const SignUpSuccess = () => {
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default SignUpSuccess
+export default SignUpSuccess;

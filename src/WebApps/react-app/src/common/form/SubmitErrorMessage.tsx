@@ -1,8 +1,8 @@
-﻿import { createStyles, makeStyles } from '@material-ui/core'
-import { ERROR_ANY } from '../models/anyAliases'
+﻿import { createStyles, makeStyles } from '@material-ui/core';
+import { ERROR_ANY } from '../models/anyAliases';
 
 interface IProps {
-    errors: ERROR_ANY
+    errors: ERROR_ANY;
 }
 
 const useStyles = makeStyles(() =>
@@ -11,10 +11,10 @@ const useStyles = makeStyles(() =>
             color: 'red',
         },
     })
-)
+);
 
 export const SubmitErrorMessage = ({ errors }: IProps) => {
-    const classes = useStyles()
+    const classes = useStyles();
     return (
         <ul className={classes.errorsList}>
             {errors.data.error && Object.keys(errors.data.errors).length ? (
@@ -29,5 +29,5 @@ export const SubmitErrorMessage = ({ errors }: IProps) => {
                 <div className={classes.errorsList}>{errors.data}</div>
             )}
         </ul>
-    )
-}
+    );
+};

@@ -1,5 +1,5 @@
-﻿import { createStyles, makeStyles } from '@material-ui/core'
-import CircularProgress from '@material-ui/core/CircularProgress'
+﻿import { createStyles, makeStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -10,16 +10,16 @@ const useStyles = makeStyles(() =>
             height: '100vh',
         },
     })
-)
+);
 
 const Loader = () => {
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <CircularProgress color="secondary" />
         </div>
-    )
-}
+    );
+};
 
-export default Loader
+export default Loader;
