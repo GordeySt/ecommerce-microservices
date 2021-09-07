@@ -10,10 +10,10 @@ import StartPage from './pages/start-page/StartPage';
 import userManager, { loadUser } from './common/auth/userService';
 import SignInOidc from './common/auth/SignInOidc';
 import AuthProvider from './common/auth/authProvider';
-import { WelcomePage } from './pages/welcome-page/WelcomePage';
 import SignoutOidc from './common/auth/SignoutOidc';
 import NavBar from './common/layout/NavBar';
 import PrivateRoute from './common/layout/PrivateRoute';
+import CatalogPage from './pages/catalog-page/CatalogPage';
 
 const App = () => {
     useEffect(() => {
@@ -33,7 +33,7 @@ const App = () => {
                                 <NavBar />
                                 <Container maxWidth="lg">
                                     <Switch>
-                                        <PrivateRoute path={CommonRoutes.welcomePageRoute} component={WelcomePage} />
+                                        <PrivateRoute path={CommonRoutes.welcomePageRoute} component={CatalogPage} />
                                         <Route path={AuthRoutes.signInOidcRoute} component={SignInOidc} />
                                         <Route path={AuthRoutes.signOutOidcRoute} component={SignoutOidc} />
                                         <Route path={AuthRoutes.signUpSuccessRoute} component={SignUpSuccess} />
