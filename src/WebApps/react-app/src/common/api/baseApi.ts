@@ -34,10 +34,10 @@ axios.interceptors.response.use(
     }
 );
 
-const sleep = (ms: number) => (response: AxiosResponse) =>
+export const sleep = (ms: number) => (response: AxiosResponse) =>
     new Promise<AxiosResponse>((resolve) => setTimeout(() => resolve(response), ms));
 
-const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+export const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 export const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(sleep(delayValue)).then(responseBody),
