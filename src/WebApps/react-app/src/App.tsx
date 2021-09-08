@@ -15,11 +15,16 @@ import PrivateRoute from './common/layout/PrivateRoute';
 import { WelcomePage } from './pages/welcome-page/WelcomePage';
 import CatalogPage from './pages/catalog-page/CatalogPage';
 import NavBar from './common/layout/NavBar';
+import { useDispatch } from 'react-redux';
+import { getUserByIdRequest } from './common/state/actions/userActions';
 
 const App = () => {
+    const dispatch = useDispatch();
+
     useEffect(() => {
         loadUser();
-    }, []);
+        dispatch(getUserByIdRequest('3b44e921-e522-4930-a1f1-b0eb4527cdec'));
+    }, [dispatch]);
 
     return (
         <React.Fragment>
