@@ -25,4 +25,5 @@ export const CatalogApiUrls = {
     loadCatalogUrl: '/catalog',
     getUserByIdUrl: '/users/id/',
     addRatingUrl: '/productratings/add-ratings',
+    changeRatingUrl: '/productratings/change-ratings',
 };

@@ -15,4 +15,7 @@ export const catalogApi = {
     addRating: (addRatingData: AddRatingData) => {
         requests.post<void>(CatalogApiUrls.addRatingUrl, addRatingData);
     },
+    changeRating: (changeRatingData: AddRatingData) => {
+        requests.post<void>(CatalogApiUrls.changeRatingUrl, changeRatingData);
+    },
 };
