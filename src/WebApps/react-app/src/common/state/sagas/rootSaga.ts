@@ -1,9 +1,10 @@
 ﻿import { all, call, spawn } from 'redux-saga/effects';
 import authRootSaga from '../../../components/auth/state/sagas/authSagas';
 import productRootSaga from '../../../components/catalog/state/sagas/productSagas';
+import ratingRootSaga from '../../../components/catalog/state/sagas/ratingSagas';
 
 export default function* rootSaga() {
-    const sagas = [authRootSaga, productRootSaga];
+    const sagas = [authRootSaga, productRootSaga, ratingRootSaga];
 
     yield all(
         sagas.map((saga) =>
