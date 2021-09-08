@@ -2,9 +2,10 @@
 import authRootSaga from '../../../components/auth/state/sagas/authSagas';
 import productRootSaga from '../../../components/catalog/state/sagas/productSagas';
 import ratingRootSaga from '../../../components/catalog/state/sagas/ratingSagas';
+import userRootSaga from './userSagas';
 
 export default function* rootSaga() {
-    const sagas = [authRootSaga, productRootSaga, ratingRootSaga];
+    const sagas = [authRootSaga, productRootSaga, ratingRootSaga, userRootSaga];
 
     yield all(
         sagas.map((saga) =>

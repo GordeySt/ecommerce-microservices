@@ -21,6 +21,6 @@ export function* getUserById(action: IGetUserByIdRequest) {
     }
 }
 
-export default function* productRootSaga() {
+export default function* userRootSaga() {
     yield takeEvery(UserActions.GET_USER_BY_ID_REQUEST, getUserById);
 }
