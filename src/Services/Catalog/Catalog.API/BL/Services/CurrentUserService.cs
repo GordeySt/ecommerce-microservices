@@ -14,6 +14,6 @@ namespace Catalog.API.BL.Services
         }
 
         public string UserId => _httpContextAccessor.HttpContext?.User
-            .FindFirstValue(ClaimTypes.NameIdentifier);
+            .FindFirstValue("sub");
     }
 }
