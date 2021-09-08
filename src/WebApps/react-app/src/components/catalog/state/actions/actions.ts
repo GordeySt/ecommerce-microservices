@@ -9,6 +9,9 @@ export const ProductActions = {
     ADD_RATING_REQUEST: 'ADD_RATING_REQUEST',
     ADD_RATING_SUCCESS: 'ADD_RATING_SUCCESS',
     ADD_RATING_FAILURE: 'ADD_RATING_FAILURE',
+    CHANGE_RATING_REQUEST: 'CHANGE_RATING_REQUEST',
+    CHANGE_RATING_SUCCESS: 'CHANGE_RATING_SUCCESS',
+    CHANGE_RATING_FAILURE: 'CHANGE_RATING_FAILURE',
 } as const;
 
 export const getProductsRequest = () => ({
@@ -43,5 +46,22 @@ export const addRatingSuccess = () => ({
 
 export const addRatingFailure = (error: ERROR_ANY) => ({
     type: ProductActions.ADD_RATING_FAILURE,
+    payload: error,
+});
+
+export const changeRatingRequest = (id: string, ratingCount: number | null) => ({
+    type: ProductActions.CHANGE_RATING_REQUEST,
+    payload: {
+        id,
+        ratingCount,
+    },
+});
+
+export const changeRatingSuccess = () => ({
+    type: ProductActions.CHANGE_RATING_SUCCESS,
+});
+
+export const changeRatingFailure = (error: ERROR_ANY) => ({
+    type: ProductActions.CHANGE_RATING_FAILURE,
     payload: error,
 });
