@@ -3,9 +3,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import { Container, IconButton, Menu, MenuItem, Toolbar } from '@material-ui/core';
 import { useState } from 'react';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
 import { signoutRedirect } from '../auth/userService';
 import { getAccessToken, getIdToken } from '../auth/authHeaders';
+import { useHistory } from 'react-router';
+import { CatalogRoutes, CommonRoutes } from '../constants/routeConstants';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,6 +28,7 @@ const NavBar = () => {
     const isUserLoggedIn = getAccessToken();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const history = useHistory();
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -34,6 +37,12 @@ const NavBar = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleMenuItemClick = (route: string) => {
+        history.push(route);
+        handleClose();
+    };
+
     return (
         <div className={classes.root}>
             <AppBar position="static" style={{ marginBottom: '20px' }}>
@@ -50,7 +59,7 @@ const NavBar = () => {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircleIcon />
+                                <MenuIcon />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -67,6 +76,12 @@ const NavBar = () => {
                                 open={open}
                                 onClose={handleClose}
                             >
+                                <MenuItem onClick={() => handleMenuItemClick(CatalogRoutes.catalogPageRoute)}>
+                                    Catalog
+                                </MenuItem>
+                                <MenuItem onClick={() => handleMenuItemClick(CommonRoutes.welcomePageRoute)}>
+                                    Welcome Page
+                                </MenuItem>
                                 {isUserLoggedIn && (
                                     <MenuItem onClick={() => signoutRedirect({ id_token_hint: getIdToken() })}>
                                         Logout
