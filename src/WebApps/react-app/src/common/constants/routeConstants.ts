@@ -11,8 +11,18 @@ export const AuthRoutes = {
     signOutOidcRoute: '/signout-oidc',
 };
 
+export const CatalogRoutes = {
+    catalogPageRoute: '/catalog',
+};
+
 export const AuthApiUrls = {
     signUpUrl: '/auth/signup',
     resendEmailVerificationUrl: '/auth/resend-email-verification?email=',
     verifyEmailUrl: '/auth/verify-email',
+};
+
+export const CatalogApiUrls = {
+    loadCatalogUrl: '/catalog',
+    getUserByIdUrl: '/users/id/',
+    addRatingUrl: '/productratings/add-ratings',
 };
