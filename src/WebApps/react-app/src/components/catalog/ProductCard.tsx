@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import { Button, CardActions, CardHeader, IconButton } from '@material-ui/core';
 import { IProduct } from '../../common/models/product';
+import { useDispatch } from 'react-redux';
+import { addRatingRequest } from './state/actions/actions';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -18,6 +20,16 @@ const useStyles = makeStyles(() =>
             height: '260px',
             objectFit: 'contain',
         },
+        iconButton: {
+            marginLeft: 'auto',
+        },
+        ratingContainer: {
+            display: 'flex',
+            alignItems: 'center',
+        },
+        averageRating: {
+            marginRight: '5px',
+        },
     })
 );
 
@@ -27,6 +39,8 @@ interface IProps {
 
 const ProductCard = ({ product }: IProps) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
     return (
         <Card className={classes.root}>
             <CardHeader action={<div>{product.ageRating}+</div>} title={product.name} subheader={product.price + '$'} />
@@ -42,10 +56,16 @@ const ProductCard = ({ product }: IProps) => {
             </CardContent>
             <CardActions disableSpacing>
                 <Button size="medium">Learn More</Button>
-                <IconButton style={{ marginLeft: 'auto' }} aria-label="show more">
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div style={{ marginRight: '5px' }}>{product.averageRating}</div>
-                        <Rating name="simple-controlled" value={product.averageRating} precision={0.1} />
+                <IconButton className={classes.iconButton} aria-label="show more">
+                    <div className={classes.ratingContainer}>
+                        <div className={classes.averageRating}>{product.averageRating}</div>
+                        <Rating
+                            name={product.id}
+                            value={product.averageRating}
+                            onChange={(event, newValue) => {
+                                dispatch(addRatingRequest(product.id, newValue));
+                            }}
+                        />
                     </div>
                 </IconButton>
             </CardActions>
