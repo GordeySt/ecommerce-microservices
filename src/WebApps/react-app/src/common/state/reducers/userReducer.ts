@@ -1,8 +1,8 @@
-﻿import { ICurrentUser } from '../../models/user';
+﻿import { IRatingUser } from '../../models/user';
 import { SetUserActionType, UserActions } from '../actions/userActions';
 
 const initialState = {
-    user: {} as ICurrentUser,
+    user: {} as IRatingUser,
 };
 
 export const userReducer = (state = initialState, action: SetUserActionType) => {
