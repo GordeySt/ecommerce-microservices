@@ -1,6 +1,8 @@
 ﻿import React, { FC, useEffect, useRef } from 'react';
 import { User, UserManager } from 'oidc-client';
-import { setAccessTokenHeader, setIdTokenHeader } from './authHeaders';
+import { setAccessTokenHeader, setIdTokenHeader, setUserId } from './authHeaders';
+import { useDispatch } from 'react-redux';
+import { getUserByIdRequest } from '../state/actions/userActions';
 
 type AuthProviderProps = {
     userManager: UserManager;
@@ -8,12 +10,16 @@ type AuthProviderProps = {
 
 const AuthProvider: FC<AuthProviderProps> = ({ userManager: manager, children }): any => {
     const userManager = useRef<UserManager>();
+    const dispatch = useDispatch();
+
     useEffect(() => {
         userManager.current = manager;
         const onUserLoaded = (user: User) => {
             console.log('User loaded: ', user);
             setAccessTokenHeader(user.access_token);
             setIdTokenHeader(user.id_token);
+            setUserId(user.profile.sub);
+            dispatch(getUserByIdRequest(user.profile.sub));
         };
         const onUserUnloaded = () => {
             setAccessTokenHeader(null);
@@ -45,7 +51,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ userManager: manager, children })
                 userManager.current.events.removeUserSignedOut(onUserSignedOut);
             }
         };
-    }, [manager]);
+    }, [manager, dispatch]);
 
     return React.Children.only(children);
 };
