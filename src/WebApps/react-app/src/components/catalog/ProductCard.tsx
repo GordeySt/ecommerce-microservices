@@ -8,7 +8,7 @@ import { Button, CardActions, CardHeader, IconButton } from '@material-ui/core';
 import { IProduct } from '../../common/models/product';
 import { useDispatch } from 'react-redux';
 import { addRatingRequest, changeRatingRequest } from './state/actions/actions';
-import { ICurrentUser } from '../../common/models/user';
+import { IRatingUser } from '../../common/models/user';
 import { useCallback, useEffect, useState } from 'react';
 import { IProductRating } from '../../common/models/rating';
 
@@ -30,6 +30,15 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             alignItems: 'center',
         },
+        allRatingsContainer: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        ratingBlock: {
+            fontSize: '17px',
+            display: 'inherit',
+        },
         averageRating: {
             marginRight: '5px',
         },
@@ -38,7 +47,7 @@ const useStyles = makeStyles(() =>
 
 interface IProps {
     product: IProduct;
-    user: ICurrentUser;
+    user: IRatingUser;
 }
 
 const ProductCard = ({ product, user }: IProps) => {
@@ -46,8 +55,10 @@ const ProductCard = ({ product, user }: IProps) => {
     const dispatch = useDispatch();
     const [userRating, setUserRating] = useState<IProductRating | null>(null);
 
+    console.log(+product.averageRating.toFixed(1));
+
     const FindUserRating = useCallback(() => {
-        user.ratings.map((rating) => {
+        user.ratings?.map((rating) => {
             if (rating.product?.id === product.id) {
                 setUserRating(rating);
             }
@@ -74,11 +85,11 @@ const ProductCard = ({ product, user }: IProps) => {
             <CardActions disableSpacing>
                 <Button size="medium">Learn More</Button>
                 <IconButton className={classes.iconButton} aria-label="show more">
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div className={classes.allRatingsContainer}>
                         <div className={classes.ratingContainer}>
-                            <div style={{ fontSize: '17px', display: 'inherit' }}>
-                                <span style={{ marginRight: '5px' }}>Your rating: </span>
-                                <div style={{ marginRight: '5px' }}>{userRating?.rating || 0}</div>
+                            <div className={classes.ratingBlock}>
+                                <span className={classes.averageRating}>Your rating: </span>
+                                <div className={classes.averageRating}>{userRating?.rating || 0}</div>
                             </div>
                             <Rating
                                 name={product.id}
@@ -98,11 +109,11 @@ const ProductCard = ({ product, user }: IProps) => {
                             />
                         </div>
                         <div className={classes.ratingContainer}>
-                            <div style={{ fontSize: '17px', display: 'inherit' }}>
-                                <span style={{ marginRight: '5px' }}>Avg rating: </span>
-                                <div className={classes.averageRating}>{product.averageRating}</div>
+                            <div className={classes.ratingBlock}>
+                                <span className={classes.averageRating}>Avg rating: </span>
+                                <div className={classes.averageRating}>{+product.averageRating.toFixed(1)}</div>
                             </div>
-                            <Rating name="read-only" value={product.averageRating} readOnly />
+                            <Rating name="read-only" value={product.averageRating} precision={0.5} readOnly />
                         </div>
                     </div>
                 </IconButton>
