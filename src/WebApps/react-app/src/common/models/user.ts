@@ -5,8 +5,19 @@ export interface IUserFormValues {
     password: string;
 }
 
-export interface ICurrentUser {
+export interface IAppUserRoles {
+    id: string;
+    name: string;
+}
+
+export interface IRatingUser {
     id: string;
     userName: string;
     ratings: IProductRating[];
+}
+
+export interface ICurrentUser {
+    id: string;
+    email: string;
+    appUserRoles: IAppUserRoles[];
 }
