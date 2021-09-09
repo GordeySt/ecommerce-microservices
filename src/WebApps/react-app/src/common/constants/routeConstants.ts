@@ -23,7 +23,12 @@ export const AuthApiUrls = {
 
 export const CatalogApiUrls = {
     loadCatalogUrl: '/catalog',
-    getUserByIdUrl: '/users/id/',
     addRatingUrl: '/productratings/add-ratings',
     changeRatingUrl: '/productratings/change-ratings',
+};
+
+export const UserApiUrls = {
+    getUserByIdUrl: '/users/id/',
+    getCurrentUser: '/users/current-user',
+    createUser: '/users/create-user/id/',
 };
