@@ -17,13 +17,14 @@ import CatalogPage from './pages/catalog-page/CatalogPage';
 import NavBar from './common/layout/NavBar';
 import { useDispatch } from 'react-redux';
 import { getUserByIdRequest } from './common/state/actions/userActions';
+import { getUserId } from './common/auth/authHeaders';
 
 const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         loadUser();
-        dispatch(getUserByIdRequest('3b44e921-e522-4930-a1f1-b0eb4527cdec'));
+        if (getUserId()) dispatch(getUserByIdRequest(getUserId()));
     }, [dispatch]);
 
     return (
