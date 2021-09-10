@@ -57,6 +57,7 @@ namespace Identity.API.Controllers
             await _mediator.Send(query);
 
             var logoutRequest = await _interactionService.GetLogoutContextAsync(query.LogoutId);
+            
             return Redirect(logoutRequest.PostLogoutRedirectUri);
         }
     }
