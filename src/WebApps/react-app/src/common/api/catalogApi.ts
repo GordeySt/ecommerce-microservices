@@ -1,5 +1,6 @@
 ﻿import axios from 'axios';
 import { CatalogApiUrls } from '../constants/routeConstants';
+import { PaginatedResult, PagingParams } from '../models/pagination';
 import { IProduct } from '../models/product';
 import { requests, responseBody, sleep } from './baseApi';
 
@@ -9,7 +10,15 @@ type AddRatingData = {
 };
 
 export const catalogApi = {
-    loadProducts: () => axios.get<IProduct[]>(CatalogApiUrls.loadCatalogUrl).then(sleep(1000)).then(responseBody),
+    loadProducts: (pagingParams: PagingParams) =>
+        axios
+            .get<PaginatedResult<IProduct[]>>(
+                CatalogApiUrls.loadCatalogUrl +
+                    `?pageNumber=${pagingParams.pageNumber}` +
+                    `&pageSize=${pagingParams.pageSize}`
+            )
+            .then(sleep(1000))
+            .then(responseBody),
     addRating: (addRatingData: AddRatingData) => {
         requests.post<void>(CatalogApiUrls.addRatingUrl, addRatingData);
     },
