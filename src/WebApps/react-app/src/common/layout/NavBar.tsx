@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             flexGrow: 1,
         },
+        appBar: {
+            marginBottom: '20px',
+        },
     })
 );
 
@@ -36,7 +39,7 @@ const NavBar = () => {
     };
     return (
         <div className={classes.root}>
-            <AppBar position="static" style={{ marginBottom: '20px' }}>
+            <AppBar position="static" className={classes.appBar}>
                 <Container maxWidth="lg">
                     <Toolbar>
                         <Typography variant="h6" className={classes.title}>
