@@ -15,7 +15,6 @@ const userManager = new UserManager(userManagerSettings);
 
 export async function loadUser() {
     const user = await userManager.getUser();
-    console.log('User: ', user);
     const accessToken = user?.access_token;
     const idToken = user?.id_token;
     setAccessTokenHeader(accessToken);
