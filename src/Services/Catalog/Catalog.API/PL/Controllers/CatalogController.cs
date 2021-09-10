@@ -3,6 +3,7 @@ using Catalog.API.PL.Filters;
 using Catalog.API.PL.Filters.ResponseCaching;
 using Catalog.API.PL.Models.DTOs.Products;
 using Catalog.API.PL.Models.Params;
+using Catalog.API.Startup.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -72,7 +73,14 @@ namespace Catalog.API.PL.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts
             ([FromQuery] ProductsParams productsParams)
-            => await _catalogService.GetAllProductsAsync(productsParams);
+        {
+            var result = await _catalogService.GetAllProductsAsync(productsParams);
+        
+            Response.AddPaginationHeader(result.CurrentPage, result.PageSize,
+                    result.TotalCount, result.TotalPages);
+
+            return result;
+        }
 
         /// <summary>
         /// Gets the product by id

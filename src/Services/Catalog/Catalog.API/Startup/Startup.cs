@@ -70,6 +70,7 @@ namespace Catalog.API.Startup
 
             app.UseCors(x => x
                 .SetIsOriginAllowed(_ => true)
+                .WithExposedHeaders("WWW-Authenticate", "Pagination")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
