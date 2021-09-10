@@ -2,11 +2,11 @@
 import { User, UserManager } from 'oidc-client';
 import { setAccessTokenHeader, setIdTokenHeader } from './authHeaders';
 
-type AuthProviderProps = {
+interface IAuthProviderProps {
     userManager: UserManager;
-};
+}
 
-const AuthProvider: FC<AuthProviderProps> = ({ userManager: manager, children }): any => {
+const AuthProvider: FC<IAuthProviderProps> = ({ userManager: manager, children }): any => {
     const userManager = useRef<UserManager>();
     useEffect(() => {
         userManager.current = manager;
