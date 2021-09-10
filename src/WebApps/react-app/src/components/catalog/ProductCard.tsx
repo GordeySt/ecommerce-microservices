@@ -55,8 +55,6 @@ const ProductCard = ({ product, user }: IProps) => {
     const dispatch = useDispatch();
     const [userRating, setUserRating] = useState<IProductRating | null>(null);
 
-    console.log(+product.averageRating.toFixed(1));
-
     const FindUserRating = useCallback(() => {
         user.ratings?.map((rating) => {
             if (rating.product?.id === product.id) {
