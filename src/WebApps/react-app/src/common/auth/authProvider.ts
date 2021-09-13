@@ -36,7 +36,7 @@ const AuthProvider: FC<IAuthProviderProps> = ({ userManager: manager, children }
         userManager.current.events.addAccessTokenExpired(onAccessTokenExpired);
         userManager.current.events.addUserSignedOut(onUserSignedOut);
 
-        return function cleanup() {
+        return () => {
             if (userManager && userManager.current) {
                 userManager.current.events.removeUserLoaded(onUserLoaded);
                 userManager.current.events.removeUserUnloaded(onUserUnloaded);
