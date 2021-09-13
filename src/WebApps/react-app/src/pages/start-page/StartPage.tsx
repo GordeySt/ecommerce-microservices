@@ -1,4 +1,5 @@
-﻿import { Container, createStyles, makeStyles } from '@material-ui/core';
+﻿import { Button, Container, createStyles, makeStyles } from '@material-ui/core';
+import { signinRedirect } from '../../common/auth/userService';
 import SignUpForm from '../../components/auth/SignUpForm';
 
 const useStyles = makeStyles(() =>
@@ -9,6 +10,9 @@ const useStyles = makeStyles(() =>
             justifyContent: 'center',
             height: '100vh',
         },
+        loginLink: {
+            marginTop: 10,
+        },
     })
 );
 
@@ -16,7 +20,12 @@ const StartPage = () => {
     const classes = useStyles();
     return (
         <Container className={classes.homeContainer}>
-            <SignUpForm />
+            <div>
+                <SignUpForm />
+                <div className={classes.loginLink}>
+                    <Button onClick={() => signinRedirect()}>Have an account?</Button>
+                </div>
+            </div>
         </Container>
     );
 };

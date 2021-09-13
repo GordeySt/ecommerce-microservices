@@ -1,16 +1,23 @@
 using FluentValidation.AspNetCore;
 using HealthChecks.UI.Client;
+using Identity.API.Configurations;
 using Identity.API.Startup.Configurations;
 using Identity.API.Startup.Middlewares;
 using Identity.API.Startup.Settings;
 using Identity.Application.ApplicationUsers.Commands.SignupUsers;
+using Identity.Domain.Entities;
+using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Services.Email;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace Identity.API.Startup
 {
@@ -27,19 +34,24 @@ namespace Identity.API.Startup
         {
             var appSettings = ReadAppSettings(Configuration);
 
-            services.AddControllers()
-                 .AddFluentValidation(config =>
-                 {
-                     config.RegisterValidatorsFromAssemblyContaining<SignupUserCommand>();
-                 });
-
+            services.ValidateSettingParameters(Configuration);
             services.RegisterDatabase(appSettings);
+            services.RegisterServices(appSettings);
             services.RegisterAuthSettings(appSettings);
             services.RegisterIdentity(appSettings);
             services.RegisterIdentityServer(appSettings);
-            services.ValidateSettingParameters(Configuration);
 
-            services.RegisterServices(appSettings);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins(appSettings.AppUrlsSettings.ClientUrl)
+                        .AllowCredentials();
+                });
+            });
 
             services.RegisterAutoMapper();
             services.RegisterMediatr();
@@ -48,6 +60,12 @@ namespace Identity.API.Startup
 
             services.RegisterSwagger(appSettings);
             services.RegisterHealthChecks(appSettings);
+
+            services.AddControllersWithViews()
+                .AddFluentValidation(config =>
+                {
+                    config.RegisterValidatorsFromAssemblyContaining<SignupUserCommand>();
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,12 +79,14 @@ namespace Identity.API.Startup
 
             app.UseSwaggerApplication();
 
-            app.UseCors(x => x
-                .SetIsOriginAllowed(_ => true)
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials()
-            );
+            app.UseCors("CorsPolicy");
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Styles")),
+                RequestPath = "/styles"
+            });
 
             app.UseRouting();
 
@@ -77,7 +97,7 @@ namespace Identity.API.Startup
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
                 {
                     Predicate = _ => true,

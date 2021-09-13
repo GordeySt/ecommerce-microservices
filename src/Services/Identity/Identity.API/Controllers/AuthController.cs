@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Identity.API.Controllers
 {
     public class AuthController : ApiControllerBase
-    {
+    { 
         /// <summary>
         /// SignUp Users
         /// </summary>
