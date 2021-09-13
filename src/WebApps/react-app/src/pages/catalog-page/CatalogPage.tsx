@@ -1,5 +1,5 @@
 ﻿import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Loader from '../../common/layout/Loader';
 import { PagingParams } from '../../common/models/pagination';
@@ -35,15 +35,13 @@ const CatalogPage = () => {
     const isLoadingMore = useTypedSelector(getLoadMoreLoadingStatus);
     const products = useTypedSelector(getProducts);
     const pagination = useTypedSelector(getPagination);
-    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        if (products.length <= 1) dispatch(getProductsRequest(new PagingParams(currentPage)));
-    }, [dispatch, products.length, currentPage]);
+        if (products.length <= 1) dispatch(getProductsRequest(new PagingParams(1)));
+    }, [dispatch, products.length]);
 
     const handleGetNext = () => {
-        setCurrentPage((prev) => prev + 1);
-        dispatch(loadMoreProductsRequest(new PagingParams(currentPage + 1)));
+        dispatch(loadMoreProductsRequest(new PagingParams(pagination.currentPage + 1)));
     };
 
     if (loading) {
@@ -55,7 +53,7 @@ const CatalogPage = () => {
             <InfiniteScroll
                 pageStart={0}
                 loadMore={handleGetNext}
-                hasMore={!isLoadingMore && !!pagination && currentPage < pagination.totalPages}
+                hasMore={!isLoadingMore && !!pagination && pagination.currentPage < pagination.totalPages}
                 initialLoad={false}
             >
                 <ProductsList products={products} />
