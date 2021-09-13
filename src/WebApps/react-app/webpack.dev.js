@@ -7,8 +7,6 @@ const dotenv = require('dotenv').config({
     path: path.join(__dirname, './.env.dev'),
 });
 
-console.log(dotenv);
-
 module.exports = {
     mode: 'development',
     devServer: {
