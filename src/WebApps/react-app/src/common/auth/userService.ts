@@ -3,19 +3,18 @@ import { setAccessTokenHeader, setIdTokenHeader, setUserId } from './authHeaders
 import { SignoutRedirectArgsType } from './types';
 
 const userManagerSettings: UserManagerSettings = {
-    client_id: 'spa',
-    redirect_uri: 'http://localhost:8080/signin-oidc',
-    response_type: 'code',
-    scope: 'openid profile roles catalogapi identityapi basketapi',
-    authority: 'https://localhost:5011/',
-    post_logout_redirect_uri: 'http://localhost:8080/signout-oidc',
+    client_id: process.env.CLIENT_ID,
+    redirect_uri: process.env.REDIRECT_URI,
+    response_type: process.env.RESPONSE_TYPE,
+    scope: process.env.SCOPE,
+    authority: process.env.AUTHORITY,
+    post_logout_redirect_uri: process.env.POST_LOGOUT_REDIRECT_URI,
 };
 
 const userManager = new UserManager(userManagerSettings);
 
 export async function loadUser() {
     const user = await userManager.getUser();
-    console.log('User: ', user);
     const accessToken = user?.access_token;
     const idToken = user?.id_token;
     const userId = user?.profile.sub;

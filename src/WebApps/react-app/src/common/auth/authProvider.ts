@@ -4,11 +4,11 @@ import { setAccessTokenHeader, setIdTokenHeader, setUserId } from './authHeaders
 import { useDispatch } from 'react-redux';
 import { getUserByIdRequest } from '../state/actions/userActions';
 
-type AuthProviderProps = {
+interface IAuthProviderProps {
     userManager: UserManager;
-};
+}
 
-const AuthProvider: FC<AuthProviderProps> = ({ userManager: manager, children }): any => {
+const AuthProvider: FC<IAuthProviderProps> = ({ userManager: manager, children }): any => {
     const userManager = useRef<UserManager>();
     const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ userManager: manager, children })
         userManager.current.events.addAccessTokenExpired(onAccessTokenExpired);
         userManager.current.events.addUserSignedOut(onUserSignedOut);
 
-        return function cleanup() {
+        return () => {
             if (userManager && userManager.current) {
                 userManager.current.events.removeUserLoaded(onUserLoaded);
                 userManager.current.events.removeUserUnloaded(onUserUnloaded);
