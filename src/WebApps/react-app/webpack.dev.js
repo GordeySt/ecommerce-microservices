@@ -1,6 +1,13 @@
-﻿const webpack = require('webpack')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const webpackMockServer = require('webpack-mock-server')
+﻿const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const webpackMockServer = require('webpack-mock-server');
+const webpack = require('webpack');
+const path = require('path');
+
+const dotenv = require('dotenv').config({
+    path: path.join(__dirname, './.env.dev'),
+});
+
+console.log(dotenv);
 
 module.exports = {
     mode: 'development',
@@ -18,8 +25,9 @@ module.exports = {
     devtool: 'cheap-module-source-map',
     plugins: [
         new webpack.DefinePlugin({
+            'process.env': JSON.stringify(dotenv.parsed),
             'process.env.name': JSON.stringify('devConfig'),
         }),
         new ReactRefreshWebpackPlugin(),
     ],
-}
+};
