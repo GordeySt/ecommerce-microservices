@@ -1,18 +1,13 @@
 ﻿import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
-import { useState } from 'react';
 
 interface IProps {
     classes: ClassNameMap<'form'>;
+    ratingOrderType: string;
+    handleRatingOrderTypeChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 
-const RatingFilter = ({ classes }: IProps) => {
-    const [ratingOrderType, setRatingOrderType] = useState('');
-
-    const handleRatingOrderTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setRatingOrderType(event.target.value as string);
-    };
-
+const RatingFilter = ({ classes, ratingOrderType, handleRatingOrderTypeChange }: IProps) => {
     return (
         <FormControl className={classes.form}>
             <InputLabel id="demo-simple-select-label">Rating</InputLabel>

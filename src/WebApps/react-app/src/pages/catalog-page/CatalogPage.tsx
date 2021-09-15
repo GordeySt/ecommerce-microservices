@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux';
 import { PagingParams } from '../../common/models/pagination';
 import { useTypedSelector } from '../../common/utils/hooks';
 import { ProductsList } from '../../components/catalog/ProductsList';
-import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/actions';
+import {
+    getProductsRequest,
+    loadMoreProductsRequest,
+    setPagingParams,
+} from '../../components/catalog/state/actions/actions';
 import InfiniteScroll from 'react-infinite-scroller';
 import {
     getLoadingProductsStatus,
@@ -34,6 +38,9 @@ const useStyles = makeStyles(() =>
 );
 
 const CatalogPage = () => {
+    const constants = {
+        initialPageNumber: 1,
+    };
     const classes = useStyles();
     const dispatch = useDispatch();
     const isLoadingProducts = useTypedSelector(getLoadingProductsStatus);
@@ -42,11 +49,13 @@ const CatalogPage = () => {
     const pagination = useTypedSelector(getPagination);
 
     useEffect(() => {
-        if (products.length <= 1) dispatch(getProductsRequest(new PagingParams(1)));
-    }, [dispatch, products.length]);
+        dispatch(setPagingParams(new PagingParams(constants.initialPageNumber)));
+        if (products.length <= 1) dispatch(getProductsRequest());
+    }, [dispatch, products.length, constants.initialPageNumber]);
 
     const handleGetNext = () => {
-        dispatch(loadMoreProductsRequest(new PagingParams(pagination.currentPage + 1)));
+        dispatch(setPagingParams(new PagingParams(pagination.currentPage + 1)));
+        dispatch(loadMoreProductsRequest());
     };
 
     return (

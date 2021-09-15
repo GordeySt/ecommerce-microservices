@@ -1,18 +1,13 @@
 ﻿import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
-import { useState } from 'react';
 
 interface IProps {
     classes: ClassNameMap<'form'>;
+    priceOrderType: string;
+    handlePriceOrderTypeChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 
-const PriceFilter = ({ classes }: IProps) => {
-    const [priceOrderType, setPriceOrderType] = useState('');
-
-    const handlePriceOrderTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setPriceOrderType(event.target.value as string);
-    };
-
+const PriceFilter = ({ classes, priceOrderType, handlePriceOrderTypeChange }: IProps) => {
     return (
         <FormControl className={classes.form}>
             <InputLabel id="demo-simple-select-label">Price</InputLabel>
