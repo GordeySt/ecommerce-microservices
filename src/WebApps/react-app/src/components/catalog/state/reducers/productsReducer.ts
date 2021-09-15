@@ -7,10 +7,17 @@ const initialState = {
     products: [] as IProduct[],
     pagination: {} as IPagination,
     isLoadingMore: false,
+    isLoadingProducts: false,
 };
 
 export const productsReducer = (state = initialState, action: ProductsActionType) => {
     switch (action.type) {
+        case ProductActions.GET_PRODUCTS_REQUEST:
+            return { ...state, isLoadingProducts: true };
+        case ProductActions.GET_PRODUCTS_SUCCESS:
+            return { ...state, isLoadingProducts: false };
+        case ProductActions.GET_PRODUCTS_FAILURE:
+            return { ...state, isLoadingProducts: false };
         case ProductActions.LOAD_MORE_PRODUCTS_REQUEST:
             return { ...state, isLoadingMore: true };
         case ProductActions.LOAD_MORE_PRODUCTS_SUCCESS:

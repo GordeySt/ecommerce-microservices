@@ -3,7 +3,6 @@ import { catalogApi } from '../../../../common/api/catalogApi';
 import { PaginatedResult } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
 import { setErrors } from '../../../../common/state/actions/errorActions';
-import { hideLoader, showLoader } from '../../../../common/state/actions/loaderActions';
 import {
     getProductsFailure,
     getProductsSuccess,
@@ -17,16 +16,10 @@ import { GetProductsRequestType, LoadMoreProductsRequestType } from '../actions/
 
 export function* getProducts({ payload }: GetProductsRequestType) {
     try {
-        yield put(showLoader());
         const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, payload);
-        yield all([
-            put(getProductsSuccess()),
-            put(setProducts(result.data)),
-            put(setPagination(result.pagination)),
-            put(hideLoader()),
-        ]);
+        yield all([put(getProductsSuccess()), put(setProducts(result.data)), put(setPagination(result.pagination))]);
     } catch (error) {
-        yield all([put(hideLoader()), setErrors(error), put(getProductsFailure(error))]);
+        yield all([setErrors(error), put(getProductsFailure(error))]);
     }
 }
 

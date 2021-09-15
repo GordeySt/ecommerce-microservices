@@ -1,26 +1,31 @@
 ﻿import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Loader from '../../common/layout/Loader';
 import { PagingParams } from '../../common/models/pagination';
-import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors';
 import { useTypedSelector } from '../../common/utils/hooks';
 import { ProductsList } from '../../components/catalog/ProductsList';
 import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/actions';
 import InfiniteScroll from 'react-infinite-scroller';
 import {
+    getLoadingProductsStatus,
     getLoadMoreLoadingStatus,
     getPagination,
     getProducts,
 } from '../../components/catalog/state/selectors/productsSelectors';
+import { FilteringSection } from '../../components/catalog/filtering/FilteringSection';
 
 const useStyles = makeStyles(() =>
     createStyles({
         catalogPageContainer: {
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
+        },
+        filters: {
+            marginLeft: '30px',
+        },
+        loaderDiv: {
+            display: 'flex',
+            justifyContent: 'center',
         },
         loader: {
             marginTop: '10px',
@@ -31,7 +36,7 @@ const useStyles = makeStyles(() =>
 const CatalogPage = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const loading = useTypedSelector(getLoadingStatus);
+    const isLoadingProducts = useTypedSelector(getLoadingProductsStatus);
     const isLoadingMore = useTypedSelector(getLoadMoreLoadingStatus);
     const products = useTypedSelector(getProducts);
     const pagination = useTypedSelector(getPagination);
@@ -44,22 +49,33 @@ const CatalogPage = () => {
         dispatch(loadMoreProductsRequest(new PagingParams(pagination.currentPage + 1)));
     };
 
-    if (loading) {
-        return <Loader />;
-    }
-
     return (
-        <div className={classes.catalogPageContainer}>
-            <InfiniteScroll
-                pageStart={0}
-                loadMore={handleGetNext}
-                hasMore={!isLoadingMore && !!pagination && pagination.currentPage < pagination.totalPages}
-                initialLoad={false}
-            >
-                <ProductsList products={products} />
-            </InfiniteScroll>
-            {isLoadingMore && <CircularProgress color="secondary" className={classes.loader} />}
-        </div>
+        <>
+            <div className={classes.catalogPageContainer}>
+                <div>
+                    {isLoadingProducts ? (
+                        <CircularProgress color="secondary" className={classes.loader} />
+                    ) : (
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={handleGetNext}
+                            hasMore={!isLoadingMore && !!pagination && pagination.currentPage < pagination.totalPages}
+                            initialLoad={false}
+                        >
+                            <div>
+                                <ProductsList products={products} />
+                            </div>
+                        </InfiniteScroll>
+                    )}
+                </div>
+                <div className={classes.filters}>
+                    <FilteringSection />
+                </div>
+            </div>
+            <div className={classes.loaderDiv}>
+                {isLoadingMore && <CircularProgress color="secondary" className={classes.loader} />}
+            </div>
+        </>
     );
 };
 
