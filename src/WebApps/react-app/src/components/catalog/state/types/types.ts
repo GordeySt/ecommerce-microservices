@@ -1,4 +1,4 @@
-﻿import * as actions from './actions';
+﻿import * as actions from '../actions/actions';
 
 export type ProductsActionType =
     | ReturnType<typeof actions.setProducts>
@@ -15,7 +15,5 @@ export type ProductsActionType =
     | ReturnType<typeof actions.setPredicates>
     | ReturnType<typeof actions.resetPredicates>
     | ReturnType<typeof actions.resetSortingPredicates>;
-export type AddRatingRequestType = ReturnType<typeof actions.addRatingRequest>;
-export type ChangeRatingRequestType = ReturnType<typeof actions.changeRatingRequest>;
 export type GetProductsRequestType = ReturnType<typeof actions.getProductsRequest>;
 export type LoadMoreProductsRequestType = ReturnType<typeof actions.loadMoreProductsRequest>;

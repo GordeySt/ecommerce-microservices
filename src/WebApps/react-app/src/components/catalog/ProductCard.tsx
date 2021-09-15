@@ -7,7 +7,7 @@ import Rating from '@material-ui/lab/Rating';
 import { Button, CardActions, CardHeader, IconButton } from '@material-ui/core';
 import { IProduct } from '../../common/models/product';
 import { useDispatch } from 'react-redux';
-import { addRatingRequest, changeRatingRequest } from './state/actions/actions';
+import { addRatingRequest, changeRatingRequest } from './state/actions/ratingActions';
 import { IRatingUser } from '../../common/models/user';
 import { useCallback, useEffect, useState } from 'react';
 import { IProductRating } from '../../common/models/rating';
