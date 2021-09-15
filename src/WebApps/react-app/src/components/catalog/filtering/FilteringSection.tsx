@@ -1,7 +1,8 @@
 ﻿import { createStyles, makeStyles } from '@material-ui/core';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { resetPredicates, resetProducts, resetSortingPredicates, setPredicates } from '../state/actions/actions';
+import { resetProducts } from '../state/actions/actions';
+import { resetPredicates, resetSortingPredicates, setPredicates } from '../state/actions/filteringActions';
 import AgeRatingFilter from './AgeRatingFilter';
 import AllProductsButton from './AllProductsButton';
 import PriceFilter from './PriceFilter';

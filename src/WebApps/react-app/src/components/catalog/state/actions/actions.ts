@@ -1,5 +1,5 @@
 ﻿import { ERROR_ANY } from '../../../../common/models/anyAliases';
-import { IPagination, PaginatedResult, PagingParams } from '../../../../common/models/pagination';
+import { IPagination, PaginatedResult } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
 
 export const ProductActions = {
@@ -13,10 +13,6 @@ export const ProductActions = {
     SET_PAGINATION: 'SET_PAGINATION',
     SET_END_STATUS: 'SET_END_STATUS',
     RESET_PRODUCTS: 'RESET_PRODUCTS',
-    SET_PAGING_PARAMS: 'SET_PAGING_PARAMS',
-    SET_PREDICATES: 'SET_PREDICATES',
-    RESET_PREDICATES: 'RESET_PREDICATES',
-    RESET_SORTING_PREDICATES: 'RESET_SORTING_PREDICATES',
 } as const;
 
 export const getProductsRequest = () => ({
@@ -62,25 +58,4 @@ export const setPagination = (pagination: IPagination) => ({
 
 export const resetProducts = () => ({
     type: ProductActions.RESET_PRODUCTS,
-});
-
-export const setPagingParams = (pagingParams: PagingParams) => ({
-    type: ProductActions.SET_PAGING_PARAMS,
-    payload: pagingParams,
-});
-
-export const setPredicates = (key: string, value: string) => ({
-    type: ProductActions.SET_PREDICATES,
-    payload: {
-        key,
-        value,
-    },
-});
-
-export const resetPredicates = () => ({
-    type: ProductActions.RESET_PREDICATES,
-});
-
-export const resetSortingPredicates = () => ({
-    type: ProductActions.RESET_SORTING_PREDICATES,
 });

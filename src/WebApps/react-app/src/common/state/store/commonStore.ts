@@ -4,6 +4,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { filteringReducer } from '../../../components/catalog/state/reducers/filteringReducer';
 import { productsReducer } from '../../../components/catalog/state/reducers/productsReducer';
 import { errorReducer } from '../reducers/errorReducer';
 import { loaderReducer } from '../reducers/loaderReducer';
@@ -23,6 +24,7 @@ const reducers = {
     errors: errorReducer,
     products: productsReducer,
     user: userReducer,
+    filtering: filteringReducer,
     router: connectRouter(history),
 };
 

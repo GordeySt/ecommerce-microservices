@@ -4,11 +4,7 @@ import { useDispatch } from 'react-redux';
 import { PagingParams } from '../../common/models/pagination';
 import { useTypedSelector } from '../../common/utils/hooks';
 import { ProductsList } from '../../components/catalog/ProductsList';
-import {
-    getProductsRequest,
-    loadMoreProductsRequest,
-    setPagingParams,
-} from '../../components/catalog/state/actions/actions';
+import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/actions';
 import InfiniteScroll from 'react-infinite-scroller';
 import {
     getLoadingProductsStatus,
@@ -17,6 +13,7 @@ import {
     getProducts,
 } from '../../components/catalog/state/selectors/productsSelectors';
 import { FilteringSection } from '../../components/catalog/filtering/FilteringSection';
+import { setPagingParams } from '../../components/catalog/state/actions/filteringActions';
 
 const useStyles = makeStyles(() =>
     createStyles({
