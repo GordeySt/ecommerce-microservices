@@ -56,6 +56,8 @@ namespace Catalog.API.BL.Services
         {
             var products = _productRepository.GetAllQueryable();
 
+            _productRepository.SortProductsByDefinition(ref products, OrderType.Asc, t => t.Id);
+
             ProductUtils.FilterByCategory(ref products, _productRepository, productsParams.CategoryName);
 
             ProductUtils.FilterByAgeRating(ref products, _productRepository, (int)productsParams.MinimumAge);
@@ -65,8 +67,6 @@ namespace Catalog.API.BL.Services
             ProductUtils.SortByRating(ref products, _productRepository, productsParams.RatingOrderType);
 
             ProductUtils.SearchByName(ref products, _productRepository, productsParams.ProductName);
-
-            _productRepository.SortProductsByDefinition(ref products, OrderType.Asc, t => t.Id);
 
             var productsDto = products
                 .ProjectTo<ProductDto>(_mapper.ConfigurationProvider);
