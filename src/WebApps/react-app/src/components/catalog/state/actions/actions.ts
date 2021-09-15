@@ -18,11 +18,14 @@ export const ProductActions = {
     CHANGE_RATING_REQUEST: 'CHANGE_RATING_REQUEST',
     CHANGE_RATING_SUCCESS: 'CHANGE_RATING_SUCCESS',
     CHANGE_RATING_FAILURE: 'CHANGE_RATING_FAILURE',
+    RESET_PRODUCTS: 'RESET_PRODUCTS',
+    SET_PAGING_PARAMS: 'SET_PAGING_PARAMS',
+    SET_PREDICATES: 'SET_PREDICATES',
+    RESET_PREDICATES: 'RESET_SORTING_PREDICATES',
 } as const;
 
-export const getProductsRequest = (pagingParams: PagingParams) => ({
+export const getProductsRequest = () => ({
     type: ProductActions.GET_PRODUCTS_REQUEST,
-    payload: pagingParams,
 });
 
 export const getProductsSuccess = () => ({
@@ -34,9 +37,8 @@ export const getProductsFailure = (error: ERROR_ANY) => ({
     payload: error,
 });
 
-export const loadMoreProductsRequest = (pagingParams: PagingParams) => ({
+export const loadMoreProductsRequest = () => ({
     type: ProductActions.LOAD_MORE_PRODUCTS_REQUEST,
-    payload: pagingParams,
 });
 
 export const loadMoreProductsSuccess = (result: PaginatedResult<IProduct[]>) => ({
@@ -95,4 +97,25 @@ export const setEndStatusLoadMoreProducts = () => ({
 export const setPagination = (pagination: IPagination) => ({
     type: ProductActions.SET_PAGINATION,
     payload: pagination,
+});
+
+export const resetProducts = () => ({
+    type: ProductActions.RESET_PRODUCTS,
+});
+
+export const setPagingParams = (pagingParams: PagingParams) => ({
+    type: ProductActions.SET_PAGING_PARAMS,
+    payload: pagingParams,
+});
+
+export const setPredicates = (key: string, value: string) => ({
+    type: ProductActions.SET_PREDICATES,
+    payload: {
+        key,
+        value,
+    },
+});
+
+export const resetPredicates = () => ({
+    type: ProductActions.RESET_PREDICATES,
 });

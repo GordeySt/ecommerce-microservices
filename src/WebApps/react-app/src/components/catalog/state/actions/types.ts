@@ -9,7 +9,11 @@ export type ProductsActionType =
     | ReturnType<typeof actions.setPagination>
     | ReturnType<typeof actions.getProductsRequest>
     | ReturnType<typeof actions.getProductsSuccess>
-    | ReturnType<typeof actions.getProductsFailure>;
+    | ReturnType<typeof actions.getProductsFailure>
+    | ReturnType<typeof actions.resetProducts>
+    | ReturnType<typeof actions.setPagingParams>
+    | ReturnType<typeof actions.setPredicates>
+    | ReturnType<typeof actions.resetPredicates>;
 export type AddRatingRequestType = ReturnType<typeof actions.addRatingRequest>;
 export type ChangeRatingRequestType = ReturnType<typeof actions.changeRatingRequest>;
 export type GetProductsRequestType = ReturnType<typeof actions.getProductsRequest>;

@@ -1,11 +1,18 @@
-﻿import { IPagination } from '../../../../common/models/pagination';
+﻿import { IPagination, PagingParams } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
 import { ProductActions } from '../actions/actions';
 import { ProductsActionType } from '../actions/types';
 
+export interface IPredicate {
+    key: string;
+    value: string;
+}
+
 const initialState = {
     products: [] as IProduct[],
     pagination: {} as IPagination,
+    pagingParams: {} as PagingParams,
+    predicates: [] as IPredicate[],
     isLoadingMore: false,
     isLoadingProducts: false,
 };
@@ -34,6 +41,15 @@ export const productsReducer = (state = initialState, action: ProductsActionType
             return { ...state, products: action.payload };
         case ProductActions.SET_PAGINATION:
             return { ...state, pagination: action.payload };
+        case ProductActions.RESET_PRODUCTS:
+            return { ...state, products: [] };
+        case ProductActions.SET_PAGING_PARAMS:
+            return { ...state, pagingParams: action.payload };
+        case ProductActions.SET_PREDICATES:
+            const { predicates } = state;
+            return { ...state, predicates: [...predicates, action.payload] };
+        case ProductActions.RESET_PREDICATES:
+            return { ...state, predicates: [] };
         default:
             return state;
     }

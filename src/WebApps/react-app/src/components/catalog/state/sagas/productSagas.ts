@@ -1,6 +1,6 @@
-﻿import { all, call, put, takeEvery } from 'redux-saga/effects';
+﻿import { all, call, put, select, takeEvery } from 'redux-saga/effects';
 import { catalogApi } from '../../../../common/api/catalogApi';
-import { PaginatedResult } from '../../../../common/models/pagination';
+import { PaginatedResult, PagingParams } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
 import { setErrors } from '../../../../common/state/actions/errorActions';
 import {
@@ -9,23 +9,42 @@ import {
     loadMoreProductsFailure,
     loadMoreProductsSuccess,
     ProductActions,
+    resetProducts,
     setPagination,
     setProducts,
 } from '../actions/actions';
-import { GetProductsRequestType, LoadMoreProductsRequestType } from '../actions/types';
+import { IPredicate } from '../reducers/productsReducer';
+import { getPagingParams, getPredicates } from '../selectors/productsSelectors';
 
-export function* getProducts({ payload }: GetProductsRequestType) {
+export function* getProducts() {
     try {
-        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, payload);
+        yield put(resetProducts());
+        const params = new URLSearchParams();
+        const pagingParams: PagingParams = yield select(getPagingParams);
+        const predicates: IPredicate[] = yield select(getPredicates);
+        params.append('pageSize', pagingParams.pageSize.toString());
+        params.append('pageNumber', pagingParams.pageNumber.toString());
+        predicates.map((predicate) => {
+            return params.append(predicate.key, predicate.value);
+        });
+        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, params);
         yield all([put(getProductsSuccess()), put(setProducts(result.data)), put(setPagination(result.pagination))]);
     } catch (error) {
         yield all([setErrors(error), put(getProductsFailure(error))]);
     }
 }
 
-export function* loadMoreProducts({ payload }: LoadMoreProductsRequestType) {
+export function* loadMoreProducts() {
     try {
-        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, payload);
+        const params = new URLSearchParams();
+        const pagingParams: PagingParams = yield select(getPagingParams);
+        const predicates: IPredicate[] = yield select(getPredicates);
+        params.append('pageSize', pagingParams.pageSize.toString());
+        params.append('pageNumber', pagingParams.pageNumber.toString());
+        predicates.map((predicate) => {
+            return params.append(predicate.key, predicate.value);
+        });
+        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, params);
         yield put(loadMoreProductsSuccess(result));
     } catch (error) {
         yield put(loadMoreProductsFailure(error));
