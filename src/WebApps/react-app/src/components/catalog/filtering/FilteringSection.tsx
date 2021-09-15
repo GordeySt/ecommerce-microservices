@@ -1,7 +1,7 @@
 ﻿import { createStyles, makeStyles } from '@material-ui/core';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { resetPredicates, resetProducts, setPredicates } from '../state/actions/actions';
+import { resetPredicates, resetProducts, resetSortingPredicates, setPredicates } from '../state/actions/actions';
 import AgeRatingFilter from './AgeRatingFilter';
 import AllProductsButton from './AllProductsButton';
 import PriceFilter from './PriceFilter';
@@ -36,14 +36,19 @@ export const FilteringSection = () => {
 
     const handlePriceOrderTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const priceOrderTypeValue = event.target.value as string;
+        dispatch(resetSortingPredicates());
+        setRatingOrderType('');
+        dispatch(setPredicates('PriceOrderType', priceOrderTypeValue));
         setPriceOrderType(priceOrderTypeValue);
         dispatch(resetProducts());
-        dispatch(setPredicates('PriceOrderType', priceOrderTypeValue));
     };
 
     const handleRatingOrderTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        dispatch(setPredicates('RatingOrderType', event.target.value as string));
-        setRatingOrderType(event.target.value as string);
+        const ratingOrderType = event.target.value as string;
+        dispatch(resetSortingPredicates());
+        setPriceOrderType('');
+        dispatch(setPredicates('RatingOrderType', ratingOrderType));
+        setRatingOrderType(ratingOrderType);
         dispatch(resetProducts());
     };
 

@@ -50,6 +50,10 @@ export const productsReducer = (state = initialState, action: ProductsActionType
             return { ...state, predicates: [...predicates, action.payload] };
         case ProductActions.RESET_PREDICATES:
             return { ...state, predicates: [] };
+        case ProductActions.RESET_SORTING_PREDICATES:
+            const newPredicates = state.predicates.filter((predicate) => predicate.key === 'minimumAge');
+
+            return { ...state, predicates: newPredicates };
         default:
             return state;
     }

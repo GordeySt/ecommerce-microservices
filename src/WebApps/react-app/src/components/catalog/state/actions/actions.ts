@@ -21,7 +21,8 @@ export const ProductActions = {
     RESET_PRODUCTS: 'RESET_PRODUCTS',
     SET_PAGING_PARAMS: 'SET_PAGING_PARAMS',
     SET_PREDICATES: 'SET_PREDICATES',
-    RESET_PREDICATES: 'RESET_SORTING_PREDICATES',
+    RESET_PREDICATES: 'RESET_PREDICATES',
+    RESET_SORTING_PREDICATES: 'RESET_SORTING_PREDICATES',
 } as const;
 
 export const getProductsRequest = () => ({
@@ -118,4 +119,8 @@ export const setPredicates = (key: string, value: string) => ({
 
 export const resetPredicates = () => ({
     type: ProductActions.RESET_PREDICATES,
+});
+
+export const resetSortingPredicates = () => ({
+    type: ProductActions.RESET_SORTING_PREDICATES,
 });

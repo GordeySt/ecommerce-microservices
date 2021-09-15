@@ -13,7 +13,8 @@ export type ProductsActionType =
     | ReturnType<typeof actions.resetProducts>
     | ReturnType<typeof actions.setPagingParams>
     | ReturnType<typeof actions.setPredicates>
-    | ReturnType<typeof actions.resetPredicates>;
+    | ReturnType<typeof actions.resetPredicates>
+    | ReturnType<typeof actions.resetSortingPredicates>;
 export type AddRatingRequestType = ReturnType<typeof actions.addRatingRequest>;
 export type ChangeRatingRequestType = ReturnType<typeof actions.changeRatingRequest>;
 export type GetProductsRequestType = ReturnType<typeof actions.getProductsRequest>;
