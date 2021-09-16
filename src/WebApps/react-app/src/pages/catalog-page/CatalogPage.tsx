@@ -14,6 +14,7 @@ import {
 } from '../../components/catalog/state/selectors/productsSelectors';
 import { FilteringSection } from '../../components/catalog/filtering/FilteringSection';
 import { setPagingParams } from '../../components/catalog/state/actions/filteringActions';
+import { SearchForm } from '../../components/catalog/filtering/SearchForm';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -47,7 +48,7 @@ const CatalogPage = () => {
 
     useEffect(() => {
         dispatch(setPagingParams(new PagingParams(constants.initialPageNumber)));
-        if (products.length <= 1) dispatch(getProductsRequest());
+        if (products.length === 0) dispatch(getProductsRequest());
     }, [dispatch, products.length, constants.initialPageNumber]);
 
     const handleGetNext = () => {
@@ -57,9 +58,7 @@ const CatalogPage = () => {
 
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <input type="text" placeholder="Product name" />
-            </div>
+            <SearchForm />
             <div className={classes.catalogPageContainer}>
                 <div>
                     {isLoadingProducts ? (
