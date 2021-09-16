@@ -1,7 +1,7 @@
 ﻿import { IPagination } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
-import { ProductActions } from '../actions/actions';
-import { ProductsActionType } from '../types/types';
+import { ProductActions } from '../actions/productActions';
+import { ProductsActionType } from '../types/productTypes';
 
 export interface IPredicate {
     key: string;

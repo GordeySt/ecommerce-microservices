@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { PagingParams } from '../../common/models/pagination';
 import { useTypedSelector } from '../../common/utils/hooks';
 import { ProductsList } from '../../components/catalog/ProductsList';
-import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/actions';
+import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/productActions';
 import InfiniteScroll from 'react-infinite-scroller';
 import {
     getLoadingProductsStatus,
@@ -57,6 +57,9 @@ const CatalogPage = () => {
 
     return (
         <>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <input type="text" placeholder="Product name" />
+            </div>
             <div className={classes.catalogPageContainer}>
                 <div>
                     {isLoadingProducts ? (

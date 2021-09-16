@@ -13,7 +13,7 @@ import {
     resetProducts,
     setPagination,
     setProducts,
-} from '../actions/actions';
+} from '../actions/productActions';
 import { IPredicate } from '../reducers/productsReducer';
 import { getPagingParams, getPredicates } from '../selectors/productsSelectors';
 
