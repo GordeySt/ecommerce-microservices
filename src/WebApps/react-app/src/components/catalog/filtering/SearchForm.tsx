@@ -1,6 +1,7 @@
 ﻿import { Button, createStyles, makeStyles } from '@material-ui/core';
 import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
+import { UrlSearchParamsConstants } from '../../../common/constants/urlSearchParamsConstants';
 import { setPredicates } from '../state/actions/filteringActions';
 import { getProductsRequest, resetProducts } from '../state/actions/productActions';
 
@@ -28,7 +29,7 @@ export const SearchForm = () => {
     const dispatch = useDispatch();
 
     const handleSubmit = (value: IFormValue) => {
-        dispatch(setPredicates('productName', value.productName));
+        dispatch(setPredicates(UrlSearchParamsConstants.productName, value.productName));
         dispatch(resetProducts());
         dispatch(getProductsRequest());
     };

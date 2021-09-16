@@ -7,6 +7,7 @@ import AgeRatingFilter from './AgeRatingFilter';
 import AllProductsButton from './AllProductsButton';
 import PriceFilter from './PriceFilter';
 import RatingFilter from './RatingFilter';
+import { UrlSearchParamsConstants } from '../../../common/constants/urlSearchParamsConstants';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -30,7 +31,7 @@ export const FilteringSection = () => {
 
     const handleAgeRatingChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const ageRatingValue = event.target.value as string;
-        dispatch(setPredicates('minimumAge', ageRatingValue));
+        dispatch(setPredicates(UrlSearchParamsConstants.minimumAge, ageRatingValue));
         setAgeRating(ageRatingValue);
         dispatch(resetProducts());
     };
@@ -39,7 +40,7 @@ export const FilteringSection = () => {
         const priceOrderTypeValue = event.target.value as string;
         dispatch(resetSortingPredicates());
         setRatingOrderType('');
-        dispatch(setPredicates('PriceOrderType', priceOrderTypeValue));
+        dispatch(setPredicates(UrlSearchParamsConstants.priceOrderType, priceOrderTypeValue));
         setPriceOrderType(priceOrderTypeValue);
         dispatch(resetProducts());
     };
@@ -48,7 +49,7 @@ export const FilteringSection = () => {
         const ratingOrderType = event.target.value as string;
         dispatch(resetSortingPredicates());
         setPriceOrderType('');
-        dispatch(setPredicates('RatingOrderType', ratingOrderType));
+        dispatch(setPredicates(UrlSearchParamsConstants.ratingOrderType, ratingOrderType));
         setRatingOrderType(ratingOrderType);
         dispatch(resetProducts());
     };

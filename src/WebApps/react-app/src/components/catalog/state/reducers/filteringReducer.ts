@@ -1,4 +1,5 @@
-﻿import { PagingParams } from '../../../../common/models/pagination';
+﻿import { UrlSearchParamsConstants } from '../../../../common/constants/urlSearchParamsConstants';
+import { PagingParams } from '../../../../common/models/pagination';
 import { FilteringActions } from '../actions/filteringActions';
 import { FilteringActionType } from '../types/filteringTypes';
 
@@ -24,7 +25,9 @@ export const filteringReducer = (state = initialState, action: FilteringActionTy
             return { ...state, predicates: [] };
         case FilteringActions.RESET_SORTING_PREDICATES:
             const newPredicates = state.predicates.filter(
-                (predicate) => predicate.key !== 'PriceOrderType' && predicate.key !== 'RatingOrderType'
+                (predicate) =>
+                    predicate.key !== UrlSearchParamsConstants.priceOrderType &&
+                    predicate.key !== UrlSearchParamsConstants.ratingOrderType
             );
 
             return { ...state, predicates: newPredicates };
