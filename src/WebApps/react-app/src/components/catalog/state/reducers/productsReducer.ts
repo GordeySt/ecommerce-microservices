@@ -21,11 +21,12 @@ export const productsReducer = (state = initialState, action: ProductsActionType
             return { ...state, isLoadingMore: true };
         case ProductActions.LOAD_MORE_PRODUCTS_SUCCESS:
             const { products } = state;
+            const { data, pagination } = action.payload;
             return {
                 ...state,
                 isLoadingMore: false,
-                pagination: action.payload.pagination,
-                products: [...products, ...action.payload.data],
+                pagination: pagination,
+                products: [...products, data],
             };
         case ProductActions.LOAD_MORE_PRODUCTS_FAILURE:
             return { ...state, isLoadingMore: false };
