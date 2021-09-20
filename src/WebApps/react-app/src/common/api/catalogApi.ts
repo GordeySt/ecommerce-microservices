@@ -19,10 +19,7 @@ export const catalogApi = {
             )
             .then(sleep(1000))
             .then(responseBody),
-    addRating: (addRatingData: AddRatingData) => {
-        requests.post<void>(CatalogApiUrls.addRatingUrl, addRatingData);
-    },
-    changeRating: (changeRatingData: AddRatingData) => {
-        requests.post<void>(CatalogApiUrls.changeRatingUrl, changeRatingData);
-    },
+    addRating: (addRatingData: AddRatingData) => requests.post<void>(CatalogApiUrls.addRatingUrl, addRatingData),
+    changeRating: (changeRatingData: AddRatingData) =>
+        requests.post<void>(CatalogApiUrls.changeRatingUrl, changeRatingData),
 };

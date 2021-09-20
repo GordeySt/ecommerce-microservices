@@ -37,7 +37,9 @@ const CatalogPage = () => {
     const pagination = useTypedSelector(getPagination);
 
     useEffect(() => {
-        if (products.length <= 1) dispatch(getProductsRequest(new PagingParams(1)));
+        if (products.length <= 1) {
+            dispatch(getProductsRequest(new PagingParams(1)));
+        }
     }, [dispatch, products.length]);
 
     const handleGetNext = () => {

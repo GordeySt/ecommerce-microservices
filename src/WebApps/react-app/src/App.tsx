@@ -24,7 +24,9 @@ const App = () => {
 
     useEffect(() => {
         loadUser();
-        if (getUserId()) dispatch(getUserByIdRequest(getUserId()));
+        if (getUserId()) {
+            dispatch(getUserByIdRequest(getUserId()));
+        }
     }, [dispatch]);
 
     return (
