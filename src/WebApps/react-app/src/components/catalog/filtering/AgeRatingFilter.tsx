@@ -4,6 +4,7 @@ import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 interface IProps {
     classes: ClassNameMap<'form'>;
     ageRating: string;
+    // eslint-disable-next-line no-unused-vars
     handleAgeRatingChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 

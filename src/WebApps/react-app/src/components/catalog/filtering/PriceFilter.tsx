@@ -4,6 +4,7 @@ import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 interface IProps {
     classes: ClassNameMap<'form'>;
     priceOrderType: string;
+    // eslint-disable-next-line no-unused-vars
     handlePriceOrderTypeChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 

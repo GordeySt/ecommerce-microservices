@@ -4,6 +4,7 @@ import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 interface IProps {
     classes: ClassNameMap<'form'>;
     ratingOrderType: string;
+    // eslint-disable-next-line no-unused-vars
     handleRatingOrderTypeChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 
