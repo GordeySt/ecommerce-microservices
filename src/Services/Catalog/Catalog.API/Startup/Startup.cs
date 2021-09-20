@@ -1,3 +1,4 @@
+using Catalog.API.PL.Constants;
 using Catalog.API.Startup.Configuration;
 using Catalog.API.Startup.Middlewares;
 using Catalog.API.Startup.Settings;
@@ -70,7 +71,7 @@ namespace Catalog.API.Startup
 
             app.UseCors(x => x
                 .SetIsOriginAllowed(_ => true)
-                .WithExposedHeaders("WWW-Authenticate", "Pagination")
+                .WithExposedHeaders("WWW-Authenticate", HeaderConstants.PaginationHeader)
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
