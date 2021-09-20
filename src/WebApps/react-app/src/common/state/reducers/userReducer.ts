@@ -1,7 +1,11 @@
 ﻿import { IRatingUser } from '../../models/user';
 import { SetUserActionType, UserActions } from '../actions/userActions';
 
-const initialState = {
+export interface IUserState {
+    user: IRatingUser;
+}
+
+const initialState: IUserState = {
     user: {} as IRatingUser,
 };
 

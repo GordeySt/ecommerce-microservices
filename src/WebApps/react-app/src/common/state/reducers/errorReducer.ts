@@ -2,7 +2,11 @@
 import { ErrorActions } from '../actions/errorActions';
 import { ErrorActionTypes } from '../types/errorTypes';
 
-const initialState = {
+export interface IErrorState {
+    error: ERROR_ANY;
+}
+
+const initialState: IErrorState = {
     error: null as ERROR_ANY,
 };
 

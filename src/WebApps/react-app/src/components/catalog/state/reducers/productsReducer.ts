@@ -3,7 +3,13 @@ import { IProduct } from '../../../../common/models/product';
 import { ProductActions } from '../actions/actions';
 import { ProductsActionType } from '../actions/types';
 
-const initialState = {
+export interface IProductsState {
+    products: IProduct[];
+    pagination: IPagination;
+    isLoadingMore: boolean;
+}
+
+const initialState: IProductsState = {
     products: [] as IProduct[],
     pagination: {} as IPagination,
     isLoadingMore: false,

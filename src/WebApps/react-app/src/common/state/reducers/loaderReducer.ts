@@ -1,7 +1,11 @@
 ﻿import { LoaderActions } from '../actions/loaderActions';
 import { LoaderActionTypes } from '../types/loaderTypes';
 
-const initialState = {
+export interface ILoaderState {
+    loading: boolean;
+}
+
+const initialState: ILoaderState = {
     loading: false,
 };
 
