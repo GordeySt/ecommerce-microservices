@@ -1,4 +1,5 @@
 ﻿import { push } from 'connected-react-router';
+import { StatusCodes } from 'http-status-codes';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { userApi } from '../../api/userApi';
 import { CommonRoutes } from '../../constants/routeConstants';
@@ -22,7 +23,7 @@ export function* getUserById({ payload }: IGetUserByIdRequest) {
         const user: IRatingUser = yield call(userApi.getUserById, payload);
         yield all([put(getUserByIdSuccess()), put(setUser(user)), put(hideLoader())]);
     } catch (error: any) {
-        if (error.status === 404) {
+        if (error.status === StatusCodes.NOT_FOUND) {
             yield call(createUser, payload);
         }
         yield all([put(hideLoader()), setErrors(error), put(getUserByIdFailure(error))]);
