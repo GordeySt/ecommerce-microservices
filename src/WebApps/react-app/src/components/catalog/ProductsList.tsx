@@ -2,7 +2,7 @@
 import { IProduct } from '../../common/models/product';
 import { getCurrentUser } from '../../common/state/selectors/userSelectors';
 import { useTypedSelector } from '../../common/utils/hooks';
-import ProductCard from './ProductCard';
+import { ProductCardContainer } from './ProductCardContainer';
 
 interface IProps {
     products: IProduct[];
@@ -15,7 +15,7 @@ export const ProductsList = ({ products }: IProps) => {
         <div>
             {products.map((product) => (
                 <Fragment key={product.id}>
-                    <ProductCard product={product} user={user} />
+                    <ProductCardContainer product={product} user={user} />
                 </Fragment>
             ))}
         </div>

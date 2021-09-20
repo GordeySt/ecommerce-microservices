@@ -6,10 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import { Button, CardActions, CardHeader, IconButton } from '@material-ui/core';
 import { IProduct } from '../../common/models/product';
-import { useDispatch } from 'react-redux';
-import { addRatingRequest, changeRatingRequest } from './state/actions/actions';
 import { IRatingUser } from '../../common/models/user';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IProductRating } from '../../common/models/rating';
 
 const useStyles = makeStyles(() =>
@@ -45,27 +43,22 @@ const useStyles = makeStyles(() =>
     })
 );
 
-interface IProps {
+export interface IProductCardProps {
     product: IProduct;
     user: IRatingUser;
+    userRating: IProductRating | null;
+    findUserRating: () => void;
+    // eslint-disable-next-line no-unused-vars
+    onRatingChange: (newValue: number | null) => void;
 }
 
-const ProductCard = ({ product, user }: IProps) => {
+const ProductCard = (props: IProductCardProps) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const [userRating, setUserRating] = useState<IProductRating | null>(null);
-
-    const FindUserRating = useCallback(() => {
-        user.ratings?.map((rating) => {
-            if (rating.product?.id === product.id) {
-                setUserRating(rating);
-            }
-        });
-    }, [product.id, user.ratings]);
+    const { product, userRating, findUserRating, onRatingChange } = props;
 
     useEffect(() => {
-        FindUserRating();
-    }, [FindUserRating]);
+        findUserRating();
+    }, [findUserRating]);
 
     return (
         <Card className={classes.root}>
@@ -92,16 +85,7 @@ const ProductCard = ({ product, user }: IProps) => {
                             <Rating
                                 name={product.id}
                                 onChange={(event, newValue) => {
-                                    userRating
-                                        ? dispatch(changeRatingRequest(product.id, newValue))
-                                        : dispatch(addRatingRequest(product.id, newValue));
-
-                                    const newUserRating: IProductRating = {
-                                        ...userRating,
-                                        rating: newValue,
-                                    };
-
-                                    setUserRating(newUserRating);
+                                    onRatingChange(newValue);
                                 }}
                                 value={userRating?.rating || 0}
                             />
