@@ -24,7 +24,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': JSON.stringify(dotenv.parsed),
-            'process.env.name': JSON.stringify('devConfig'),
+            'process.env.name': JSON.stringify('dev'),
         }),
         new ReactRefreshWebpackPlugin(),
     ],
