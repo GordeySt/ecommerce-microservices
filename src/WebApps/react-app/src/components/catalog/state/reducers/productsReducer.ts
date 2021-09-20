@@ -5,17 +5,17 @@ import { ProductsActionType } from '../actions/types';
 
 export interface IProductsState {
     products: IProduct[];
-    pagination: IPagination;
+    pagination: IPagination | null;
     isLoadingMore: boolean;
 }
 
-const initialState: IProductsState = {
+const initialState = {
     products: [] as IProduct[],
-    pagination: {} as IPagination,
+    pagination: null,
     isLoadingMore: false,
-};
+} as IProductsState;
 
-export const productsReducer = (state = initialState, action: ProductsActionType) => {
+export const productsReducer = (state = initialState, action: ProductsActionType): IProductsState => {
     switch (action.type) {
         case ProductActions.LOAD_MORE_PRODUCTS_REQUEST:
             return { ...state, isLoadingMore: true };
@@ -26,7 +26,7 @@ export const productsReducer = (state = initialState, action: ProductsActionType
                 ...state,
                 isLoadingMore: false,
                 pagination: pagination,
-                products: [...products, data],
+                products: [...products, ...data],
             };
         case ProductActions.LOAD_MORE_PRODUCTS_FAILURE:
             return { ...state, isLoadingMore: false };

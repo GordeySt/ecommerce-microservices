@@ -5,9 +5,9 @@ export interface IUserState {
     user: IRatingUser;
 }
 
-const initialState: IUserState = {
+const initialState = {
     user: {} as IRatingUser,
-};
+} as IUserState;
 
 export const userReducer = (state = initialState, action: SetUserActionType) => {
     switch (action.type) {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Catalog.API.PL.Constants
+﻿namespace Catalog.API.PL.Constants
 {
-    public class HeaderConstants
+    public static class HeaderConstants
     {
         public const string PaginationHeader = "Pagination";
     }

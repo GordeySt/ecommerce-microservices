@@ -5,9 +5,9 @@ export interface ILoaderState {
     loading: boolean;
 }
 
-const initialState: ILoaderState = {
+const initialState = {
     loading: false,
-};
+} as ILoaderState;
 
 export const loaderReducer = (state = initialState, action: LoaderActionTypes) => {
     switch (action.type) {

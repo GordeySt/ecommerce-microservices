@@ -43,7 +43,7 @@ const CatalogPage = () => {
     }, [dispatch, products.length]);
 
     const handleGetNext = () => {
-        dispatch(loadMoreProductsRequest(new PagingParams(pagination.currentPage + 1)));
+        pagination && dispatch(loadMoreProductsRequest(new PagingParams(pagination.currentPage + 1)));
     };
 
     if (loading) {
