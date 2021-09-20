@@ -1,18 +1,10 @@
 ﻿import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Loader from '../../common/layout/Loader';
-import { PagingParams } from '../../common/models/pagination';
-import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors';
-import { useTypedSelector } from '../../common/utils/hooks';
+import { IPagination } from '../../common/models/pagination';
 import { ProductsList } from '../../components/catalog/ProductsList';
-import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/actions';
 import InfiniteScroll from 'react-infinite-scroller';
-import {
-    getLoadMoreLoadingStatus,
-    getPagination,
-    getProducts,
-} from '../../components/catalog/state/selectors/productsSelectors';
+import { IProduct } from '../../common/models/product';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -28,23 +20,22 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const CatalogPage = () => {
+export interface ICatalogPageProps {
+    loading: boolean;
+    isLoadingMore: boolean;
+    products: IProduct[];
+    pagination: IPagination;
+    handleGetNext: () => void;
+    onComponentLoad: () => void;
+}
+
+const CatalogPage = (props: ICatalogPageProps) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const loading = useTypedSelector(getLoadingStatus);
-    const isLoadingMore = useTypedSelector(getLoadMoreLoadingStatus);
-    const products = useTypedSelector(getProducts);
-    const pagination = useTypedSelector(getPagination);
+    const { onComponentLoad, loading, handleGetNext, isLoadingMore, pagination, products } = props;
 
     useEffect(() => {
-        if (products.length <= 1) {
-            dispatch(getProductsRequest(new PagingParams(1)));
-        }
-    }, [dispatch, products.length]);
-
-    const handleGetNext = () => {
-        pagination && dispatch(loadMoreProductsRequest(new PagingParams(pagination.currentPage + 1)));
-    };
+        onComponentLoad();
+    }, [onComponentLoad]);
 
     if (loading) {
         return <Loader />;
