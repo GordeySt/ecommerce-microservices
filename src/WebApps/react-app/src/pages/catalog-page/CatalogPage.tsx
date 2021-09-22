@@ -1,7 +1,7 @@
 ﻿import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
 import { IPagination, PagingParams } from '../../common/models/pagination';
-import { ProductsList } from '../../components/catalog/ProductsList';
+import ProductsList from '../../components/catalog/ProductsList';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IProduct } from '../../common/models/product';
 import { SearchForm } from '../../components/catalog/filtering/SearchForm';

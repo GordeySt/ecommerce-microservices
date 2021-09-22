@@ -11,7 +11,7 @@ import {
 } from '../../components/catalog/state/selectors/productsSelectors';
 import CatalogPage, { ICatalogPageProps } from './CatalogPage';
 
-export const CatalogPageContainer = () => {
+const CatalogPageContainer = () => {
     const dispatch = useDispatch();
     const isLoadingMore = useTypedSelector(getLoadMoreLoadingStatus);
     const isLoadingProducts = useTypedSelector(getLoadingProductsStatus);
@@ -34,3 +34,5 @@ export const CatalogPageContainer = () => {
 
     return <CatalogPage {...catalogPageProps} />;
 };
+
+export default CatalogPageContainer;
