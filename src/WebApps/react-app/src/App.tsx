@@ -13,18 +13,20 @@ import AuthProvider from './common/auth/authProvider';
 import SignoutOidc from './common/auth/SignoutOidc';
 import PrivateRoute from './common/layout/PrivateRoute';
 import { WelcomePage } from './pages/welcome-page/WelcomePage';
-import CatalogPage from './pages/catalog-page/CatalogPage';
 import NavBar from './common/layout/NavBar';
 import { useDispatch } from 'react-redux';
 import { getUserByIdRequest } from './common/state/actions/userActions';
 import { getUserId } from './common/auth/authHeaders';
+import { CatalogPageContainer } from './pages/catalog-page/CatalogPageContainer';
 
 const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         loadUser();
-        if (getUserId()) dispatch(getUserByIdRequest(getUserId()));
+        if (getUserId()) {
+            dispatch(getUserByIdRequest(getUserId()));
+        }
     }, [dispatch]);
 
     return (
@@ -41,7 +43,7 @@ const App = () => {
                                 <Container maxWidth="lg">
                                     <Switch>
                                         <PrivateRoute path={CommonRoutes.welcomePageRoute} component={WelcomePage} />
-                                        <Route path={CatalogRoutes.catalogPageRoute} component={CatalogPage} />
+                                        <Route path={CatalogRoutes.catalogPageRoute} component={CatalogPageContainer} />
                                         <Route path={AuthRoutes.signInOidcRoute} component={SignInOidc} />
                                         <Route path={AuthRoutes.signOutOidcRoute} component={SignoutOidc} />
                                         <Route path={AuthRoutes.signUpSuccessRoute} component={SignUpSuccess} />

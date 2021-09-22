@@ -36,7 +36,6 @@ namespace Catalog.API.PL.Controllers
         /// <response code="400">If rating already exists</response>
         /// <response code="404">If product rating not found (user or product not found)</response>
         [HttpPost("add-ratings")]
-        /*[ProductRatingParamFilter]*/
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -66,7 +65,6 @@ namespace Catalog.API.PL.Controllers
         /// <response code="200">Success</response>
         /// <response code="404">If product rating not found (user or product not found)</response>
         [HttpPost("change-ratings")]
-        /*[ProductRatingParamFilter]*/
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ChangeRatingAtProduct(AddRatingsDto addRatings)

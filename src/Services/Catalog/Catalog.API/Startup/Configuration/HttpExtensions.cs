@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Catalog.API.PL.Constants;
+using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
 namespace Catalog.API.Startup.Configuration
@@ -16,7 +17,7 @@ namespace Catalog.API.Startup.Configuration
                 totalPages
             };
 
-            response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationHeader));
+            response.Headers.Add(HeaderConstants.PaginationHeader, JsonSerializer.Serialize(paginationHeader));
         }
     }
 }

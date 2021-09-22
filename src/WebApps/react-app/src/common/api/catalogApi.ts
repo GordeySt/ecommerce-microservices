@@ -4,10 +4,10 @@ import { PaginatedResult } from '../models/pagination';
 import { IProduct } from '../models/product';
 import { requests, responseBody, sleep } from './baseApi';
 
-type AddRatingData = {
+interface IAddRatingData {
     id: string;
     ratingCount: number | null;
-};
+}
 
 export const catalogApi = {
     loadProducts: (params: URLSearchParams) =>
@@ -15,10 +15,7 @@ export const catalogApi = {
             .get<PaginatedResult<IProduct[]>>(CatalogApiUrls.loadCatalogUrl, { params })
             .then(sleep(1000))
             .then(responseBody),
-    addRating: (addRatingData: AddRatingData) => {
-        requests.post<void>(CatalogApiUrls.addRatingUrl, addRatingData);
-    },
-    changeRating: (changeRatingData: AddRatingData) => {
-        requests.post<void>(CatalogApiUrls.changeRatingUrl, changeRatingData);
-    },
+    addRating: (addRatingData: IAddRatingData) => requests.post<void>(CatalogApiUrls.addRatingUrl, addRatingData),
+    changeRating: (changeRatingData: IAddRatingData) =>
+        requests.post<void>(CatalogApiUrls.changeRatingUrl, changeRatingData),
 };

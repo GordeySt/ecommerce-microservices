@@ -6,21 +6,37 @@
 }
 
 export class PaginatedResult<T> {
-    data: T;
-    pagination: IPagination;
+    private _data: T;
+    private _pagination: IPagination;
+
+    public get data() {
+        return this._data;
+    }
+
+    public get pagination() {
+        return this._pagination;
+    }
 
     constructor(data: T, pagination: IPagination) {
-        this.data = data;
-        this.pagination = pagination;
+        this._data = data;
+        this._pagination = pagination;
     }
 }
 
 export class PagingParams {
-    pageNumber;
-    pageSize;
+    private readonly _pageNumber;
+    private readonly _pageSize;
+
+    public get pageNumber() {
+        return this._pageNumber;
+    }
+
+    public get pageSize() {
+        return this._pageSize;
+    }
 
     constructor(pageNumber = 1, pageSize = 2) {
-        this.pageNumber = pageNumber;
-        this.pageSize = pageSize;
+        this._pageNumber = pageNumber;
+        this._pageSize = pageSize;
     }
 }

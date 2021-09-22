@@ -6,10 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import { Button, CardActions, CardHeader, IconButton } from '@material-ui/core';
 import { IProduct } from '../../common/models/product';
-import { useDispatch } from 'react-redux';
-import { addRatingRequest, changeRatingRequest } from './state/actions/ratingActions';
 import { IRatingUser } from '../../common/models/user';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IProductRating } from '../../common/models/rating';
 
 const useStyles = makeStyles(() =>
@@ -45,39 +43,39 @@ const useStyles = makeStyles(() =>
     })
 );
 
-interface IProps {
+export interface IProductCardProps {
     product: IProduct;
     user: IRatingUser;
+    userRating: IProductRating | null;
+    findUserRating: () => void;
+    // eslint-disable-next-line no-unused-vars
+    onRatingChange: (newValue: number | null) => void;
 }
 
-const ProductCard = ({ product, user }: IProps) => {
+const ProductCard = (props: IProductCardProps) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const [userRating, setUserRating] = useState<IProductRating | null>(null);
-
-    const FindUserRating = useCallback(() => {
-        user.ratings?.map((rating) => {
-            if (rating.product?.id === product.id) {
-                setUserRating(rating);
-            }
-        });
-    }, [product.id, user.ratings]);
+    const {
+        product: { ageRating, averageRating, name, price, summary, mainImageUrl, id },
+        userRating,
+        findUserRating,
+        onRatingChange,
+    } = props;
 
     useEffect(() => {
-        FindUserRating();
-    }, [FindUserRating]);
+        findUserRating();
+    }, [findUserRating]);
 
     return (
         <Card className={classes.root}>
-            <CardHeader action={<div>{product.ageRating}+</div>} title={product.name} subheader={product.price + '$'} />
+            <CardHeader action={<div>{ageRating}+</div>} title={name} subheader={price + '$'} />
             <CardMedia
                 className={classes.media}
-                image={product.mainImageUrl || 'assets/images/no-image.jpg'}
+                image={mainImageUrl || 'assets/images/no-image.jpg'}
                 title="Paella dish"
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {product.summary}
+                    {summary}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -90,18 +88,9 @@ const ProductCard = ({ product, user }: IProps) => {
                                 <div className={classes.averageRating}>{userRating?.rating || 0}</div>
                             </div>
                             <Rating
-                                name={product.id}
+                                name={id}
                                 onChange={(event, newValue) => {
-                                    userRating
-                                        ? dispatch(changeRatingRequest(product.id, newValue))
-                                        : dispatch(addRatingRequest(product.id, newValue));
-
-                                    const newUserRating: IProductRating = {
-                                        ...userRating,
-                                        rating: newValue,
-                                    };
-
-                                    setUserRating(newUserRating);
+                                    onRatingChange(newValue);
                                 }}
                                 value={userRating?.rating || 0}
                             />
@@ -109,9 +98,9 @@ const ProductCard = ({ product, user }: IProps) => {
                         <div className={classes.ratingContainer}>
                             <div className={classes.ratingBlock}>
                                 <span className={classes.averageRating}>Avg rating: </span>
-                                <div className={classes.averageRating}>{+product.averageRating.toFixed(1)}</div>
+                                <div className={classes.averageRating}>{+averageRating.toFixed(1)}</div>
                             </div>
-                            <Rating name="read-only" value={product.averageRating} precision={0.5} readOnly />
+                            <Rating name="read-only" value={averageRating} precision={0.5} readOnly />
                         </div>
                     </div>
                 </IconButton>

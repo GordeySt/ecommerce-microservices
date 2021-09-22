@@ -1,9 +1,13 @@
 ﻿import { IRatingUser } from '../../models/user';
 import { SetUserActionType, UserActions } from '../actions/userActions';
 
+export interface IUserState {
+    user: IRatingUser;
+}
+
 const initialState = {
     user: {} as IRatingUser,
-};
+} as IUserState;
 
 export const userReducer = (state = initialState, action: SetUserActionType) => {
     switch (action.type) {

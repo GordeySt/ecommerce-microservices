@@ -9,7 +9,7 @@ export const UserActions = {
     GET_CURRENT_USER_SUCCESS: 'GET_CURRENT_USER_SUCCESS',
     GET_CURRENT_USER_FAILURE: 'GET_CURRENT_USER_FAILURE',
     SET_USER: 'SET_USER',
-};
+} as const;
 
 export interface IGetUserByIdRequest {
     type: typeof UserActions.GET_USER_BY_ID_REQUEST;

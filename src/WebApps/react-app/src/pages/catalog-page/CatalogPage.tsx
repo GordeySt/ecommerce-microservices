@@ -1,20 +1,11 @@
 ﻿import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { PagingParams } from '../../common/models/pagination';
-import { useTypedSelector } from '../../common/utils/hooks';
+import { IPagination } from '../../common/models/pagination';
 import { ProductsList } from '../../components/catalog/ProductsList';
-import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/productActions';
 import InfiniteScroll from 'react-infinite-scroller';
-import {
-    getLoadingProductsStatus,
-    getLoadMoreLoadingStatus,
-    getPagination,
-    getProducts,
-} from '../../components/catalog/state/selectors/productsSelectors';
-import { FilteringSection } from '../../components/catalog/filtering/FilteringSection';
-import { setPagingParams } from '../../components/catalog/state/actions/filteringActions';
+import { IProduct } from '../../common/models/product';
 import { SearchForm } from '../../components/catalog/filtering/SearchForm';
+import { FilteringSection } from '../../components/catalog/filtering/FilteringSection';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -35,33 +26,29 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const CatalogPage = () => {
-    const constants = {
-        initialPageNumber: 1,
-    };
+export interface ICatalogPageProps {
+    loading: boolean;
+    isLoadingMore: boolean;
+    products: IProduct[];
+    pagination: IPagination;
+    handleGetNext: () => void;
+    onComponentLoad: () => void;
+}
+
+const CatalogPage = (props: ICatalogPageProps) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const isLoadingProducts = useTypedSelector(getLoadingProductsStatus);
-    const isLoadingMore = useTypedSelector(getLoadMoreLoadingStatus);
-    const products = useTypedSelector(getProducts);
-    const pagination = useTypedSelector(getPagination);
+    const { onComponentLoad, loading, handleGetNext, isLoadingMore, pagination, products } = props;
 
     useEffect(() => {
-        dispatch(setPagingParams(new PagingParams(constants.initialPageNumber)));
-        if (products.length === 0) dispatch(getProductsRequest());
-    }, [dispatch, products.length, constants.initialPageNumber]);
-
-    const handleGetNext = () => {
-        dispatch(setPagingParams(new PagingParams(pagination.currentPage + 1)));
-        dispatch(loadMoreProductsRequest());
-    };
+        onComponentLoad();
+    }, [onComponentLoad]);
 
     return (
         <>
             <SearchForm />
             <div className={classes.catalogPageContainer}>
                 <div>
-                    {isLoadingProducts ? (
+                    {loading ? (
                         <CircularProgress color="secondary" className={classes.loader} />
                     ) : (
                         <InfiniteScroll
