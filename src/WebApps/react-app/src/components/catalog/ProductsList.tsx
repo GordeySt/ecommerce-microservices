@@ -13,11 +13,12 @@ export const ProductsList = ({ products }: IProps) => {
 
     return (
         <div>
-            {products.map((product) => (
-                <Fragment key={product.id}>
-                    <ProductCardContainer product={product} user={user} />
-                </Fragment>
-            ))}
+            {products &&
+                products.map((product) => (
+                    <Fragment key={product.id}>
+                        <ProductCardContainer product={product} user={user} />
+                    </Fragment>
+                ))}
         </div>
     );
 };
