@@ -67,7 +67,7 @@
     },
     // Product Ratings API -- http://localhost:5000/api/ProductRatings
     {
-      "DownstreamPathTemplate": "/api/ProductRatings/add-ratings/id/{id:guid}",
+      "DownstreamPathTemplate": "/api/ProductRatings/add-ratings",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -75,7 +75,7 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/ProductRatings/add-ratings/id/{id:guid}",
+      "UpstreamPathTemplate": "/ProductRatings/add-ratings",
       "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
@@ -83,7 +83,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/ProductRatings/change-ratings/id/{id:guid}",
+      "DownstreamPathTemplate": "/api/ProductRatings/change-ratings",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -91,7 +91,7 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/ProductRatings/change-ratings/id/{id:guid}",
+      "UpstreamPathTemplate": "/ProductRatings/change-ratings",
       "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",

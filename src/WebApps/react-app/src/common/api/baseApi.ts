@@ -1,5 +1,6 @@
 ﻿import axios, { AxiosResponse } from 'axios';
 import { LocalStorageConstants } from '../constants/localStorageConstants';
+import { PaginatedResult } from '../models/pagination';
 import { ErrorsHandler } from './errors';
 
 const delayValue = 1000;
@@ -21,6 +22,13 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     async (response) => {
+        const pagination = response.headers['pagination'];
+        if (pagination) {
+            response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+
+            return response as AxiosResponse<PaginatedResult<any>>;
+        }
+
         return response;
     },
     (er) => {
@@ -34,10 +42,10 @@ axios.interceptors.response.use(
     }
 );
 
-const sleep = (ms: number) => (response: AxiosResponse) =>
+export const sleep = (ms: number) => (response: AxiosResponse) =>
     new Promise<AxiosResponse>((resolve) => setTimeout(() => resolve(response), ms));
 
-const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+export const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 export const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(sleep(delayValue)).then(responseBody),

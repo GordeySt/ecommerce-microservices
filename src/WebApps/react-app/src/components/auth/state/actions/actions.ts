@@ -1,4 +1,5 @@
-﻿import { IUserFormValues } from '../../../../common/models/user';
+﻿import { ERROR_ANY } from '../../../../common/models/anyAliases';
+import { IUserFormValues } from '../../../../common/models/user';
 
 export const AuthActions = {
     SIGNUP_REQUEST: 'SIGNUP_REQUEST',
@@ -21,7 +22,7 @@ export const signUpUserSuccess = () => ({
     type: AuthActions.SIGNUP_SUCCESS,
 });
 
-export const signUpUserFailure = (error: Error) => ({
+export const signUpUserFailure = (error: ERROR_ANY) => ({
     type: AuthActions.SIGNUP_FAILURE,
     payload: error,
 });
@@ -35,7 +36,7 @@ export const resendEmailVerificationSuccess = () => ({
     type: AuthActions.RESEND_EMAIL_VERIFICATION_SUCCESS,
 });
 
-export const resendEmailVerificationFailure = (error: Error) => ({
+export const resendEmailVerificationFailure = (error: ERROR_ANY) => ({
     type: AuthActions.RESEND_EMAIL_VERIFICATION_FAILURE,
     payload: error,
 });
@@ -52,7 +53,7 @@ export const verifyEmailSuccess = () => ({
     type: AuthActions.VERIFY_EMAIL_SUCCESS,
 });
 
-export const verifyEmailFailure = (error: Error) => ({
+export const verifyEmailFailure = (error: ERROR_ANY) => ({
     type: AuthActions.VERIFY_EMAIL_FAILURE,
     payload: error,
 });

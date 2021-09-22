@@ -4,8 +4,10 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { productsReducer } from '../../../components/catalog/state/reducers/productsReducer';
 import { errorReducer } from '../reducers/errorReducer';
 import { loaderReducer } from '../reducers/loaderReducer';
+import { userReducer } from '../reducers/userReducer';
 import rootSaga from '../sagas/rootSaga';
 
 export let history: MemoryHistory<unknown> | History<unknown>;
@@ -19,6 +21,8 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'producti
 const reducers = {
     loader: loaderReducer,
     errors: errorReducer,
+    products: productsReducer,
+    user: userReducer,
     router: connectRouter(history),
 };
 

@@ -66,6 +66,8 @@ namespace Catalog.API.BL.Services
 
             ProductUtils.SearchByName(ref products, _productRepository, productsParams.ProductName);
 
+            _productRepository.SortProductsByDefinition(ref products, OrderType.Asc, t => t.Id);
+
             var productsDto = products
                 .ProjectTo<ProductDto>(_mapper.ConfigurationProvider);
 

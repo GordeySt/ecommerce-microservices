@@ -12,7 +12,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': JSON.stringify(dotenv.parsed),
-            'process.env.name': JSON.stringify('prodConfig'),
+            'process.env.name': JSON.stringify('prod'),
         }),
         new BundleAnalyzerPlugin(),
     ],

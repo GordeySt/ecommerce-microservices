@@ -1,7 +1,7 @@
 ﻿using Identity.API.Configurations;
+using Identity.API.Services;
 using Identity.API.Startup.Settings;
 using Identity.Domain.Entities;
-using IdentityServer4.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.API.Startup.Configurations
@@ -17,7 +17,8 @@ namespace Identity.API.Startup.Configurations
                 .AddInMemoryIdentityResources(IdentityConfiguration.IdentityResources)
                 .AddInMemoryApiScopes(IdentityConfiguration.Scopes)
                 .AddInMemoryClients(IdentityConfiguration.GetClients(appSettings))
-                .AddDeveloperSigningCredential();
+                .AddDeveloperSigningCredential()
+                .AddProfileService<ProfileService>();
 
             services.ConfigureApplicationCookie(config =>
             {

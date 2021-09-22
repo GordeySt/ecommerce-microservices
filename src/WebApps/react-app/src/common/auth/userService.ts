@@ -1,5 +1,5 @@
 ﻿import { UserManager, UserManagerSettings } from 'oidc-client';
-import { setAccessTokenHeader, setIdTokenHeader } from './authHeaders';
+import { setAccessTokenHeader, setIdTokenHeader, setUserId } from './authHeaders';
 import { SignoutRedirectArgsType } from './types';
 
 const userManagerSettings: UserManagerSettings = {
@@ -17,8 +17,10 @@ export async function loadUser() {
     const user = await userManager.getUser();
     const accessToken = user?.access_token;
     const idToken = user?.id_token;
+    const userId = user?.profile.sub;
     setAccessTokenHeader(accessToken);
     setIdTokenHeader(idToken);
+    setUserId(userId);
 }
 
 export const signinRedirect = () => userManager.signinRedirect();
