@@ -54,7 +54,12 @@ export interface IProductCardProps {
 
 const ProductCard = (props: IProductCardProps) => {
     const classes = useStyles();
-    const { product, userRating, findUserRating, onRatingChange } = props;
+    const {
+        product: { ageRating, averageRating, name, price, summary, mainImageUrl, id },
+        userRating,
+        findUserRating,
+        onRatingChange,
+    } = props;
 
     useEffect(() => {
         findUserRating();
@@ -62,15 +67,15 @@ const ProductCard = (props: IProductCardProps) => {
 
     return (
         <Card className={classes.root}>
-            <CardHeader action={<div>{product.ageRating}+</div>} title={product.name} subheader={product.price + '$'} />
+            <CardHeader action={<div>{ageRating}+</div>} title={name} subheader={price + '$'} />
             <CardMedia
                 className={classes.media}
-                image={product.mainImageUrl || 'assets/images/no-image.jpg'}
+                image={mainImageUrl || 'assets/images/no-image.jpg'}
                 title="Paella dish"
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {product.summary}
+                    {summary}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -83,7 +88,7 @@ const ProductCard = (props: IProductCardProps) => {
                                 <div className={classes.averageRating}>{userRating?.rating || 0}</div>
                             </div>
                             <Rating
-                                name={product.id}
+                                name={id}
                                 onChange={(event, newValue) => {
                                     onRatingChange(newValue);
                                 }}
@@ -93,9 +98,9 @@ const ProductCard = (props: IProductCardProps) => {
                         <div className={classes.ratingContainer}>
                             <div className={classes.ratingBlock}>
                                 <span className={classes.averageRating}>Avg rating: </span>
-                                <div className={classes.averageRating}>{+product.averageRating.toFixed(1)}</div>
+                                <div className={classes.averageRating}>{+averageRating.toFixed(1)}</div>
                             </div>
-                            <Rating name="read-only" value={product.averageRating} precision={0.5} readOnly />
+                            <Rating name="read-only" value={averageRating} precision={0.5} readOnly />
                         </div>
                     </div>
                 </IconButton>
