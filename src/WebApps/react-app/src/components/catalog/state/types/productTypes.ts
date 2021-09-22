@@ -10,6 +10,8 @@ export type ProductsActionType =
     | ReturnType<typeof actions.getProductsRequest>
     | ReturnType<typeof actions.getProductsSuccess>
     | ReturnType<typeof actions.getProductsFailure>
+    | ReturnType<typeof actions.getProductByIdSuccess>
     | ReturnType<typeof actions.resetProducts>;
 export type GetProductsRequestType = ReturnType<typeof actions.getProductsRequest>;
 export type LoadMoreProductsRequestType = ReturnType<typeof actions.loadMoreProductsRequest>;
+export type GetProductsByIdRequestType = ReturnType<typeof actions.getProductByIdRequest>;

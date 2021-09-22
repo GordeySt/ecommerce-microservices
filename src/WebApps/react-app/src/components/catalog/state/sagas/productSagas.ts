@@ -3,8 +3,11 @@ import { catalogApi } from '../../../../common/api/catalogApi';
 import { PaginatedResult, PagingParams } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
 import { setErrors } from '../../../../common/state/actions/errorActions';
+import { hideLoader, showLoader } from '../../../../common/state/actions/loaderActions';
 import { formUrlSearchParams } from '../../../../common/utils/functions';
 import {
+    getProductByIdFailure,
+    getProductByIdSuccess,
     getProductsFailure,
     getProductsSuccess,
     loadMoreProductsFailure,
@@ -16,6 +19,7 @@ import {
 } from '../actions/productActions';
 import { IPredicate } from '../reducers/productsReducer';
 import { getPagingParams, getPredicates } from '../selectors/productsSelectors';
+import { GetProductsByIdRequestType } from '../types/productTypes';
 
 export function* getProducts() {
     try {
@@ -42,7 +46,19 @@ export function* loadMoreProducts() {
     }
 }
 
+export function* getProductById({ payload }: GetProductsByIdRequestType) {
+    try {
+        yield put(showLoader());
+        const product: IProduct = yield call(catalogApi.getProductById, payload);
+        yield all([put(hideLoader()), put(getProductByIdSuccess(product))]);
+        yield;
+    } catch (error) {
+        yield put(getProductByIdFailure(error));
+    }
+}
+
 export default function* productRootSaga() {
     yield takeEvery(ProductActions.GET_PRODUCTS_REQUEST, getProducts);
     yield takeEvery(ProductActions.LOAD_MORE_PRODUCTS_REQUEST, loadMoreProducts);
+    yield takeEvery(ProductActions.GET_PRODUCTS_BY_ID_REQUEST, getProductById);
 }

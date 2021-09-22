@@ -13,10 +13,12 @@ export interface IProductsState {
     pagination: IPagination | null;
     isLoadingMore: boolean;
     isLoadingProducts: boolean;
+    product: IProduct;
 }
 
 const initialState = {
     products: [] as IProduct[],
+    product: {} as IProduct,
     pagination: null,
     isLoadingMore: false,
     isLoadingProducts: false,
@@ -43,6 +45,8 @@ export const productsReducer = (state = initialState, action: ProductsActionType
             };
         case ProductActions.LOAD_MORE_PRODUCTS_FAILURE:
             return { ...state, isLoadingMore: false };
+        case ProductActions.GET_PRODUCTS_BY_ID_SUCCESS:
+            return { ...state, product: action.payload };
         case ProductActions.SET_PRODUCTS:
             return { ...state, products: action.payload };
         case ProductActions.SET_PAGINATION:
