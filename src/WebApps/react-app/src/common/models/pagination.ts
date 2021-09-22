@@ -24,8 +24,8 @@ export class PaginatedResult<T> {
 }
 
 export class PagingParams {
-    private _pageNumber;
-    private _pageSize;
+    private readonly _pageNumber;
+    private readonly _pageSize;
 
     public get pageNumber() {
         return this._pageNumber;
