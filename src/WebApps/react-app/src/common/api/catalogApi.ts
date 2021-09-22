@@ -15,6 +15,7 @@ export const catalogApi = {
             .get<PaginatedResult<IProduct[]>>(CatalogApiUrls.loadCatalogUrl, { params })
             .then(sleep(1000))
             .then(responseBody),
+    getProductById: (id: string) => requests.get<IProduct>(CatalogApiUrls.getProductByIdUrl + id),
     addRating: (addRatingData: IAddRatingData) => requests.post<void>(CatalogApiUrls.addRatingUrl, addRatingData),
     changeRating: (changeRatingData: IAddRatingData) =>
         requests.post<void>(CatalogApiUrls.changeRatingUrl, changeRatingData),
