@@ -1,5 +1,6 @@
 ﻿using Catalog.API.BL.Interfaces;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using StackExchange.Redis.Extensions.Core.Abstractions;
 using System;
 using System.Threading.Tasks;
@@ -22,7 +23,9 @@ namespace Catalog.API.BL.Services.ResponseCaching
                 return;
             }
 
-            var serializedResponse = JsonConvert.SerializeObject(response);
+            var serializerSettings = new JsonSerializerSettings();
+            serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var serializedResponse = JsonConvert.SerializeObject(response, serializerSettings);
 
             await _redisCache.GetDbFromConfiguration().AddAsync(cacheKey, serializedResponse);
             await _redisCache.GetDbFromConfiguration().UpdateExpiryAsync(cacheKey, timeToLive);
