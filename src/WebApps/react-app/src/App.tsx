@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { getUserByIdRequest } from './common/state/actions/userActions';
 import { getUserId } from './common/auth/authHeaders';
 import { CatalogPageContainer } from './pages/catalog-page/CatalogPageContainer';
+import ProductDetailsPage from './pages/catalog-page/ProductDetailsPage';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -42,8 +43,15 @@ const App = () => {
                                 <NavBar />
                                 <Container maxWidth="lg">
                                     <Switch>
+                                        <PrivateRoute
+                                            path={CatalogRoutes.catalogPageRoute + '/:id'}
+                                            component={ProductDetailsPage}
+                                        />
                                         <PrivateRoute path={CommonRoutes.welcomePageRoute} component={WelcomePage} />
-                                        <Route path={CatalogRoutes.catalogPageRoute} component={CatalogPageContainer} />
+                                        <PrivateRoute
+                                            path={CatalogRoutes.catalogPageRoute}
+                                            component={CatalogPageContainer}
+                                        />
                                         <Route path={AuthRoutes.signInOidcRoute} component={SignInOidc} />
                                         <Route path={AuthRoutes.signOutOidcRoute} component={SignoutOidc} />
                                         <Route path={AuthRoutes.signUpSuccessRoute} component={SignUpSuccess} />

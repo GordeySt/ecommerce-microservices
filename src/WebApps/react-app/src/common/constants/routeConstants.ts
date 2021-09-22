@@ -23,6 +23,7 @@ export const AuthApiUrls = {
 
 export const CatalogApiUrls = {
     loadCatalogUrl: '/catalog',
+    getProductByIdUrl: '/catalog/id/',
     addRatingUrl: '/productratings/add-ratings',
     changeRatingUrl: '/productratings/change-ratings',
 };
