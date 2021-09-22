@@ -1,11 +1,14 @@
 ﻿import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
-import { IPagination } from '../../common/models/pagination';
+import { IPagination, PagingParams } from '../../common/models/pagination';
 import { ProductsList } from '../../components/catalog/ProductsList';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IProduct } from '../../common/models/product';
 import { SearchForm } from '../../components/catalog/filtering/SearchForm';
 import { FilteringSection } from '../../components/catalog/filtering/FilteringSection';
+import { Dispatch } from 'redux';
+import { setPagingParams } from '../../components/catalog/state/actions/filteringActions';
+import { getProductsRequest } from '../../components/catalog/state/actions/productActions';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -33,22 +36,28 @@ export interface ICatalogPageProps {
     pagination: IPagination;
     handleGetNext: () => void;
     onComponentLoad: () => void;
+    isLoadingProducts: boolean;
+    dispatch: Dispatch<any>;
 }
 
 const CatalogPage = (props: ICatalogPageProps) => {
     const classes = useStyles();
-    const { onComponentLoad, loading, handleGetNext, isLoadingMore, pagination, products } = props;
+    const { isLoadingProducts, handleGetNext, isLoadingMore, pagination, products, dispatch } = props;
 
     useEffect(() => {
-        onComponentLoad();
-    }, [onComponentLoad]);
+        dispatch(setPagingParams(new PagingParams(1)));
+
+        if (products.length === 0) {
+            dispatch(getProductsRequest());
+        }
+    }, [dispatch, products.length]);
 
     return (
         <>
             <SearchForm />
             <div className={classes.catalogPageContainer}>
                 <div>
-                    {loading ? (
+                    {isLoadingProducts ? (
                         <CircularProgress color="secondary" className={classes.loader} />
                     ) : (
                         <InfiniteScroll

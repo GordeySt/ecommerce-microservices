@@ -6,8 +6,8 @@
 }
 
 export class PaginatedResult<T> {
-    private _data: T;
-    private _pagination: IPagination;
+    private readonly _data: T;
+    private readonly _pagination: IPagination;
 
     public get data() {
         return this._data;

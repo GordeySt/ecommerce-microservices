@@ -13,12 +13,15 @@ export const ProductsList = ({ products }: IProps) => {
 
     return (
         <div>
-            {products &&
+            {products && products.length > 0 ? (
                 products.map((product) => (
                     <Fragment key={product.id}>
                         <ProductCardContainer product={product} user={user} />
                     </Fragment>
-                ))}
+                ))
+            ) : (
+                <div>No products</div>
+            )}
         </div>
     );
 };
