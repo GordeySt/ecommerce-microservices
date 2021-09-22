@@ -9,6 +9,8 @@ import { IProduct } from '../../common/models/product';
 import { IRatingUser } from '../../common/models/user';
 import { useEffect } from 'react';
 import { IProductRating } from '../../common/models/rating';
+import { useHistory } from 'react-router';
+import { CatalogRoutes } from '../../common/constants/routeConstants';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -54,6 +56,7 @@ export interface IProductCardProps {
 
 const ProductCard = (props: IProductCardProps) => {
     const classes = useStyles();
+    const history = useHistory();
     const {
         product: { ageRating, averageRating, name, price, summary, mainImageUrl, id },
         userRating,
@@ -79,7 +82,9 @@ const ProductCard = (props: IProductCardProps) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <Button size="medium">Learn More</Button>
+                <Button onClick={() => history.push(CatalogRoutes.catalogPageRoute + `/${id}`)} size="medium">
+                    Learn More
+                </Button>
                 <IconButton className={classes.iconButton} aria-label="show more">
                     <div className={classes.allRatingsContainer}>
                         <div className={classes.ratingContainer}>
