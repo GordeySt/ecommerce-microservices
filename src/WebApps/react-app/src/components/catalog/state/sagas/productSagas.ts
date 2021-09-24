@@ -14,8 +14,8 @@ import {
     setPagination,
     setProducts,
 } from '../actions/productActions';
-import { IPredicate } from '../reducers/productsReducer';
 import { getPagingParams, getPredicates } from '../selectors/productsSelectors';
+import { IPredicate } from '../types/filteringTypes';
 
 export function* getProducts() {
     try {

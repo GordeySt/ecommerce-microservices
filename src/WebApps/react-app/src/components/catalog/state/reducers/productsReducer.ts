@@ -3,11 +3,6 @@ import { IProduct } from '../../../../common/models/product';
 import { ProductActions } from '../actions/productActions';
 import { ProductsActionType } from '../types/productTypes';
 
-export interface IPredicate {
-    key: string;
-    value: string;
-}
-
 export interface IProductsState {
     products: IProduct[];
     pagination: IPagination | null;

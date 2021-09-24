@@ -1,12 +1,7 @@
 ﻿import { UrlSearchParamsConstants } from '../../../../common/constants/urlSearchParamsConstants';
 import { PagingParams } from '../../../../common/models/pagination';
 import { FilteringActions } from '../actions/filteringActions';
-import { FilteringActionType } from '../types/filteringTypes';
-
-export interface IPredicate {
-    key: string;
-    value: string;
-}
+import { FilteringActionType, IPredicate } from '../types/filteringTypes';
 
 const initialState = {
     pagingParams: {} as PagingParams,
