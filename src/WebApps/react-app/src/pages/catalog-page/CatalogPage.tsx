@@ -19,7 +19,7 @@ const useStyles = makeStyles(() =>
         filters: {
             marginLeft: '30px',
         },
-        loaderDiv: {
+        loaderWrapper: {
             display: 'flex',
             justifyContent: 'center',
         },
@@ -47,7 +47,7 @@ const CatalogPage = (props: ICatalogPageProps) => {
     useEffect(() => {
         dispatch(setPagingParams(new PagingParams(1)));
 
-        if (products.length === 0) {
+        if (!products.length) {
             dispatch(getProductsRequest());
         }
     }, [dispatch, products.length]);
@@ -76,7 +76,7 @@ const CatalogPage = (props: ICatalogPageProps) => {
                     <FilteringSection />
                 </div>
             </div>
-            <div className={classes.loaderDiv}>
+            <div className={classes.loaderWrapper}>
                 {isLoadingMore && <CircularProgress color="secondary" className={classes.loader} />}
             </div>
         </>
