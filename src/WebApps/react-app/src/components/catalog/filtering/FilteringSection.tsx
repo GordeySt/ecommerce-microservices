@@ -3,11 +3,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { resetProducts } from '../state/actions/productActions';
 import { resetPredicates, resetSortingPredicates, setPredicates } from '../state/actions/filteringActions';
-import AgeRatingFilter from './AgeRatingFilter';
 import AllProductsButton from './AllProductsButton';
-import PriceFilter from './PriceFilter';
-import RatingFilter from './RatingFilter';
 import { UrlSearchParamsConstants } from '../../../common/constants/urlSearchParamsConstants';
+import { FilterWrapper } from './FilterWrapper';
+import { ageRatings, sortingTypes } from './utils/sortingValues';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -68,16 +67,26 @@ export const FilteringSection = () => {
 
     return (
         <div className={classes.filteringSection}>
-            <AgeRatingFilter classes={classes} ageRating={ageRating} handleAgeRatingChange={handleAgeRatingChange} />
-            <PriceFilter
+            <FilterWrapper
                 classes={classes}
-                priceOrderType={priceOrderType}
-                handlePriceOrderTypeChange={handlePriceOrderTypeChange}
+                orderType={ageRating}
+                handleOrderTypeChange={handleAgeRatingChange}
+                sortingTypes={ageRatings}
+                inputLabel="AgeRating"
             />
-            <RatingFilter
+            <FilterWrapper
                 classes={classes}
-                ratingOrderType={ratingOrderType}
-                handleRatingOrderTypeChange={handleRatingOrderTypeChange}
+                orderType={priceOrderType}
+                handleOrderTypeChange={handlePriceOrderTypeChange}
+                sortingTypes={sortingTypes}
+                inputLabel="Price"
+            />
+            <FilterWrapper
+                classes={classes}
+                orderType={ratingOrderType}
+                handleOrderTypeChange={handleRatingOrderTypeChange}
+                sortingTypes={sortingTypes}
+                inputLabel="Rating"
             />
             <AllProductsButton handleOnClickButton={handleOnClickButton} />
         </div>

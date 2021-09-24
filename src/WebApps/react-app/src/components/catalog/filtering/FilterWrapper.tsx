@@ -1,26 +1,27 @@
 ﻿import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
-import { sortingTypes } from './utils/sortingValues';
 
 interface IProps {
     classes: ClassNameMap<'form'>;
-    priceOrderType: string;
+    orderType: string;
+    sortingTypes: number[] | string[];
+    inputLabel: string;
     // eslint-disable-next-line no-unused-vars
-    handlePriceOrderTypeChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
+    handleOrderTypeChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 
-const PriceFilter = ({ classes, priceOrderType, handlePriceOrderTypeChange }: IProps) => {
+export const FilterWrapper = ({ classes, orderType, handleOrderTypeChange, sortingTypes, inputLabel }: IProps) => {
     return (
         <FormControl className={classes.form}>
-            <InputLabel id="demo-simple-select-label">Price</InputLabel>
+            <InputLabel id="demo-simple-select-label">{inputLabel}</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={priceOrderType}
-                onChange={handlePriceOrderTypeChange}
+                value={orderType}
+                onChange={handleOrderTypeChange}
             >
                 {sortingTypes.map((sortingType) => (
-                    <MenuItem key={sortingType.toUpperCase()} value={sortingType}>
+                    <MenuItem key={sortingType} value={sortingType}>
                         {sortingType}
                     </MenuItem>
                 ))}
@@ -28,5 +29,3 @@ const PriceFilter = ({ classes, priceOrderType, handlePriceOrderTypeChange }: IP
         </FormControl>
     );
 };
-
-export default PriceFilter;
