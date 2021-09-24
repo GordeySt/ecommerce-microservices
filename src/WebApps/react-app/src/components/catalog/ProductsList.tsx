@@ -13,7 +13,7 @@ const ProductsList = ({ products }: IProps) => {
 
     return (
         <div>
-            {products && products.length > 0 ? (
+            {products && products.length ? (
                 products.map((product) => (
                     <Fragment key={product.id}>
                         <ProductCardContainer product={product} user={user} />
