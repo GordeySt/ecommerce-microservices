@@ -1,5 +1,6 @@
 ﻿import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
+import { ageRatings } from './utils/AgeRatings';
 
 interface IProps {
     classes: ClassNameMap<'form'>;
@@ -18,10 +19,11 @@ const AgeRatingFilter = ({ classes, ageRating, handleAgeRatingChange }: IProps) 
                 value={ageRating}
                 onChange={handleAgeRatingChange}
             >
-                <MenuItem value={3}>3+</MenuItem>
-                <MenuItem value={7}>7+</MenuItem>
-                <MenuItem value={12}>12+</MenuItem>
-                <MenuItem value={16}>16+</MenuItem>
+                {ageRatings.map((ageRating) => (
+                    <MenuItem key={ageRating} value={ageRating}>
+                        {ageRating}+
+                    </MenuItem>
+                ))}
             </Select>
         </FormControl>
     );
