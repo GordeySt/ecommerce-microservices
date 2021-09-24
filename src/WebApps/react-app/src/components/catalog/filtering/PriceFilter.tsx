@@ -1,5 +1,6 @@
 ﻿import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
+import { sortingTypes } from './utils/sortingValues';
 
 interface IProps {
     classes: ClassNameMap<'form'>;
@@ -18,8 +19,11 @@ const PriceFilter = ({ classes, priceOrderType, handlePriceOrderTypeChange }: IP
                 value={priceOrderType}
                 onChange={handlePriceOrderTypeChange}
             >
-                <MenuItem value="ASC">Asc</MenuItem>
-                <MenuItem value="DESC">Desc</MenuItem>
+                {sortingTypes.map((sortingType) => (
+                    <MenuItem key={sortingType.toUpperCase()} value={sortingType}>
+                        {sortingType}
+                    </MenuItem>
+                ))}
             </Select>
         </FormControl>
     );
