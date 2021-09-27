@@ -6,7 +6,7 @@ interface IProps {
 
 const AllProductsButton = ({ handleOnClickButton }: IProps) => {
     return (
-        <Button onClick={() => handleOnClickButton()} variant="outlined" size="small" color="primary">
+        <Button onClick={handleOnClickButton} variant="outlined" size="small" color="primary">
             Show All
         </Button>
     );

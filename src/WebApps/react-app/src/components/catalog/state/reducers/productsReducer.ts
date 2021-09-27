@@ -3,11 +3,6 @@ import { IProduct } from '../../../../common/models/product';
 import { ProductActions } from '../actions/productActions';
 import { ProductsActionType } from '../types/productTypes';
 
-export interface IPredicate {
-    key: string;
-    value: string;
-}
-
 export interface IProductsState {
     products: IProduct[];
     pagination: IPagination | null;
@@ -29,7 +24,6 @@ export const productsReducer = (state = initialState, action: ProductsActionType
         case ProductActions.GET_PRODUCTS_REQUEST:
             return { ...state, isLoadingProducts: true };
         case ProductActions.GET_PRODUCTS_SUCCESS:
-            return { ...state, isLoadingProducts: false };
         case ProductActions.GET_PRODUCTS_FAILURE:
             return { ...state, isLoadingProducts: false };
         case ProductActions.LOAD_MORE_PRODUCTS_REQUEST:

@@ -1,4 +1,4 @@
-﻿import { IPredicate } from '../../components/catalog/state/reducers/productsReducer';
+﻿import { IPredicate } from '../../components/catalog/state/types/filteringTypes';
 import { UrlSearchParamsConstants } from '../constants/urlSearchParamsConstants';
 import { PagingParams } from '../models/pagination';
 

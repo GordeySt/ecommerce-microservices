@@ -2,18 +2,18 @@
 import { IProduct } from '../../common/models/product';
 import { getCurrentUser } from '../../common/state/selectors/userSelectors';
 import { useTypedSelector } from '../../common/utils/hooks';
-import { ProductCardContainer } from './ProductCardContainer';
+import ProductCardContainer from './ProductCardContainer';
 
 interface IProps {
     products: IProduct[];
 }
 
-export const ProductsList = ({ products }: IProps) => {
+const ProductsList = ({ products }: IProps) => {
     const user = useTypedSelector(getCurrentUser);
 
     return (
         <div>
-            {products && products.length > 0 ? (
+            {products && products.length ? (
                 products.map((product) => (
                     <Fragment key={product.id}>
                         <ProductCardContainer product={product} user={user} />
@@ -25,3 +25,5 @@ export const ProductsList = ({ products }: IProps) => {
         </div>
     );
 };
+
+export default ProductsList;

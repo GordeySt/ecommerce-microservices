@@ -11,7 +11,7 @@ interface IProps {
     user: IRatingUser;
 }
 
-export const ProductCardContainer = ({ product, user }: IProps) => {
+const ProductCardContainer = ({ product, user }: IProps) => {
     const dispatch = useDispatch();
     const [userRating, setUserRating] = useState<IProductRating | null>(null);
 
@@ -46,3 +46,5 @@ export const ProductCardContainer = ({ product, user }: IProps) => {
 
     return <ProductCard {...productCardProps} />;
 };
+
+export default ProductCardContainer;

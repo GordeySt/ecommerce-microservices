@@ -1,7 +1,7 @@
 ﻿import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
 import { IPagination, PagingParams } from '../../common/models/pagination';
-import { ProductsList } from '../../components/catalog/ProductsList';
+import ProductsList from '../../components/catalog/ProductsList';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IProduct } from '../../common/models/product';
 import { SearchForm } from '../../components/catalog/filtering/SearchForm';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() =>
         filters: {
             marginLeft: '30px',
         },
-        loaderDiv: {
+        loaderWrapper: {
             display: 'flex',
             justifyContent: 'center',
         },
@@ -47,7 +47,7 @@ const CatalogPage = (props: ICatalogPageProps) => {
     useEffect(() => {
         dispatch(setPagingParams(new PagingParams(1)));
 
-        if (products.length === 0) {
+        if (!products.length) {
             dispatch(getProductsRequest());
         }
     }, [dispatch, products.length]);
@@ -76,7 +76,7 @@ const CatalogPage = (props: ICatalogPageProps) => {
                     <FilteringSection />
                 </div>
             </div>
-            <div className={classes.loaderDiv}>
+            <div className={classes.loaderWrapper}>
                 {isLoadingMore && <CircularProgress color="secondary" className={classes.loader} />}
             </div>
         </>
