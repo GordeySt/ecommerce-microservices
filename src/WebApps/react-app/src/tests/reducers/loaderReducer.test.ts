@@ -1,5 +1,6 @@
-﻿import { hideLoader, LoaderActions, showLoader } from '../../common/state/actions/loaderActions';
+﻿import { hideLoader, showLoader } from '../../common/state/actions/loaderActions';
 import { loaderReducer } from '../../common/state/reducers/loaderReducer';
+import { LoaderActions } from '../../common/state/types/loaderTypes';
 
 const initialState = {
     loading: false,

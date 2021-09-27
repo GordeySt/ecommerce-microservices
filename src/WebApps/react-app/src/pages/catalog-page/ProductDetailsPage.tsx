@@ -42,7 +42,7 @@ const ProductDetailsPage = () => {
             <Typography className={classes.typography}>Product summary: {product.summary}</Typography>
             <Typography className={classes.typography}>Product description: {product.description}</Typography>
             <Typography className={classes.typography}>Product price: {product.price}</Typography>
-            <Typography className={classes.typography}>Product rating: {+product.averageRating.toFixed(1)}</Typography>
+            <Typography className={classes.typography}>Product rating: {product.averageRating.toFixed(1)}</Typography>
         </Paper>
     );
 };

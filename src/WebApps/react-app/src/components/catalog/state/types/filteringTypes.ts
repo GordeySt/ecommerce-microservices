@@ -1,10 +1,14 @@
-﻿import * as actions from '../actions/filteringActions';
+﻿import { InferValueTypes } from '../../../../common/state/types/commonTypes';
+import * as actions from '../actions/filteringActions';
 
-export type FilteringActionType =
-    | ReturnType<typeof actions.setPagingParams>
-    | ReturnType<typeof actions.setPredicates>
-    | ReturnType<typeof actions.resetPredicates>
-    | ReturnType<typeof actions.resetSortingPredicates>;
+export const FilteringActions = {
+    SET_PAGING_PARAMS: 'SET_PAGING_PARAMS',
+    SET_PREDICATES: 'SET_PREDICATES',
+    RESET_PREDICATES: 'RESET_PREDICATES',
+    RESET_SORTING_PREDICATES: 'RESET_SORTING_PREDICATES',
+} as const;
+
+export type FilteringActionType = ReturnType<InferValueTypes<typeof actions>>;
 
 export type SetPredicatesActionType = ReturnType<typeof actions.setPredicates>;
 

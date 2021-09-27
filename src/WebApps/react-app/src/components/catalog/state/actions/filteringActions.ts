@@ -1,11 +1,5 @@
 ﻿import { PagingParams } from '../../../../common/models/pagination';
-
-export const FilteringActions = {
-    SET_PAGING_PARAMS: 'SET_PAGING_PARAMS',
-    SET_PREDICATES: 'SET_PREDICATES',
-    RESET_PREDICATES: 'RESET_PREDICATES',
-    RESET_SORTING_PREDICATES: 'RESET_SORTING_PREDICATES',
-} as const;
+import { FilteringActions } from '../types/filteringTypes';
 
 export const setPagingParams = (pagingParams: PagingParams) => ({
     type: FilteringActions.SET_PAGING_PARAMS,

@@ -1,13 +1,12 @@
 ﻿import { UrlSearchParamsConstants } from '../../common/constants/urlSearchParamsConstants';
 import { PagingParams } from '../../common/models/pagination';
 import {
-    FilteringActions,
     resetPredicates,
     resetSortingPredicates,
     setPredicates,
 } from '../../components/catalog/state/actions/filteringActions';
 import { filteringReducer, IFilteringState } from '../../components/catalog/state/reducers/filteringReducer';
-import { IPredicate } from '../../components/catalog/state/types/filteringTypes';
+import { FilteringActions, IPredicate } from '../../components/catalog/state/types/filteringTypes';
 
 const initialState: IFilteringState = {
     pagingParams: {} as PagingParams,

@@ -1,5 +1,4 @@
-﻿import { LoaderActions } from '../actions/loaderActions';
-import { LoaderActionTypes } from '../types/loaderTypes';
+﻿import { LoaderActions, LoaderActionTypes } from '../types/loaderTypes';
 
 export interface ILoaderState {
     loading: boolean;

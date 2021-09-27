@@ -4,11 +4,11 @@ import {
     getProductByIdSuccess,
     getProductsRequest,
     loadMoreProductsSuccess,
-    ProductActions,
     resetProducts,
 } from '../../components/catalog/state/actions/productActions';
 import { IProductsState, productsReducer } from '../../components/catalog/state/reducers/productsReducer';
 import { data, pagination, product } from '../../common/utils/testData/catalogTestData';
+import { ProductActions } from '../../components/catalog/state/types/productTypes';
 
 const initialState = {
     products: [] as IProduct[],
