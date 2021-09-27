@@ -1,38 +1,41 @@
-﻿import { all, call, put, takeEvery } from 'redux-saga/effects';
+﻿import { all, call, put, select, takeEvery } from 'redux-saga/effects';
 import { catalogApi } from '../../../../common/api/catalogApi';
-import { PaginatedResult } from '../../../../common/models/pagination';
+import { PaginatedResult, PagingParams } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
 import { setErrors } from '../../../../common/state/actions/errorActions';
-import { hideLoader, showLoader } from '../../../../common/state/actions/loaderActions';
+import { formUrlSearchParams } from '../../../../common/utils/functions';
 import {
     getProductsFailure,
     getProductsSuccess,
     loadMoreProductsFailure,
     loadMoreProductsSuccess,
     ProductActions,
+    resetProducts,
     setPagination,
     setProducts,
-} from '../actions/actions';
-import { GetProductsRequestType, LoadMoreProductsRequestType } from '../actions/types';
+} from '../actions/productActions';
+import { getPagingParams, getPredicates } from '../selectors/productsSelectors';
+import { IPredicate } from '../types/filteringTypes';
 
-export function* getProducts({ payload }: GetProductsRequestType) {
+export function* getProducts() {
     try {
-        yield put(showLoader());
-        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, payload);
-        yield all([
-            put(getProductsSuccess()),
-            put(setProducts(result.data)),
-            put(setPagination(result.pagination)),
-            put(hideLoader()),
-        ]);
+        yield put(resetProducts());
+        const pagingParams: PagingParams = yield select(getPagingParams);
+        const predicates: IPredicate[] = yield select(getPredicates);
+        const params = formUrlSearchParams(pagingParams, predicates);
+        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, params);
+        yield all([put(getProductsSuccess()), put(setProducts(result.data)), put(setPagination(result.pagination))]);
     } catch (error) {
-        yield all([put(hideLoader()), setErrors(error), put(getProductsFailure(error))]);
+        yield all([setErrors(error), put(getProductsFailure(error))]);
     }
 }
 
-export function* loadMoreProducts({ payload }: LoadMoreProductsRequestType) {
+export function* loadMoreProducts() {
     try {
-        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, payload);
+        const pagingParams: PagingParams = yield select(getPagingParams);
+        const predicates: IPredicate[] = yield select(getPredicates);
+        const params = formUrlSearchParams(pagingParams, predicates);
+        const result: PaginatedResult<IProduct[]> = yield call(catalogApi.loadProducts, params);
         yield put(loadMoreProductsSuccess(result));
     } catch (error) {
         yield put(loadMoreProductsFailure(error));

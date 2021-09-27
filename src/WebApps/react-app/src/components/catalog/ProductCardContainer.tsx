@@ -4,14 +4,14 @@ import { IProduct } from '../../common/models/product';
 import { IProductRating } from '../../common/models/rating';
 import { IRatingUser } from '../../common/models/user';
 import ProductCard, { IProductCardProps } from './ProductCard';
-import { addRatingRequest, changeRatingRequest } from './state/actions/actions';
+import { addRatingRequest, changeRatingRequest } from './state/actions/ratingActions';
 
 interface IProps {
     product: IProduct;
     user: IRatingUser;
 }
 
-export const ProductCardContainer = ({ product, user }: IProps) => {
+const ProductCardContainer = ({ product, user }: IProps) => {
     const dispatch = useDispatch();
     const [userRating, setUserRating] = useState<IProductRating | null>(null);
 
@@ -46,3 +46,5 @@ export const ProductCardContainer = ({ product, user }: IProps) => {
 
     return <ProductCard {...productCardProps} />;
 };
+
+export default ProductCardContainer;

@@ -1,41 +1,38 @@
-﻿import React from 'react';
-import { useDispatch } from 'react-redux';
+﻿import { useDispatch } from 'react-redux';
 import { PagingParams } from '../../common/models/pagination';
-import { getLoadingStatus } from '../../common/state/selectors/loaderSelectors';
 import { useTypedSelector } from '../../common/utils/hooks';
-import { getProductsRequest, loadMoreProductsRequest } from '../../components/catalog/state/actions/actions';
+import { loadMoreProductsRequest } from '../../components/catalog/state/actions/productActions';
+import { setPagingParams } from '../../components/catalog/state/actions/filteringActions';
 import {
+    getLoadingProductsStatus,
     getLoadMoreLoadingStatus,
     getPagination,
     getProducts,
 } from '../../components/catalog/state/selectors/productsSelectors';
 import CatalogPage, { ICatalogPageProps } from './CatalogPage';
 
-export const CatalogPageContainer = () => {
+const CatalogPageContainer = () => {
     const dispatch = useDispatch();
-    const loading = useTypedSelector(getLoadingStatus);
     const isLoadingMore = useTypedSelector(getLoadMoreLoadingStatus);
+    const isLoadingProducts = useTypedSelector(getLoadingProductsStatus);
     const products = useTypedSelector(getProducts);
     const pagination = useTypedSelector(getPagination);
 
     const handleGetNext = () => {
-        pagination && dispatch(loadMoreProductsRequest(new PagingParams(pagination.currentPage + 1)));
-    };
-
-    const onComponentLoad = () => {
-        if (products.length <= 1) {
-            dispatch(getProductsRequest(new PagingParams(1)));
-        }
+        pagination && dispatch(setPagingParams(new PagingParams(pagination.currentPage + 1)));
+        dispatch(loadMoreProductsRequest());
     };
 
     const catalogPageProps = {
-        loading,
+        dispatch,
         isLoadingMore,
         products,
         pagination,
         handleGetNext,
-        onComponentLoad,
+        isLoadingProducts,
     } as ICatalogPageProps;
 
     return <CatalogPage {...catalogPageProps} />;
 };
+
+export default CatalogPageContainer;

@@ -1,22 +1,29 @@
 ﻿import { IPagination } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
-import { ProductActions } from '../actions/actions';
-import { ProductsActionType } from '../actions/types';
+import { ProductActions } from '../actions/productActions';
+import { ProductsActionType } from '../types/productTypes';
 
 export interface IProductsState {
     products: IProduct[];
     pagination: IPagination | null;
     isLoadingMore: boolean;
+    isLoadingProducts: boolean;
 }
 
 const initialState = {
     products: [] as IProduct[],
     pagination: null,
     isLoadingMore: false,
+    isLoadingProducts: false,
 } as IProductsState;
 
 export const productsReducer = (state = initialState, action: ProductsActionType): IProductsState => {
     switch (action.type) {
+        case ProductActions.GET_PRODUCTS_REQUEST:
+            return { ...state, isLoadingProducts: true };
+        case ProductActions.GET_PRODUCTS_SUCCESS:
+        case ProductActions.GET_PRODUCTS_FAILURE:
+            return { ...state, isLoadingProducts: false };
         case ProductActions.LOAD_MORE_PRODUCTS_REQUEST:
             return { ...state, isLoadingMore: true };
         case ProductActions.LOAD_MORE_PRODUCTS_SUCCESS:
@@ -34,6 +41,8 @@ export const productsReducer = (state = initialState, action: ProductsActionType
             return { ...state, products: action.payload };
         case ProductActions.SET_PAGINATION:
             return { ...state, pagination: action.payload };
+        case ProductActions.RESET_PRODUCTS:
+            return { ...state, products: [] };
         default:
             return state;
     }

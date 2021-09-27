@@ -17,7 +17,7 @@ import NavBar from './common/layout/NavBar';
 import { useDispatch } from 'react-redux';
 import { getUserByIdRequest } from './common/state/actions/userActions';
 import { getUserId } from './common/auth/authHeaders';
-import { CatalogPageContainer } from './pages/catalog-page/CatalogPageContainer';
+import CatalogPageContainer from './pages/catalog-page/CatalogPageContainer';
 
 const App = () => {
     const dispatch = useDispatch();

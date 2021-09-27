@@ -2,8 +2,8 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { catalogApi } from '../../../../common/api/catalogApi';
 import { hideLoader, showLoader } from '../../../../common/state/actions/loaderActions';
-import { addRatingFailure, addRatingSuccess, changeRatingSuccess, ProductActions } from '../actions/actions';
-import { AddRatingRequestType, ChangeRatingRequestType } from '../actions/types';
+import { addRatingFailure, addRatingSuccess, changeRatingSuccess, RatingActions } from '../actions/ratingActions';
+import { AddRatingRequestType, ChangeRatingRequestType } from '../types/ratingTypes';
 
 export function* addRating({ payload }: AddRatingRequestType) {
     try {
@@ -30,6 +30,6 @@ export function* changeRating({ payload }: ChangeRatingRequestType) {
 }
 
 export default function* ratingRootSaga() {
-    yield takeEvery(ProductActions.ADD_RATING_REQUEST, addRating);
-    yield takeEvery(ProductActions.CHANGE_RATING_REQUEST, changeRating);
+    yield takeEvery(RatingActions.ADD_RATING_REQUEST, addRating);
+    yield takeEvery(RatingActions.CHANGE_RATING_REQUEST, changeRating);
 }
