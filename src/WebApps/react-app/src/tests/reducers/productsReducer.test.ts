@@ -66,7 +66,7 @@ describe('ProductsReducer action type responses for', () => {
         });
     });
 
-    describe(`${ProductActions.GET_PRODUCTS_BY_ID_SUCCESS}`, () => {
+    describe(`${ProductActions.GET_PRODUCT_BY_ID_SUCCESS}`, () => {
         // Arrange
         const action = getProductByIdSuccess(product);
         const newState = productsReducer(initialState, action);

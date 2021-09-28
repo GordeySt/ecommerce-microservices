@@ -38,7 +38,7 @@ export const productsReducer = (state = initialState, action: ProductsActionType
             };
         case ProductActions.LOAD_MORE_PRODUCTS_FAILURE:
             return { ...state, isLoadingMore: false };
-        case ProductActions.GET_PRODUCTS_BY_ID_SUCCESS:
+        case ProductActions.GET_PRODUCT_BY_ID_SUCCESS:
             return { ...state, product: action.paylod };
         case ProductActions.SET_PRODUCTS:
             return { ...state, products: action.payload };

@@ -31,17 +31,17 @@ export const loadMoreProductsFailure = (error: ERROR_ANY) => ({
 });
 
 export const getProductByIdRequest = (id: string) => ({
-    type: ProductActions.GET_PRODUCTS_BY_ID_REQUEST,
+    type: ProductActions.GET_PRODUCT_BY_ID_REQUEST,
     payload: id,
 });
 
 export const getProductByIdSuccess = (product: IProduct) => ({
-    type: ProductActions.GET_PRODUCTS_BY_ID_SUCCESS,
+    type: ProductActions.GET_PRODUCT_BY_ID_SUCCESS,
     paylod: product,
 });
 
 export const getProductByIdFailure = (error: ERROR_ANY) => ({
-    type: ProductActions.GET_PRODUCTS_BY_ID_FAILURE,
+    type: ProductActions.GET_PRODUCT_BY_ID_FAILURE,
     payload: error,
 });
 

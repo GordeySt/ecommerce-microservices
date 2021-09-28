@@ -59,5 +59,5 @@ export function* getProductById({ payload }: GetProductsByIdRequestType) {
 export default function* productRootSaga() {
     yield takeLatest(ProductActions.GET_PRODUCTS_REQUEST, getProducts);
     yield takeLatest(ProductActions.LOAD_MORE_PRODUCTS_REQUEST, loadMoreProducts);
-    yield takeLatest(ProductActions.GET_PRODUCTS_BY_ID_REQUEST, getProductById);
+    yield takeLatest(ProductActions.GET_PRODUCT_BY_ID_REQUEST, getProductById);
 }
