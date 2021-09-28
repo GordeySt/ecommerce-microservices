@@ -82,7 +82,7 @@ const ProductCard = (props: IProductCardProps) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <Button onClick={() => history.push(CatalogRoutes.catalogPageRoute + `/${id}`)} size="medium">
+                <Button onClick={() => history.push(`${CatalogRoutes.catalogPageRoute}/${id}`)} size="medium">
                     Learn More
                 </Button>
                 <IconButton className={classes.iconButton} aria-label="show more">

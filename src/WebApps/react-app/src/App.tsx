@@ -44,7 +44,7 @@ const App = () => {
                                 <Container maxWidth="lg">
                                     <Switch>
                                         <PrivateRoute
-                                            path={CatalogRoutes.catalogPageRoute + '/:id'}
+                                            path={`${CatalogRoutes.catalogPageRoute}/:id`}
                                             component={ProductDetailsPage}
                                         />
                                         <PrivateRoute path={CommonRoutes.welcomePageRoute} component={WelcomePage} />
