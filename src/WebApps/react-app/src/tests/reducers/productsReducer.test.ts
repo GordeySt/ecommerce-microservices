@@ -18,55 +18,38 @@ const initialState = {
     isLoadingProducts: false,
 } as IProductsState;
 
-describe('ProductsReducer action type responses for', () => {
-    describe(`${ProductActions.GET_PRODUCTS_REQUEST}`, () => {
+describe('ProductsReducer action type response', () => {
+    it(`Should update isLoadingProducts to true on ${ProductActions.GET_PRODUCTS_REQUEST}`, () => {
         // Arrange
         const action = getProductsRequest();
         const newState = productsReducer(initialState, action);
 
         // Act and Assert
-        it('Products are got', () => {
-            expect(newState.isLoadingProducts).toEqual(true);
-        });
+        expect(newState.isLoadingProducts).toEqual(true);
     });
 
-    describe(`${ProductActions.LOAD_MORE_PRODUCTS_SUCCESS}`, () => {
+    it(`Should update pagination, products and isLoadingMore status on ${ProductActions.LOAD_MORE_PRODUCTS_SUCCESS}`, () => {
         // Arrange
         const payload = new PaginatedResult<IProduct[]>(data, pagination);
         const action = loadMoreProductsSuccess(payload);
         const newState = productsReducer(initialState, action);
 
         // Act and Assert
-        it('Products are loaded', () => {
-            expect(newState.pagination).toEqual(pagination);
-            expect(newState.products).toEqual(data);
-            expect(newState.isLoadingMore).toEqual(false);
-        });
+        expect(newState.pagination).toEqual(pagination);
+        expect(newState.products).toEqual(data);
+        expect(newState.isLoadingMore).toEqual(false);
     });
 
-    describe(`${ProductActions.RESET_PRODUCTS}`, () => {
+    it(`Should reset products array on ${ProductActions.RESET_PRODUCTS}`, () => {
         // Arrange
         const action = resetProducts();
         const newState = productsReducer(initialState, action);
 
         // Act and Assert
-        it('Products are got', () => {
-            expect(newState.products).toEqual([]);
-        });
+        expect(newState.products).toEqual([]);
     });
 
-    describe(`${ProductActions.RESET_PRODUCTS}`, () => {
-        // Arrange
-        const action = resetProducts();
-        const newState = productsReducer(initialState, action);
-
-        // Act and Assert
-        it('Products are got', () => {
-            expect(newState.products).toEqual([]);
-        });
-    });
-
-    describe(`${ProductActions.GET_PRODUCT_BY_ID_SUCCESS}`, () => {
+    it(`Should update product on ${ProductActions.GET_PRODUCT_BY_ID_SUCCESS}`, () => {
         // Arrange
         const action = getProductByIdSuccess(product);
         const newState = productsReducer(initialState, action);

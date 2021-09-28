@@ -13,19 +13,17 @@ const initialState: IFilteringState = {
     predicates: [] as IPredicate[],
 };
 
-describe('FilteringReducer action type responses for', () => {
-    describe(`${FilteringActions.RESET_PREDICATES}`, () => {
+describe('FilteringReducer action type responses', () => {
+    it(`Should reset predicates array on ${FilteringActions.RESET_PREDICATES}`, () => {
         // Arrange
         const action = resetPredicates();
         const newState = filteringReducer(initialState, action);
 
         // Act and Assert
-        it('Predicates is reset', () => {
-            expect(newState.predicates).toEqual([]);
-        });
+        expect(newState.predicates).toEqual([]);
     });
 
-    describe(`${FilteringActions.RESET_SORTING_PREDICATES}`, () => {
+    it(`Should reset sorting predicates on ${FilteringActions.RESET_SORTING_PREDICATES}`, () => {
         // Arrange
         const resetAction = resetSortingPredicates();
         const setAgeRatingAction = setPredicates(UrlSearchParamsConstants.minimumAge, '12');
@@ -37,8 +35,6 @@ describe('FilteringReducer action type responses for', () => {
         const newState = filteringReducer(ratingOrderTypeState, resetAction);
 
         // Act and Assert
-        it('Predicates is reset', () => {
-            expect(newState.predicates).toEqual([{ key: UrlSearchParamsConstants.minimumAge, value: '12' }]);
-        });
+        expect(newState.predicates).toEqual([{ key: UrlSearchParamsConstants.minimumAge, value: '12' }]);
     });
 });

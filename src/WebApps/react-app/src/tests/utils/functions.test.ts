@@ -4,7 +4,7 @@ import { formUrlSearchParams } from '../../common/utils/functions';
 import { IPredicate } from '../../components/catalog/state/types/filteringTypes';
 
 describe('Utils Functions Test', () => {
-    it('On formUrlSearchParams function called', () => {
+    it('Should return URL query string on formUrlSearchParams function call', () => {
         const pageNumber = 1;
         const pageSize = 2;
         const pagingParams = new PagingParams(pageNumber, pageSize);

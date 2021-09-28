@@ -6,26 +6,22 @@ const initialState = {
     loading: false,
 };
 
-describe('LoaderReducer action type responses for', () => {
-    describe(`${LoaderActions.SHOW_LOADER}`, () => {
+describe('LoaderReducer action type responses', () => {
+    it(`Should update loading status to true on ${LoaderActions.SHOW_LOADER}`, () => {
         // Arrange
         const action = showLoader();
         const newState = loaderReducer(initialState, action);
 
         // Act and Assert
-        it('Error is set', () => {
-            expect(newState.loading).toEqual(true);
-        });
+        expect(newState.loading).toEqual(true);
     });
 
-    describe(`${LoaderActions.HIDE_LOADER}`, () => {
+    describe(`Should update loading status to false on ${LoaderActions.HIDE_LOADER}`, () => {
         // Arrange
         const action = hideLoader();
         const newState = loaderReducer(initialState, action);
 
         // Act and Assert
-        it('Error is set', () => {
-            expect(newState.loading).toEqual(false);
-        });
+        expect(newState.loading).toEqual(false);
     });
 });
