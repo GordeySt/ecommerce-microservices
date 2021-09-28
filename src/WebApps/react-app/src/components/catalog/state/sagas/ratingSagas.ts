@@ -1,5 +1,5 @@
 ﻿import { toast } from 'react-toastify';
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { catalogApi } from '../../../../common/api/catalogApi';
 import { hideLoader, showLoader } from '../../../../common/state/actions/loaderActions';
 import { addRatingFailure, addRatingSuccess, changeRatingSuccess, RatingActions } from '../actions/ratingActions';
@@ -30,6 +30,6 @@ export function* changeRating({ payload }: ChangeRatingRequestType) {
 }
 
 export default function* ratingRootSaga() {
-    yield takeEvery(RatingActions.ADD_RATING_REQUEST, addRating);
-    yield takeEvery(RatingActions.CHANGE_RATING_REQUEST, changeRating);
+    yield takeLatest(RatingActions.ADD_RATING_REQUEST, addRating);
+    yield takeLatest(RatingActions.CHANGE_RATING_REQUEST, changeRating);
 }

@@ -1,6 +1,6 @@
 ﻿import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { authApi } from '../../../../common/api/authApi';
 import { AuthRoutes } from '../../../../common/constants/routeConstants';
 import { setErrors } from '../../../../common/state/actions/errorActions';
@@ -55,7 +55,7 @@ export function* verifyEmail({ payload }: VerifyEmailRequestType) {
 }
 
 export default function* authRootSaga() {
-    yield takeEvery(AuthActions.SIGNUP_REQUEST, signUpUser);
-    yield takeEvery(AuthActions.RESEND_EMAIL_VERIFICATION_REQUEST, resendEmailVerification);
-    yield takeEvery(AuthActions.VERIFY_EMAIL_REQUEST, verifyEmail);
+    yield takeLatest(AuthActions.SIGNUP_REQUEST, signUpUser);
+    yield takeLatest(AuthActions.RESEND_EMAIL_VERIFICATION_REQUEST, resendEmailVerification);
+    yield takeLatest(AuthActions.VERIFY_EMAIL_REQUEST, verifyEmail);
 }
