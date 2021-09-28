@@ -49,7 +49,9 @@ export const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 export const requests = {
     get: <T>(url: string): Promise<T> => axios.get<T>(url).then(sleep(delayValue)).then(responseBody),
-    post: <T>(url: string, body: {}): Promise<T> => axios.post<T>(url, body).then(sleep(delayValue)).then(responseBody),
-    put: <T>(url: string, body: {}): Promise<T> => axios.put<T>(url, body).then(sleep(delayValue)).then(responseBody),
+    post: <T>(url: string, body: unknown): Promise<T> =>
+        axios.post<T>(url, body).then(sleep(delayValue)).then(responseBody),
+    put: <T>(url: string, body: unknown): Promise<T> =>
+        axios.put<T>(url, body).then(sleep(delayValue)).then(responseBody),
     del: <T>(url: string): Promise<T> => axios.delete<T>(url).then(sleep(delayValue)).then(responseBody),
 };
