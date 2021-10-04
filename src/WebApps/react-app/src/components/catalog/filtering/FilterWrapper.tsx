@@ -10,7 +10,7 @@ interface IProps {
     handleOrderTypeChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 
-export const FilterWrapper = ({ classes, orderType, handleOrderTypeChange, sortingTypes, inputLabel }: IProps) => {
+const FilterWrapper = ({ classes, orderType, handleOrderTypeChange, sortingTypes, inputLabel }: IProps) => {
     return (
         <FormControl className={classes.form}>
             <InputLabel id="demo-simple-select-label">{inputLabel}</InputLabel>
@@ -29,3 +29,5 @@ export const FilterWrapper = ({ classes, orderType, handleOrderTypeChange, sorti
         </FormControl>
     );
 };
+
+export default FilterWrapper;

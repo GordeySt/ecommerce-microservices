@@ -5,7 +5,7 @@ import { resetProducts } from '../state/actions/productActions';
 import { resetPredicates, resetSortingPredicates, setPredicates } from '../state/actions/filteringActions';
 import AllProductsButton from './AllProductsButton';
 import { UrlSearchParamsConstants } from '../../../common/constants/urlSearchParamsConstants';
-import { FilterWrapper } from './FilterWrapper';
+import FilterWrapper from './FilterWrapper';
 import { ageRatings, sortingTypes } from './utils/sortingValues';
 
 const useStyles = makeStyles(() =>
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export const FilteringSection = () => {
+const FilteringSection = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [ageRating, setAgeRating] = useState('');
@@ -92,3 +92,5 @@ export const FilteringSection = () => {
         </div>
     );
 };
+
+export default FilteringSection;

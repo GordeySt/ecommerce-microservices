@@ -24,7 +24,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export const SearchForm = () => {
+const SearchForm = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -68,3 +68,5 @@ export const SearchForm = () => {
         </div>
     );
 };
+
+export default SearchForm;
