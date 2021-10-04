@@ -6,7 +6,7 @@ import Rating from '@material-ui/lab/Rating';
 import { Button, CardActions, CardHeader, IconButton } from '@material-ui/core';
 import { IProduct } from '../../common/models/product';
 import { IRatingUser } from '../../common/models/user';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { IProductRating } from '../../common/models/rating';
 import { useHistory } from 'react-router';
 import { CatalogRoutes } from '../../common/constants/routeConstants';
@@ -53,6 +53,14 @@ export interface IProductCardProps {
     // eslint-disable-next-line no-unused-vars
     onRatingChange: (newValue: number | null) => void;
 }
+
+const propsAreEqual = (prevProps: IProductCardProps, nextProps: IProductCardProps) => {
+    return (
+        JSON.stringify(prevProps.product) === JSON.stringify(nextProps.product) &&
+        JSON.stringify(prevProps.userRating) === JSON.stringify(nextProps.userRating) &&
+        JSON.stringify(prevProps.user) === JSON.stringify(nextProps.user)
+    );
+};
 
 const ProductCard = (props: IProductCardProps) => {
     const classes = useStyles();
@@ -115,4 +123,4 @@ const ProductCard = (props: IProductCardProps) => {
     );
 };
 
-export default ProductCard;
+export default React.memo(ProductCard, propsAreEqual);

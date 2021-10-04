@@ -23,18 +23,21 @@ const ProductCardContainer = ({ product, user }: IProps) => {
         });
     }, [product.id, user.ratings]);
 
-    const onRatingChange = (newValue: number | null) => {
-        userRating
-            ? dispatch(changeRatingRequest(product.id, newValue))
-            : dispatch(addRatingRequest(product.id, newValue));
+    const onRatingChange = useCallback(
+        (newValue: number | null) => {
+            userRating
+                ? dispatch(changeRatingRequest(product.id, newValue))
+                : dispatch(addRatingRequest(product.id, newValue));
 
-        const newUserRating: IProductRating = {
-            ...userRating,
-            rating: newValue,
-        };
+            const newUserRating: IProductRating = {
+                ...userRating,
+                rating: newValue,
+            };
 
-        setUserRating(newUserRating);
-    };
+            setUserRating(newUserRating);
+        },
+        [dispatch, product.id, userRating]
+    );
 
     const productCardProps: IProductCardProps = {
         user,
