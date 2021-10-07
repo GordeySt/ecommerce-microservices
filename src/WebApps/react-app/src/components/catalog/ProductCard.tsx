@@ -55,9 +55,7 @@ export interface IProductCardProps {
     onRatingChange: (newValue: number | null) => void;
 }
 
-const propsAreEqual = (prevProps: IProductCardProps, nextProps: IProductCardProps) => {
-    return deepEqual(prevProps, nextProps);
-};
+const propsAreEqual = (prevProps: IProductCardProps, nextProps: IProductCardProps) => deepEqual(prevProps, nextProps);
 
 const ProductCard = (props: IProductCardProps) => {
     const classes = useStyles();
