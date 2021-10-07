@@ -11,6 +11,7 @@ import { IProductRating } from '../../common/models/rating';
 import { useHistory } from 'react-router';
 import { CatalogRoutes } from '../../common/constants/routeConstants';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { deepEqual } from '../../common/utils/functions';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -55,11 +56,7 @@ export interface IProductCardProps {
 }
 
 const propsAreEqual = (prevProps: IProductCardProps, nextProps: IProductCardProps) => {
-    return (
-        JSON.stringify(prevProps.product) === JSON.stringify(nextProps.product) &&
-        JSON.stringify(prevProps.userRating) === JSON.stringify(nextProps.userRating) &&
-        JSON.stringify(prevProps.user) === JSON.stringify(nextProps.user)
-    );
+    return deepEqual(prevProps, nextProps);
 };
 
 const ProductCard = (props: IProductCardProps) => {
