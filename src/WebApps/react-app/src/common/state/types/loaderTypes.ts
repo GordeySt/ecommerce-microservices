@@ -1,5 +1,9 @@
-﻿import * as loaderActions from '../actions/loaderActions';
+﻿import * as actions from '../actions/loaderActions';
+import { InferValueTypes } from './commonTypes';
 
-export type LoaderActionTypes =
-    | ReturnType<typeof loaderActions.showLoader>
-    | ReturnType<typeof loaderActions.hideLoader>;
+export const LoaderActions = {
+    SHOW_LOADER: 'SHOW_LOADER',
+    HIDE_LOADER: 'HIDE_LOADER',
+} as const;
+
+export type LoaderActionTypes = ReturnType<InferValueTypes<typeof actions>>;

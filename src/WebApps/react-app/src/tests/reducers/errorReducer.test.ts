@@ -7,15 +7,13 @@ const initialState = {
 };
 
 describe('ErrorReducer action type responses for', () => {
-    describe(`${ErrorActions.SET_ERRORS}`, () => {
+    it(`Should update error on ${ErrorActions.SET_ERRORS}`, () => {
         // Arrange
         const error = new Error('test error');
         const action = setErrors(error);
         const newState = errorReducer(initialState, action);
 
         // Act and Assert
-        it('Error is set', () => {
-            expect(newState.error).toEqual(error);
-        });
+        expect(newState.error).toEqual(error);
     });
 });

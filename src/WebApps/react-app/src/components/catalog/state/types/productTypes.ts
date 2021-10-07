@@ -1,15 +1,24 @@
-﻿import * as actions from '../actions/productActions';
+﻿import { InferValueTypes } from '../../../../common/state/types/commonTypes';
+import * as actions from '../actions/productActions';
 
-export type ProductsActionType =
-    | ReturnType<typeof actions.setProducts>
-    | ReturnType<typeof actions.loadMoreProductsRequest>
-    | ReturnType<typeof actions.loadMoreProductsSuccess>
-    | ReturnType<typeof actions.loadMoreProductsFailure>
-    | ReturnType<typeof actions.setEndStatusLoadMoreProducts>
-    | ReturnType<typeof actions.setPagination>
-    | ReturnType<typeof actions.getProductsRequest>
-    | ReturnType<typeof actions.getProductsSuccess>
-    | ReturnType<typeof actions.getProductsFailure>
-    | ReturnType<typeof actions.resetProducts>;
+export const ProductActions = {
+    GET_PRODUCTS_REQUEST: 'GET_PRODUCTS_REQUEST',
+    GET_PRODUCTS_SUCCESS: 'GET_PRODUCTS_SUCCESS',
+    GET_PRODUCTS_FAILURE: 'GET_PRODUCTS_FAILURE',
+    LOAD_MORE_PRODUCTS_REQUEST: 'LOAD_MORE_PRODUCTS_REQUEST',
+    LOAD_MORE_PRODUCTS_SUCCESS: 'LOAD_MORE_PRODUCTS_SUCCESS',
+    LOAD_MORE_PRODUCTS_FAILURE: 'LOAD_MORE_PRODUCTS_FAILURE',
+    GET_PRODUCT_BY_ID_REQUEST: 'GET_PRODUCT_BY_ID_REQUEST',
+    GET_PRODUCT_BY_ID_SUCCESS: 'GET_PRODUCT_BY_ID_SUCCESS',
+    GET_PRODUCT_BY_ID_FAILURE: 'GET_PRODUCT_BY_ID_FAILURE',
+    SET_PRODUCTS: 'SET_PRODUCTS',
+    SET_PAGINATION: 'SET_PAGINATION',
+    SET_END_STATUS: 'SET_END_STATUS',
+    RESET_PRODUCTS: 'RESET_PRODUCTS',
+} as const;
+
+export type ProductsActionType = ReturnType<InferValueTypes<typeof actions>>;
+
 export type GetProductsRequestType = ReturnType<typeof actions.getProductsRequest>;
 export type LoadMoreProductsRequestType = ReturnType<typeof actions.loadMoreProductsRequest>;
+export type GetProductsByIdRequestType = ReturnType<typeof actions.getProductByIdRequest>;

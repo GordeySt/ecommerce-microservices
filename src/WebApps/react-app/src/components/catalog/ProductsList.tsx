@@ -1,4 +1,4 @@
-﻿import { Fragment } from 'react';
+﻿import React, { Fragment } from 'react';
 import { IProduct } from '../../common/models/product';
 import { getCurrentUser } from '../../common/state/selectors/userSelectors';
 import { useTypedSelector } from '../../common/utils/hooks';
@@ -26,4 +26,4 @@ const ProductsList = ({ products }: IProps) => {
     );
 };
 
-export default ProductsList;
+export default React.memo(ProductsList);

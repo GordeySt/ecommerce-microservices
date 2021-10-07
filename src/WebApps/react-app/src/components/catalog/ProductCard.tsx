@@ -1,14 +1,17 @@
 ﻿import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import { Button, CardActions, CardHeader, IconButton } from '@material-ui/core';
 import { IProduct } from '../../common/models/product';
 import { IRatingUser } from '../../common/models/user';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { IProductRating } from '../../common/models/rating';
+import { useHistory } from 'react-router';
+import { CatalogRoutes } from '../../common/constants/routeConstants';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { deepEqual } from '../../common/utils/functions';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -52,8 +55,11 @@ export interface IProductCardProps {
     onRatingChange: (newValue: number | null) => void;
 }
 
+const propsAreEqual = (prevProps: IProductCardProps, nextProps: IProductCardProps) => deepEqual(prevProps, nextProps);
+
 const ProductCard = (props: IProductCardProps) => {
     const classes = useStyles();
+    const history = useHistory();
     const {
         product: { ageRating, averageRating, name, price, summary, mainImageUrl, id },
         userRating,
@@ -68,9 +74,10 @@ const ProductCard = (props: IProductCardProps) => {
     return (
         <Card className={classes.root}>
             <CardHeader action={<div>{ageRating}+</div>} title={name} subheader={price + '$'} />
-            <CardMedia
+            <LazyLoadImage
+                effect="blur"
                 className={classes.media}
-                image={mainImageUrl || 'assets/images/no-image.jpg'}
+                src={mainImageUrl || 'assets/images/no-image.jpg'}
                 title="Paella dish"
             />
             <CardContent>
@@ -79,7 +86,9 @@ const ProductCard = (props: IProductCardProps) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <Button size="medium">Learn More</Button>
+                <Button onClick={() => history.push(`${CatalogRoutes.catalogPageRoute}/${id}`)} size="medium">
+                    Learn More
+                </Button>
                 <IconButton className={classes.iconButton} aria-label="show more">
                     <div className={classes.allRatingsContainer}>
                         <div className={classes.ratingContainer}>
@@ -109,4 +118,4 @@ const ProductCard = (props: IProductCardProps) => {
     );
 };
 
-export default ProductCard;
+export default React.memo(ProductCard, propsAreEqual);

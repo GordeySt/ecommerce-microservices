@@ -1,21 +1,24 @@
-﻿import { all, call, put, select, takeEvery } from 'redux-saga/effects';
+﻿import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { catalogApi } from '../../../../common/api/catalogApi';
 import { PaginatedResult, PagingParams } from '../../../../common/models/pagination';
 import { IProduct } from '../../../../common/models/product';
 import { setErrors } from '../../../../common/state/actions/errorActions';
+import { hideLoader, showLoader } from '../../../../common/state/actions/loaderActions';
 import { formUrlSearchParams } from '../../../../common/utils/functions';
 import {
+    getProductByIdFailure,
+    getProductByIdSuccess,
     getProductsFailure,
     getProductsSuccess,
     loadMoreProductsFailure,
     loadMoreProductsSuccess,
-    ProductActions,
     resetProducts,
     setPagination,
     setProducts,
 } from '../actions/productActions';
 import { getPagingParams, getPredicates } from '../selectors/productsSelectors';
 import { IPredicate } from '../types/filteringTypes';
+import { GetProductsByIdRequestType, ProductActions } from '../types/productTypes';
 
 export function* getProducts() {
     try {
@@ -42,7 +45,19 @@ export function* loadMoreProducts() {
     }
 }
 
+export function* getProductById({ payload }: GetProductsByIdRequestType) {
+    try {
+        yield put(showLoader());
+        const product: IProduct = yield call(catalogApi.getProductById, payload);
+        yield all([put(hideLoader()), put(getProductByIdSuccess(product))]);
+        yield;
+    } catch (error) {
+        yield put(getProductByIdFailure(error));
+    }
+}
+
 export default function* productRootSaga() {
-    yield takeEvery(ProductActions.GET_PRODUCTS_REQUEST, getProducts);
-    yield takeEvery(ProductActions.LOAD_MORE_PRODUCTS_REQUEST, loadMoreProducts);
+    yield takeLatest(ProductActions.GET_PRODUCTS_REQUEST, getProducts);
+    yield takeLatest(ProductActions.LOAD_MORE_PRODUCTS_REQUEST, loadMoreProducts);
+    yield takeLatest(ProductActions.GET_PRODUCT_BY_ID_REQUEST, getProductById);
 }

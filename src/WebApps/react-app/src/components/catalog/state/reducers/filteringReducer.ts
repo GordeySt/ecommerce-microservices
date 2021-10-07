@@ -1,9 +1,8 @@
 ﻿import { UrlSearchParamsConstants } from '../../../../common/constants/urlSearchParamsConstants';
 import { PagingParams } from '../../../../common/models/pagination';
-import { FilteringActions } from '../actions/filteringActions';
-import { FilteringActionType, IPredicate, SetPredicatesActionType } from '../types/filteringTypes';
+import { FilteringActions, FilteringActionType, IPredicate, SetPredicatesActionType } from '../types/filteringTypes';
 
-interface IFilteringState {
+export interface IFilteringState {
     pagingParams: PagingParams;
     predicates: IPredicate[];
 }
